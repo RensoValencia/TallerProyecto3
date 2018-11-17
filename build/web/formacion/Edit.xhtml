@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FormacionEditDlg" widgetVar="FormacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Edición de formación">
+            <h:form id="FormacionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{formacionController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditFormacionLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{formacionController.selected.nombre}" title="#{bundle.EditFormacionTitle_nombre}" required="true" requiredMessage="#{bundle.EditFormacionRequiredMessage_nombre}"/>
+                        
+                        <p:outputLabel value="Tipo de formación:" for="idTipoFormacion" />
+                        <p:selectOneMenu id="idTipoFormacion" value="#{formacionController.selected.idTipoFormacion}" >
+                            <f:selectItems value="#{parametrosController.listTipoFormacion}"
+                                           var="idTipoFormacionItem"
+                                           itemValue="#{idTipoFormacionItem}" itemLabel="#{idTipoFormacionItem.descripcion}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{bundle.EditFormacionLabel_proposito}" for="proposito" />
+                        
+                        <p:inputTextarea id="proposito" rows="6" cols="33" 
+                                         required="true" requiredMessage="#{bundle.EditFormacionRequiredMessage_proposito}"
+                                         value="#{formacionController.selected.proposito}" 
+                                         title="#{bundle.EditFormacionTitle_proposito}"/>
+                        
+                        <p:outputLabel value="Tipo de sala:" for="tipoSala" />
+                        <p:selectOneMenu id="tipoSala" value="#{formacionController.selected.tipoSala}" required="true" requiredMessage="#{bundle.EditFormacionRequiredMessage_tipoSala}">
+                            <f:selectItems value="#{parametrosController.listTipoSala}"
+                                           var="tipoSalaItem"
+                                           itemValue="#{tipoSalaItem}" itemLabel="#{tipoSalaItem.descripcion}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Máximo de participantes:" for="maximoParticipantes" />
+                        <p:inputText id="maximoParticipantes" value="#{formacionController.selected.maximoParticipantes}" title="#{bundle.EditFormacionTitle_maximoParticipantes}" required="true" requiredMessage="#{bundle.EditFormacionRequiredMessage_maximoParticipantes}"/>
+                        
+                        <p:outputLabel value="#{bundle.EditFormacionLabel_temario}" for="temario" />
+                        
+                        <p:inputTextarea id="temario" rows="6" cols="33" required="true"
+                                         value="#{formacionController.selected.temario}"
+                                         title="#{bundle.EditFormacionTitle_temario}"
+                                         requiredMessage="#{bundle.EditFormacionRequiredMessage_temario}"/>
+                        
+                        <p:outputLabel value="Número de horas" for="numeroHoras" />
+                        <p:inputText id="numeroHoras" value="#{formacionController.selected.numeroHoras}" title="#{bundle.EditFormacionTitle_numeroHoras}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateFormacionLabel_idArea}" for="idArea" />
+                        <p:selectOneMenu id="idArea" value="#{formacionController.selected.idArea}" >
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="idAreaItem"
+                                           itemValue="#{idAreaItem}" itemLabel="#{idAreaItem.nombre}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Tipo de capacitación" for="idTipoModalidad" />
+                        <p:selectOneMenu id="idTipoModalidad" value="#{formacionController.selected.idTipoModalidad}" >
+                            <f:selectItems value="#{parametrosController.listTipoModalidad}"
+                                           var="idTipoModalidadItem"
+                                           itemValue="#{idTipoModalidadItem}" itemLabel="#{idTipoModalidadItem.descripcion}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{formacionController.update}" value="Editar" update="display,:FormacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FormacionEditDialog');"/>
+                    <p:commandButton value="Salir" onclick="FormacionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

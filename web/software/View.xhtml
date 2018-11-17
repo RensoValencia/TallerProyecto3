@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SoftwareViewDlg" widgetVar="SoftwareViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSoftwareTitle}">
+            <h:form id="SoftwareViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{softwareController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_id}"/>
+                        <h:outputText value="#{softwareController.selected.id}" title="#{bundle.ViewSoftwareTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_descripcion}"/>
+                        <h:outputText value="#{softwareController.selected.descripcion}" title="#{bundle.ViewSoftwareTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_codLicencia}"/>
+                        <h:outputText value="#{softwareController.selected.codLicencia}" title="#{bundle.ViewSoftwareTitle_codLicencia}"/>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_fechaExpiracion}"/>
+                        <h:outputText value="#{softwareController.selected.fechaExpiracion}" title="#{bundle.ViewSoftwareTitle_fechaExpiracion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_tipoExpiracion}"/>
+                        <h:outputText value="#{softwareController.selected.tipoExpiracion}" title="#{bundle.ViewSoftwareTitle_tipoExpiracion}"/>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_cantidad}"/>
+                        <h:outputText value="#{softwareController.selected.cantidad}" title="#{bundle.ViewSoftwareTitle_cantidad}"/>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_estado}"/>
+                        <h:outputText value="#{softwareController.selected.estado}" title="#{bundle.ViewSoftwareTitle_estado}"/>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_stock}"/>
+                        <h:outputText value="#{softwareController.selected.stock}" title="#{bundle.ViewSoftwareTitle_stock}"/>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_idMarcaSw}"/>
+                        <h:outputText value="#{softwareController.selected.idMarcaSw}" title="#{bundle.ViewSoftwareTitle_idMarcaSw}"/>
+                        <h:outputText value="#{bundle.ViewSoftwareLabel_idTipoSw}"/>
+                        <h:outputText value="#{softwareController.selected.idTipoSw}" title="#{bundle.ViewSoftwareTitle_idTipoSw}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SoftwareViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

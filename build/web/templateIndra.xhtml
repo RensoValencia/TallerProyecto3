@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputScript library="js" name="planCapacitacion.js"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <p:growl id="growl" life="3000" autoUpdate="true" />
+
+        <div id="top">
+            <ui:insert name="top">Top</ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">
+                    <h:form>
+                        <c:choose>
+                            <c:when test="#{user.idEmpleado.idRol.nivel eq 7}">
+                                <p>
+                                    <p:commandLink ajax="false" action="/formacion/List.xhtml">
+                                        <h:outputText value="Formación" />
+                                    </p:commandLink>   
+                                </p>
+                                <p>
+                                    <p:commandLink ajax="false" action="/perfilCapacitador/List.xhtml">
+                                        <h:outputText value="Perfil Capacitador" />
+                                    </p:commandLink>   
+                                </p>   
+                            </c:when>
+                            <c:when test="#{user.idEmpleado.idRol.nivel eq 6}">
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/griRecurso/List.xhtml">
+                                        <h:outputText value="Recursos informaticos" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/griTipoRecurso/List.xhtml">
+                                        <h:outputText value="RI Tipo recurso" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/griMarca/List.xhtml">
+                                        <h:outputText value="Marca" />
+                                    </p:commandLink>   
+                                </p>
+
+                            </c:when>
+                            <c:when test="#{user.idEmpleado.idRol.nivel eq 5}">
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/materialesEscritorio/List.xhtml">
+                                        <h:outputText value="Materiales escritorio" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/tipoMaterial/List.xhtml">
+                                        <h:outputText value="Tipo material" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/marcaMaterial/List.xhtml">
+                                        <h:outputText value="Marca material" />
+                                    </p:commandLink>   
+                                </p>
+
+                            </c:when>
+                            <c:when test="#{user.idEmpleado.idRol.nivel eq 3}">
+                                <p>
+                                    <p:commandLink ajax="false" action="/actualizarSolicitudCapacitacion/frmListadoSolicitudCapacitacion.xhtml">
+                                        <h:outputText value="Solicitudes de capacitación" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml">
+                                        <h:outputText value="Planes de Capacitación" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p id="NuevoRegistro">
+                                    <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmRegistrarPlanCapacitacion.xhtml">
+                                        <h:outputText value="Nuevo plan de capacitación" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/area/List.xhtml">
+                                        <h:outputText value="Areas" />
+                                    </p:commandLink>   
+
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/rol/List.xhtml">
+                                        <h:outputText value="Roles" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/empleado/List.xhtml">
+                                        <h:outputText value="Empleado" />
+                                    </p:commandLink>   
+                                </p>        
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/perfilCapacitador/List.xhtml">
+                                        <h:outputText value="Perfil Capacitador" />
+                                    </p:commandLink>   
+                                </p>   
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/formacion/List.xhtml">
+                                        <h:outputText value="Formación" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/materialesEscritorio/List.xhtml">
+                                        <h:outputText value="Materiales escritorio" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/tipoMaterial/List.xhtml">
+                                        <h:outputText value="Tipo material" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/marcaMaterial/List.xhtml">
+                                        <h:outputText value="Marca material" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/perfil/List.xhtml">
+                                        <h:outputText value="Perfiles" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/usuario/List.xhtml">
+                                        <h:outputText value="Usuario" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/parametros/List.xhtml">
+                                        <h:outputText value="Parametros" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/indicadorArea/List.xhtml">
+                                        <h:outputText value="Indicador Area" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/griRecurso/List.xhtml">
+                                        <h:outputText value="Recursos informaticos" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/griTipoRecurso/List.xhtml">
+                                        <h:outputText value="RI Tipo recurso" />
+                                    </p:commandLink>   
+                                </p>
+
+                                <p>
+                                    <p:commandLink ajax="false" action="/griMarca/List.xhtml">
+                                        <h:outputText value="Marca" />
+                                    </p:commandLink>   
+                                </p>
+                            </c:when>
+                            <c:when test="#{user.idEmpleado.idRol.nivel eq 1}">
+                                <p>
+                                    <p:commandLink ajax="false" action="/actualizarSolicitudCapacitacion/frmListadoSolicitudCapacitacion.xhtml">
+                                        <h:outputText value="Solicitudes de capacitación" />
+                                    </p:commandLink>   
+                                </p>
+                            </c:when>
+                            <c:otherwise>
+                                <p>
+                                    <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml">
+                                        <h:outputText value="Planes de Capacitación" />
+                                    </p:commandLink>   
+                                </p>
+                                <p id="NuevoRegistro">
+                                    <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmRegistrarPlanCapacitacion.xhtml">
+                                        <h:outputText value="Nuevo plan de capacitación" />
+                                    </p:commandLink>   
+                                </p>
+                            </c:otherwise>
+                        </c:choose>
+                        <p>Ayuda</p>
+                    </h:form>
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content">Content</ui:insert>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">
+                <p>Todos los derechos reservados de la empresa Indra Corp. S.A.C</p>
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

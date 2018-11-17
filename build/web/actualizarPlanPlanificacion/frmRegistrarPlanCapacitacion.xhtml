@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Registro de plan de capacitacion</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="planCapacitacion.css"/>
+        <h:outputScript library="js" name="planCapacitacion.js"/>
+        <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}" />
+    </h:head>
+    <ui:composition template="../templateIndra.xhtml">
+        <ui:define name="top">
+            <div style="text-align: left;color: white;font-size: 26px; display: inline">
+                <img src="../img/indra.png" width="150px"  alt=""/>
+            </div>
+            <div style="display: inline; float: right;">
+                <h:form>
+                    <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                            - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                            <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
+                    <p:commandLink action="/usuario/Login.xhtml" ajax="false"
+                                   actionListener="#{loginBean.cerrarSesion()}">
+                        <h:outputText value="Cerrar sesión" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+        </ui:define>
+
+        <ui:define name="content">
+            <ui:include src="/actualizarPlanPlanificacion/dlgIndicadores.xhtml" />
+            
+            <h:form id="frmRegistrarPlanCapacitacion">
+                <p:blockUI id="block" block="frmRegistrarPlanCapacitacion" widgetVar="wgvDtDetSol">
+                    <p:graphicImage url="../img/load.gif" />
+                </p:blockUI>
+                <a name="mensaje-inicio"></a>
+                
+                 <ui:include src="/actualizarPlanPlanificacion/frmNuevoPlanCapacitacion.xhtml" />
+                
+                <ui:include src="/actualizarPlanPlanificacion/frmRecursoMaterialInformatico.xhtml" />
+               
+                <ui:include src="/actualizarPlanPlanificacion/frmPerfilCapacitador.xhtml" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

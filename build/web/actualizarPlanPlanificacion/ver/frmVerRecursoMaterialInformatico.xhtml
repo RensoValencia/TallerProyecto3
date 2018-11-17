@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+         <div id="divSegundo" style="display: none">
+                    
+            <p:fieldset legend="Recursos materiales y recursos informaticos">
+
+                
+                <p:dataTable id="dtMaterialInformatico2" var="materialEscritorio2"
+                                 scrollable="true"
+                                 scrollHeight="350"
+                                 paginator="true" rows="10" reflow="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 rowKey="#{materialEscritorio2.id}"
+                                 rowIndexVar="cantidad"
+                                 value="#{registrarPlanCapacitacionBean.listRecursoCapacitacion}">
+                        <f:facet name="header">
+                            Listado de materiales y/o informática agregados
+                        </f:facet>
+                        <p:column id="colNro" headerText="Nro">
+                            <h:outputLabel value="#{cantidad + 1}"/>
+                        </p:column>
+                        <p:column id="colNombre" headerText="Descripción" filterMatchMode="contains" filterBy="#{materialEscritorio2.descripcion}">
+                            <h:outputLabel value="#{materialEscritorio2.descripcion}"/>
+                        </p:column>
+                        <p:column id="colMarca" headerText="Marca" filterBy="#{materialEscritorio2.marca}">
+                            <h:outputLabel value="#{materialEscritorio2.marca}"/>
+                        </p:column>
+                        <p:column id="colTipo" headerText="Tipo" filterBy="#{materialEscritorio2.tipo}">
+                            <h:outputLabel value="#{materialEscritorio2.tipo}"/>
+                        </p:column>
+                        <p:column id="colTipoRecurso" headerText="Tipo recurso" filterBy="#{materialEscritorio2.nombre}">
+                            <h:outputLabel value="#{materialEscritorio2.nombre}"/>
+                        </p:column>
+                        <p:column id="colCantidad" headerText="Cantidad">
+                            <h:outputLabel value="#{materialEscritorio2.cantidad}"/>
+                        </p:column>
+                        <p:column id="colValor" headerText="Precio Referencial">
+                            <h:outputLabel value="#{materialEscritorio2.valor}"/>
+                        </p:column>
+                    </p:dataTable>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="btnRegresar1" value="Regresar" 
+                                         onstart="PF('wgvDtDetSol').show()"
+                                         oncomplete="PF('wgvDtDetSol').hide()"
+                                         onclick="$('#divPrimero').show(); $('#divSegundo').hide();" />
+
+                        <p:commandButton id="btnSiguiente2" icon="ui-icon-arrowthickstop-1-s" 
+                                         onstart="PF('wgvDtDetSol').show()"
+                                         oncomplete="PF('wgvDtDetSol').hide()"
+                                         value="Siguiente"
+                                         process="@this :frmVerPlanCapacitacion:dtMaterialInformatico2"
+                                         partialSubmit="true"
+                                         action="#{registrarPlanCapacitacionBean.siguiente2}" />
+                    </f:facet>
+                    <f:facet name="right">
+                        <h:outputLabel style="color: red; font-weight: bold; font-size: 15px;" value="Monto Recurso: "/>
+                        <h:outputLabel id="monto_total" style="font-weight: bold; font-size: 15px;" value=" S/. #{registrarPlanCapacitacionBean.montoTotal}"/>
+                        <p:spacer with="20" />
+                    </f:facet>    
+                </p:toolbar>
+            </p:fieldset>
+        </div>
+    </h:body>
+</html>

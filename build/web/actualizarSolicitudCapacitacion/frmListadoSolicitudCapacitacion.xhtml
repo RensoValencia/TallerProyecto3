@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Listado de solicitudes de capacitaciones</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="planCapacitacion.css"/>
+        <h:outputScript library="js" name="planCapacitacion.js"/>
+        <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}" />
+    </h:head>
+    <h:body>
+        <ui:composition template="../templateIndra.xhtml">
+            <ui:define name="top">
+                <div style="text-align: left;color: white;font-size: 26px; display: inline">
+                    <img src="../img/indra.png" width="150px"  alt=""/>
+                </div>
+                <div style="display: inline; float: right;">
+                    <h:form>
+                        <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                            - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                            <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
+                        <p:commandLink action="/usuario/Login.xhtml"
+                                       actionListener="#{loginBean.cerrarSesion()}">
+                            <h:outputText value="Cerrar sesión" />
+                        </p:commandLink>
+                    </h:form>
+                </div>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="frmBuscarSolicitudCapacitacion">
+                    <p:blockUI id="block" block="frmBuscarSolicitudCapacitacion" widgetVar="wgvFrmBuscarSolicitud">
+                        <p:graphicImage url="../img/load.gif" />
+                    </p:blockUI>
+
+                    <p:fieldset legend="Buscar Solicitud de Capacitación">
+                        <p:panelGrid columns="8" layout="grid">
+                            <p:column>
+                                <h:outputLabel styleClass="lblGeneral" value="Estado:" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column>
+                                <!-- (pendiente, aprobada, rechazada, etc)-->
+                                <p:selectOneMenu id="somEstadoSolicitudCapacitacion" value="#{crearSolicitudBean.estadoSolicitudCapacitacion}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                    <f:selectItems value="#{parametrosController.listEstadoSolicitud}" var="estadoSolicitudCapacitacion"
+                                                   itemValue="#{estadoSolicitudCapacitacion}" 
+                                                   itemLabel="#{estadoSolicitudCapacitacion.descripcion}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel styleClass="lblGeneral" value="Tipo de capacitación:" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column>
+                                <!-- (inductivo, instructivo, especializacion)-->
+                                <p:selectOneMenu id="somTipoCapacitacion" value="#{crearSolicitudBean.tipoModalidadSeleccionada}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                    <f:selectItems value="#{parametrosController.listTipoModalidad}" var="tipoModalidad"
+                                                   itemValue="#{tipoModalidad}" 
+                                                   itemLabel="#{tipoModalidad.descripcion}" />
+                                    <p:ajax update=":frmBuscarSolicitudCapacitacion:somTipoFormacion:" 
+                                            process="@this :frmBuscarSolicitudCapacitacion:somTipoCapacitacion:"
+                                            partialSubmit="true"
+                                            onstart="PF('wgvFrmBuscarSolicitud').show();"
+                                            oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
+                                            listener="#{crearSolicitudBean.buscarTipoFormacionYCurso()}" />
+                                            />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel styleClass="lblGeneral" value="Tipo de formación:" style="font-weight: bold;"/>
+                                <p:spacer width="10" />
+                                <!-- (curso, taller) -->
+                                <p:selectOneMenu id="somTipoFormacion"
+                                                 value="#{crearSolicitudBean.tipoFormacionSeleccionada}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="" />
+                                    <f:selectItems value="#{crearSolicitudBean.listTipoFormacion}"
+                                                   var="tipoFormacion" itemValue="#{tipoFormacion}" 
+                                                   itemLabel="#{tipoFormacion.descripcion}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel id="lblPeriodo" value="Periodo:" styleClass="lblGeneral" />
+                                <p:spacer width="5" />
+                                <p:selectOneMenu id="cmbPeriodo" value="#{crearSolicitudBean.anioSeleccionado}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="2015" itemValue="#{2015}" />
+                                    <f:selectItem itemLabel="2016" itemValue="#{2016}" />
+                                    <f:selectItem itemLabel="2017" itemValue="#{2017}" />
+                                    <f:selectItem itemLabel="2018" itemValue="#{2018}" />
+                                    <f:selectItem itemLabel="2019" itemValue="#{2019}" />
+                                    <f:selectItem itemLabel="2020" itemValue="#{2020}" />
+                                    <f:selectItem itemLabel="2021" itemValue="#{2021}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:commandButton id="btnBuscar" action="#{crearSolicitudBean.buscarSolicitudCapacitacion}"
+                                             value="Buscar"
+                                             styleClass="btnBuscar"
+                                             icon="ui-icon-circle-plus"
+                                             onstart="PF('wgvFrmBuscarSolicitud').show();"
+                                             oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
+                                             process="@this :frmBuscarSolicitudCapacitacion"  />
+
+                            <h:panelGroup />
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <p:dataTable id="dtLstSolicitud" 
+                                 var="detalleSolicitud"
+                                 reflow="true"
+                                 emptyMessage="Por favor, Busque el listado de solicitudes"
+                                 rowIndexVar="cantidad"
+                                 value="#{crearSolicitudBean.listSolicitud}">
+                        <p:column id="colNro" headerText="Item">
+                            <h:outputText value="#{cantidad + 1}" />
+                        </p:column>
+                        <p:column id="colAnioSol" headerText="Anio Solicitud">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.periodo}" />
+                        </p:column>
+                        <p:column id="colNroDoc" headerText="Nro Documento">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.id}" />
+                        </p:column>
+                        <p:column id="colFecDocumento" headerText="Fecha Documento">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.fechaDocumento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"
+                                                   timeZone="America/Lima" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column id="colFecAtencion" headerText="Fecha Atencion">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.fechaAtencion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"
+                                                   timeZone="America/Lima" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column id="colCapacitacion" headerText="Tipo Capacitacion">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.idTipoModalidad.descripcion}" />
+                        </p:column>
+                        <p:column id="colEstado" headerText="Estado">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.idEstado.descripcion}" />
+                        </p:column>
+                        <p:column id="colEditar" headerText="Editar">
+                            <p:commandButton id="btnEditar" 
+                                             icon="ui-icon-pencil" 
+                                             action="#{crearSolicitudBean.seleccionarDetalleSolicitud}"
+                                             onstart="PF('wgvFrmBuscarSolicitud').show();" 
+                                             disabled="#{(detalleSolicitud.idSolCap.idEstado.id eq crearSolicitudBean.estSolCapEnviada.id)
+                                                        or (detalleSolicitud.idSolCap.idEstado.id eq 26)}"
+                                             oncomplete="PF('wgvFrmBuscarSolicitud').hide(); PF('wgvDlgCrearSolicitudCapacitacion').show();"
+                                             process="@this" partialSubmit="true">
+                                <f:setPropertyActionListener value="#{detalleSolicitud.idSolCap}" target="#{crearSolicitudBean.soliCap}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:commandButton value="Nueva solicitud"
+                                     icon="ui-icon-disk"
+                                     action="#{crearSolicitudBean.nuevaSolicitudCapacitacion}"
+                                     onstart="PF('wgvDlgCrearSolicitudCapacitacion').show();" />
+
+                </h:form>
+
+                <ui:include src="/actualizarSolicitudCapacitacion/frmRegistrarSolicitudCapacitacion.xhtml" />
+                <ui:include src="/actualizarSolicitudCapacitacion/dlgFrmListadoParticipantesAElegir.xhtml" />
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

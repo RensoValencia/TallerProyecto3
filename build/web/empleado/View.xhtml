@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadoViewDlg" widgetVar="EmpleadoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEmpleadoTitle}">
+            <h:form id="EmpleadoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empleadoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEmpleadoLabel_id}"/>
+                        <h:outputText value="#{empleadoController.selected.id}" title="#{bundle.ViewEmpleadoTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewEmpleadoLabel_nombres}"/>
+                        <h:outputText value="#{empleadoController.selected.nombres}" title="#{bundle.ViewEmpleadoTitle_nombres}"/>
+                        <h:outputText value="#{bundle.ViewEmpleadoLabel_apellidos}"/>
+                        <h:outputText value="#{empleadoController.selected.apellidos}" title="#{bundle.ViewEmpleadoTitle_apellidos}"/>
+                        <h:outputText value="#{bundle.ViewEmpleadoLabel_fechaNacimiento}"/>
+                        <h:outputText value="#{empleadoController.selected.fechaNacimiento}" title="#{bundle.ViewEmpleadoTitle_fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewEmpleadoLabel_fechaAlta}"/>
+                        <h:outputText value="#{empleadoController.selected.fechaAlta}" title="#{bundle.ViewEmpleadoTitle_fechaAlta}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewEmpleadoLabel_fechaBaja}"/>
+                        <h:outputText value="#{empleadoController.selected.fechaBaja}" title="#{bundle.ViewEmpleadoTitle_fechaBaja}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewEmpleadoLabel_estado}"/>
+                        <h:outputText value="#{empleadoController.selected.estado}" title="#{bundle.ViewEmpleadoTitle_estado}"/>
+                        <h:outputText value="#{bundle.ViewEmpleadoLabel_idRol}"/>
+                        <h:outputText value="#{empleadoController.selected.idRol}" title="#{bundle.ViewEmpleadoTitle_idRol}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EmpleadoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

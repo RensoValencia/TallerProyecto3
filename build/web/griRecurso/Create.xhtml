@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GriRecursoCreateDlg" widgetVar="GriRecursoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateGriRecursoTitle}">
+            <h:form id="GriRecursoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{griRecursoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{griRecursoController.selected.id}" title="#{bundle.CreateGriRecursoTitle_id}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{griRecursoController.selected.descripcion}" title="#{bundle.CreateGriRecursoTitle_descripcion}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_descripcion}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{griRecursoController.selected.cantidad}" title="#{bundle.CreateGriRecursoTitle_cantidad}" />
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_so}" for="so" />
+                        <p:inputText id="so" value="#{griRecursoController.selected.so}" title="#{bundle.CreateGriRecursoTitle_so}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_so}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_procesador}" for="procesador" />
+                        <p:inputText id="procesador" value="#{griRecursoController.selected.procesador}" title="#{bundle.CreateGriRecursoTitle_procesador}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_procesador}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_memoriaRam}" for="memoriaRam" />
+                        <p:inputText id="memoriaRam" value="#{griRecursoController.selected.memoriaRam}" title="#{bundle.CreateGriRecursoTitle_memoriaRam}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_memoriaRam}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_discoDuro}" for="discoDuro" />
+                        <p:inputText id="discoDuro" value="#{griRecursoController.selected.discoDuro}" title="#{bundle.CreateGriRecursoTitle_discoDuro}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_discoDuro}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_pulgadas}" for="pulgadas" />
+                        <p:inputText id="pulgadas" value="#{griRecursoController.selected.pulgadas}" title="#{bundle.CreateGriRecursoTitle_pulgadas}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_pulgadas}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_capacidad}" for="capacidad" />
+                        <p:inputText id="capacidad" value="#{griRecursoController.selected.capacidad}" title="#{bundle.CreateGriRecursoTitle_capacidad}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_capacidad}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_serie}" for="serie" />
+                        <p:inputText id="serie" value="#{griRecursoController.selected.serie}" title="#{bundle.CreateGriRecursoTitle_serie}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_serie}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_tipoExpiracion}" for="tipoExpiracion" />
+                        <p:inputText id="tipoExpiracion" value="#{griRecursoController.selected.tipoExpiracion}" title="#{bundle.CreateGriRecursoTitle_tipoExpiracion}" required="true" requiredMessage="#{bundle.CreateGriRecursoRequiredMessage_tipoExpiracion}"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_fechaExpiracion}" for="fechaExpiracion" />
+                        <p:calendar id="fechaExpiracion" pattern="MM/dd/yyyy" value="#{griRecursoController.selected.fechaExpiracion}" title="#{bundle.EditGriRecursoTitle_fechaExpiracion}" required="true" requiredMessage="#{bundle.EditGriRecursoRequiredMessage_fechaExpiracion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_idGriMarca}" for="idGriMarca" />
+                        <p:selectOneMenu id="idGriMarca" value="#{griRecursoController.selected.idGriMarca}" required="true" requiredMessage="#{bundle.EditGriRecursoRequiredMessage_idGriMarca}">
+                            <f:selectItems value="#{griMarcaController.itemsAvailableSelectOne}"
+                                           var="idGriMarcaItem"
+                                           itemValue="#{idGriMarcaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateGriRecursoLabel_idGriTipoRecurso}" for="idGriTipoRecurso" />
+                        <p:selectOneMenu id="idGriTipoRecurso" value="#{griRecursoController.selected.idGriTipoRecurso}" required="true" requiredMessage="#{bundle.EditGriRecursoRequiredMessage_idGriTipoRecurso}">
+                            <f:selectItems value="#{griTipoRecursoController.itemsAvailableSelectOne}"
+                                           var="idGriTipoRecursoItem"
+                                           itemValue="#{idGriTipoRecursoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{griRecursoController.create}" value="#{bundle.Save}" update="display,:GriRecursoListForm:datalist,:growl" oncomplete="handleSubmit(args,'GriRecursoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="GriRecursoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

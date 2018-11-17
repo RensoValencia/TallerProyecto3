@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Listado plan de capacitacion</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}" />
+    </h:head>
+    <h:body>
+        <ui:composition template="../templateIndra.xhtml">
+            <ui:define name="top">
+                <div style="text-align: left;color: white;font-size: 26px; display: inline">
+                    <img src="../img/indra.png" width="150px"  alt=""/>
+                </div>
+                <div style="display: inline; float: right;">
+                    <h:form>
+                        <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                            - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                            <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
+                        <p:commandLink action="/usuario/Login.xhtml"
+                                       actionListener="#{loginBean.cerrarSesion()}">
+                            <h:outputText value="Cerrar sesión" />
+                        </p:commandLink>
+                    </h:form>
+                </div>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="frmListadoPlanCapacitacion">
+
+                    <p:blockUI id="block" block="frmListadoPlanCapacitacion" widgetVar="wgvDtPlanesCapacitacion">
+                        <p:graphicImage url="../img/load.gif" />
+                    </p:blockUI>
+
+                    <p:fieldset legend="Listado de planes de capacitación">
+                        
+                        <p:panelGrid columns="10" layout="grid">
+
+                            <p:column>
+                                <h:outputLabel id="lblPeriodo" value="Periodo:" styleClass="lblGeneral" />
+                                <p:spacer width="5" />
+                                <p:selectOneMenu id="cmbPeriodo" value="#{registrarPlanCapacitacionBean.anioSeleccionadoBuscar}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="2018" itemValue="#{2018}" />
+                                    <f:selectItem itemLabel="2019" itemValue="#{2019}" />
+                                    <f:selectItem itemLabel="2020" itemValue="#{2020}" />
+                                    <f:selectItem itemLabel="2021" itemValue="#{2021}" />
+                                </p:selectOneMenu>
+                            </p:column>       
+                            <h:outputLabel id="lblSituacion" value="Estado:" styleClass="lblGeneral" />
+
+                            <p:selectOneMenu id="cmbSituacion" value="#{registrarPlanCapacitacionBean.estadoPlanCapacitacionSeleccionada}">
+                                <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                <f:selectItems value="#{parametrosController.listEstadoTipoCapacitacion}" var="estadoCapa"
+                                               itemValue="#{estadoCapa}" itemLabel="#{estadoCapa.descripcion}" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="cbBuscar" icon="ui-icon-search"
+                                             action="#{registrarPlanCapacitacionBean.listarCapacitaciones}"
+                                             styleClass="btnBuscar"
+                                             onstart="PF('wgvDtPlanesCapacitacion').show();"
+                                             oncomplete="PF('wgvDtPlanesCapacitacion').hide();"
+                                             value="Buscar" />
+                        </p:panelGrid>
+                        <br />
+                        <p:separator />
+                    </p:fieldset>    
+                    <p:dataTable id="dtPlanesCapacitacion" var="plan"
+                                 paginatorPosition="bottom"
+                                 rowIndexVar="cantidad" reflow="true"
+                                 paginator="true" rows="10"
+                                 emptyMessage="No existen planes de capacitación"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 value="#{registrarPlanCapacitacionBean.listPlanCapacitacion}">
+                        <p:column id="colNroPlan" headerText="Nro plan" sortBy="#{plan.id}">
+                            <h:outputText value="#{plan.id}" />
+                        </p:column>
+                        <p:column id="colEstado" headerText="Estado" sortBy="#{plan.estado.descripcion}">
+                            <h:outputText value="#{plan.estado.descripcion}" />
+                        </p:column>
+                        <p:column id="colFecEje" headerText="Fecha aprobación" sortBy="#{plan.fechaAprobacion}">
+                            <h:outputText value="#{plan.fechaAprobacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column id="colPeriodo" headerText="Periodo">
+                            <h:outputText value="#{plan.periodo}" />
+                        </p:column>
+                        <p:column id="colBtnEdi" headerText="Modificar">
+                            <p:commandButton id="btnEditar" 
+                                             action="#{registrarPlanCapacitacionBean.modificarPlanCapacitacion(plan)}"
+                                             disabled="#{(plan.estado.id eq 36) or (plantillaBean.usuario.idEmpleado.idRol.nivel eq 4)}"
+                                             icon="ui-icon-pencil" />    
+                        </p:column>
+                        <p:column id="colBtnVer" headerText="Ver">
+                            <p:commandButton id="btnVer" 
+                                             action="#{registrarPlanCapacitacionBean.verPlanCapacitacion(plan)}"
+                                             icon="ui-icon-pencil" />
+                            
+                        </p:column>
+                        <p:column id="colEvaluar" headerText="Evaluar">
+                            <p:commandButton id="btnEvaluar" 
+                                             disabled="#{(plantillaBean.usuario.idEmpleado.idRol.nivel ne 4) or 
+                                                         (plan.estado.id eq 36) or (plan.estado.id eq 37)}"
+                                             action="#{registrarPlanCapacitacionBean.evaluarPlanCapacitacion(plan)}"
+                                             onstar="PF('wgvDtPlanesCapacitacion').show();"
+                                             oncomplete="PF('wgvDtPlanesCapacitacion').hide();"
+                                             icon="ui-icon-pencil" />
+                        </p:column>
+                    </p:dataTable>
+                            <p:commandButton id="btnNuevo" value="Nuevo plan de capacitacion" icon="ui-icon-document" 
+                                             action="#{registrarPlanCapacitacionBean.nuevoPlanDeCapa}"
+                                             disabled="#{plantillaBean.usuario.idEmpleado.idRol.nivel eq 4}"
+                                             onstart="PF('wgvDtPlanesCapacitacion').show();"
+                                             oncomplete="PF('wgvDtPlanesCapacitacion').hide();" />
+
+                        
+                    
+                </h:form>
+                
+                <ui:include src="/actualizarPlanPlanificacion/dlgAprobarPlan.xhtml" />
+                <ui:include src="/actualizarPlanPlanificacion/frmVerPlanCapacitacion.xhtml" />
+                <ui:include src="/actualizarPlanPlanificacion/frmEditarPlanCapacitacion.xhtml" />
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

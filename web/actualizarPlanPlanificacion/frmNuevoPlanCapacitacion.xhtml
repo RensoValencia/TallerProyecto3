@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <div id="divPrimero">
+            <p:fieldset legend="Nuevo plan de capacitación">
+
+                <p:dataTable id="dtSolicitudes" var="solicitudCapacitacion"
+                             scrollable="true" scrollHeight="150"
+                             selectionMode="single" reflow="true"
+                             paginatorPosition="bottom"
+                             rowKey="#{solicitudCapacitacion.id}"
+                             value="#{registrarPlanCapacitacionBean.listSolicitudCapacitacion}">
+                    <f:facet name="header">
+                        Listado de solicitudes de capacitación pendientes
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" 
+                            onstart="PF('wgvDtDetSol').show();"
+                            oncomplete="PF('wgvDtDetSol').hide();"
+                            listener="#{registrarPlanCapacitacionBean.onRowSelect}" />
+                    <p:column id="colNroSol" headerText="Número">
+                        <h:outputLabel value="#{solicitudCapacitacion.id}"/>
+                    </p:column>
+                    <p:column id="colArea" headerText="Area Solicitante">
+                        <h:outputLabel value="#{solicitudCapacitacion.idArea.nombre}"/>
+                    </p:column>
+                    <p:column id="colTipCapacitacion" headerText="Tipo Capacitacion">
+                        <h:outputLabel value="#{solicitudCapacitacion.idTipoModalidad.descripcion}"/>
+                    </p:column>
+                    <p:column id="colFecDocumento" headerText="Fecha de envío">
+                        
+                        <h:outputText value="#{solicitudCapacitacion.fechaDocumento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton id="btnVerMas" 
+                                 action="#{registrarPlanCapacitacionBean.mostrarVerMas}"
+                                 value="Ver mas"
+                                 style="height: 40px;width: 100px;"
+                                 icon="ui-icon-circle-plus"
+                                 onstart="PF('wgvDtDetSol').show();"
+                                 oncomplete="PF('wgvDtDetSol').hide();"
+                                 process="@this" partialSubmit="true" />
+
+                <p:dataTable id="dtDetSol" var="detSol"
+                             emptyMessage="Listado del detalle de la solicitud"
+                             paginator="true" rows="10" rowIndexVar="cantidad"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" reflow="true"
+                             value="#{registrarPlanCapacitacionBean.listDetalleSolicitud}">
+                    <f:facet name="header">
+                        Detalle de la solicitud de capacitación.
+                    </f:facet>
+                    <p:column id="colNro" headerText="Nro">
+                        <h:outputText value="#{cantidad + 1}" />
+                    </p:column>
+                    <p:column id="colNomArea" headerText="Area">
+                        <h:outputLabel value="#{detSol.idFormacion.idArea.nombre}"/>
+                    </p:column>
+                    <p:column id="colTipForm" headerText="Tipo formación">
+                        <h:outputLabel value="#{detSol.idFormacion.idTipoFormacion.descripcion}"/>
+                    </p:column>
+                    <p:column id="colFormacion" headerText="Nombre de formación">
+                        <h:outputLabel value="#{detSol.idFormacion.nombre}"/>
+                    </p:column>
+                    <p:column id="colModalidad" headerText="Tipo de capacitación">
+                        <h:outputLabel value="#{detSol.idFormacion.idTipoModalidad.descripcion}"/>
+                    </p:column>
+                    <p:column id="col" headerText="Número participantes">
+                        <h:outputLabel value="#{detSol.idFormacion.maximoParticipantes}"/>
+                    </p:column>
+                    <p:column id="colHoras" headerText="Numeros de horas">
+                        <h:outputLabel value="#{detSol.idFormacion.numeroHoras}"/>
+                    </p:column>
+                    <p:column id="colAgregar" headerText="Agregar">
+                        <p:commandButton id="btnAgregar1" 
+                                         onstart="PF('wgvDtDetSol').show();"
+                                         oncomplete="PF('wgvDtDetSol').hide();"
+                                         icon="ui-icon-plus"
+                                         process="@this :frmRegistrarPlanCapacitacion:dtDetSol"
+                                         partialSubmit="true"
+                                         action="#{registrarPlanCapacitacionBean.agregarDetalleSolicitud(detSol)}" />
+                    </p:column>
+                </p:dataTable>
+                <br />
+                <p:separator />
+                <br />
+
+                <p:dataTable id="dtDetSol2" var="detSol2"
+                             paginatorPosition="bottom"
+                             paginator="true" rows="10" reflow="true"
+                             emptyMessage="Listado de capacitaciones para configurar."
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowIndexVar="cantidad"
+                             rowKey="#{detSol2.id}"
+                             value="#{registrarPlanCapacitacionBean.listCapacitacion}">
+                    <f:facet name="header">
+                        Listado de capacitaciones para programar
+                    </f:facet>
+                    <p:column id="colArea" headerText="Area">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.idArea.nombre}"/>
+                    </p:column>
+                    <p:column id="colFormacion1" headerText="Formacion">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.nombre}"/>
+                    </p:column>
+                    <p:column id="colFormacion2" headerText="Tipo de capacitación">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.idTipoModalidad.descripcion}"/>
+                    </p:column>
+                    <p:column id="colNroPar" headerText="Numero de participantes">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.maximoParticipantes}"/>
+                    </p:column>
+                    <p:column id="colHoras" headerText="Numero de horas">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.numeroHoras}"/>
+                    </p:column>
+                    <p:column id="colFecIni" headerText="Fecha inicio">
+                        <p:calendar id="clrFechaInicio" 
+                                    locale="es"
+                                    styleClass="calendarioFecIniFin"
+                                    pattern="dd/mm/yyyy"
+                                    mask="99/99/9999"
+                                    placeholder="dd/mm/yyyy"
+                                    value="#{detSol2.fechaInicio}" />
+                    </p:column>
+                    <p:column id="coFecFin" headerText="Fecha fin">
+                        <p:calendar id="clrFechaFin"
+                                    locale="es"
+                                    styleClass="calendarioFecIniFin"
+                                    pattern="dd/mm/yyyy"
+                                    mask="99/99/9999"
+                                    placeholder="dd/mm/yyyy"
+                                    value="#{detSol2.fechaFin}" />
+                    </p:column>
+                    <p:column id="colEliminar" headerText="Remover">
+                        <p:commandButton id="btnEliminar" 
+                                         onstart="PF('wgvDtDetSol').show();"
+                                         oncomplete="PF('wgvDtDetSol').hide();"
+                                         icon="ui-icon-circle-minus"
+                                         process="@this"
+                                         partialSubmit="true"
+                                         action="#{registrarPlanCapacitacionBean.eliminarDetalleSolicitud(detSol2)}" />
+                    </p:column>
+                </p:dataTable>
+
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="btnSiguiente1" icon="ui-icon-arrowthickstop-1-s" value="Siguiente"
+                                         action="#{registrarPlanCapacitacionBean.siguiente1}"
+                                         onstart="PF('wgvDtDetSol').show();"
+                                         oncomplete="PF('wgvDtDetSol').hide();"
+                                         process="@this  
+                                         :frmRegistrarPlanCapacitacion:dtDetSol2"
+                                         partialSubmit="false">
+                        </p:commandButton>
+
+                        <p:commandButton id="btnSalir" icon="ui-icon-circle-close" 
+                                         action="/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml"
+                                         onstart="PF('wgvDtDetSol').show()"
+                                         oncomplete="PF('wgvDtDetSol').show()"
+                                         value="Salir" />
+                    </f:facet>
+                </p:toolbar>
+
+            </p:fieldset>        
+        </div>
+    </h:body>
+</html>

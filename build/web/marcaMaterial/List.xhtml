@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+     <h:head>
+        <title>Listado de areas</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}" />
+    </h:head>
+    
+    <h:body>
+    <ui:composition template="../templateIndra.xhtml">
+
+             <ui:define name="top">
+                <div style="text-align: left;color: white;font-size: 26px; display: inline">
+                <img src="../img/indra.png" width="150px"  alt=""/>
+            </div>
+                 <div style="display: inline; float: right;">
+                <h:form>
+                    <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                        - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                        <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
+                    <p:commandLink action="/usuario/Login.xhtml" ajax="false"
+                                     actionListener="#{loginBean.cerrarSesion()}">
+                        <h:outputText value="Cerrar sesión" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+                 </ui:define>
+            
+                <ui:define name="content">
+            <h:form id="MarcaMaterialListForm">
+                <p:panel>
+                    <p:dataTable id="datalist" value="#{marcaMaterialController.items}" var="item"
+                                 selectionMode="single" selection="#{marcaMaterialController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMarcaMaterialTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMarcaMaterialTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{marcaMaterialController.prepareCreate}" update=":MarcaMaterialCreateForm" oncomplete="PF('MarcaMaterialCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":MarcaMaterialViewForm" oncomplete="PF('MarcaMaterialViewDialog').show()" disabled="#{empty marcaMaterialController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":MarcaMaterialEditForm" oncomplete="PF('MarcaMaterialEditDialog').show()" disabled="#{empty marcaMaterialController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{marcaMaterialController.destroy}" update=":growl,datalist" disabled="#{empty marcaMaterialController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+    </ui:define></ui:composition></h:body>
+
+</html>

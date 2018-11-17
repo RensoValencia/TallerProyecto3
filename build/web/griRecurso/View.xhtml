@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GriRecursoViewDlg" widgetVar="GriRecursoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewGriRecursoTitle}">
+            <h:form id="GriRecursoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{griRecursoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_id}"/>
+                        <h:outputText value="#{griRecursoController.selected.id}" title="#{bundle.ViewGriRecursoTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_descripcion}"/>
+                        <h:outputText value="#{griRecursoController.selected.descripcion}" title="#{bundle.ViewGriRecursoTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_cantidad}"/>
+                        <h:outputText value="#{griRecursoController.selected.cantidad}" title="#{bundle.ViewGriRecursoTitle_cantidad}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_so}"/>
+                        <h:outputText value="#{griRecursoController.selected.so}" title="#{bundle.ViewGriRecursoTitle_so}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_procesador}"/>
+                        <h:outputText value="#{griRecursoController.selected.procesador}" title="#{bundle.ViewGriRecursoTitle_procesador}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_memoriaRam}"/>
+                        <h:outputText value="#{griRecursoController.selected.memoriaRam}" title="#{bundle.ViewGriRecursoTitle_memoriaRam}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_discoDuro}"/>
+                        <h:outputText value="#{griRecursoController.selected.discoDuro}" title="#{bundle.ViewGriRecursoTitle_discoDuro}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_pulgadas}"/>
+                        <h:outputText value="#{griRecursoController.selected.pulgadas}" title="#{bundle.ViewGriRecursoTitle_pulgadas}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_capacidad}"/>
+                        <h:outputText value="#{griRecursoController.selected.capacidad}" title="#{bundle.ViewGriRecursoTitle_capacidad}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_serie}"/>
+                        <h:outputText value="#{griRecursoController.selected.serie}" title="#{bundle.ViewGriRecursoTitle_serie}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_tipoExpiracion}"/>
+                        <h:outputText value="#{griRecursoController.selected.tipoExpiracion}" title="#{bundle.ViewGriRecursoTitle_tipoExpiracion}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_fechaExpiracion}"/>
+                        <h:outputText value="#{griRecursoController.selected.fechaExpiracion}" title="#{bundle.ViewGriRecursoTitle_fechaExpiracion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_idGriMarca}"/>
+                        <h:outputText value="#{griRecursoController.selected.idGriMarca}" title="#{bundle.ViewGriRecursoTitle_idGriMarca}"/>
+                        <h:outputText value="#{bundle.ViewGriRecursoLabel_idGriTipoRecurso}"/>
+                        <h:outputText value="#{griRecursoController.selected.idGriTipoRecurso}" title="#{bundle.ViewGriRecursoTitle_idGriTipoRecurso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="GriRecursoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

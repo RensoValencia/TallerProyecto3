@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Listado de agregar participantes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <p:dialog id="dlgSeleccionarParticipantesSeleccionar" 
+                  modal="true" 
+                  header="Seleccionar participantes para el detalle de capacitacion" 
+                  widgetVar="wgvDlgSeleccionarParticipantesSeleccionar"
+                  resizable="false" 
+                  position="center"
+                  closeOnEscape="true"
+                  minimizable="false" 
+                  width="70%" height="80%">
+            <h:form id="frmListadoParticipanteSeleccionar">
+                <p:dataTable id="dtListadoParticipanteSeleccionar" 
+                             var="participante"
+                             scrollable="true" scrollHeight="350"
+                             reflow="true"
+                             selection="#{crearSolicitudBean.listParticipanteTemp}"
+                             rowIndexVar="cantidad"
+                             rowKey="#{participante.id}"
+                             value="#{crearSolicitudBean.listParticipanteArea}">
+                    <p:column id="colNro" headerText="Nro">
+                        <h:outputText value="#{cantidad + 1}" />
+                    </p:column>
+                    <p:column id="colCheck" selectionMode="multiple" style="width:16px;text-align:center"/>
+                    <p:column id="colTipoFormacion" headerText="Nombres"
+                              filterBy="#{participante.nombres}">
+                        <h:outputText value="#{participante.nombres}" />
+                    </p:column>
+                    <p:column id="colFormacion" headerText="Apellidos"
+                              filterBy="#{participante.apellidos}">
+                        <h:outputText value="#{participante.apellidos}" />
+                    </p:column>
+                    <p:column id="colPerfil" headerText="Perfil"
+                              filterBy="#{participante.idRol.nombre}">
+                        <h:outputText value="#{participante.idRol.nombre}" />
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton value="Guardar"
+                                 icon="ui-icon-disk"
+                                 onstart="PF('wgvFrmBuscarSolicitud').show();"
+                                 oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
+                                 action="#{crearSolicitudBean.guardarParticipante}">
+                    <p:confirm header="Mensaje de validacion" 
+                               message="¿Estas seguro agregar solo a estos participante, por favor verifica?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

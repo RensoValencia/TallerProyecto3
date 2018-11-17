@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login del sistema</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        
+        <ui:composition template="../templateIndra.xhtml">
+            
+            <ui:define name="top">
+                <div style="text-align: left;color: white;font-size: 20px; display: inline">
+                    <img src="../img/indra.png" width="150px"  alt=""/>
+                </div>
+            </ui:define>
+            <ui:define name="left">
+                
+            </ui:define>
+            
+            <ui:define name="content">
+                
+                <h:form id="frmLogin">
+                    
+                    <p:focus for="txtUsuario" />
+                    
+                    <p:blockUI id="block" block="frmLogin" widgetVar="wgvFrmLogin">
+                        <p:graphicImage url="../img/load.gif" />
+                    </p:blockUI>
+                    
+                    <p style="font-size: 24px; font-weight: bold; text-align: center;">Bienvenido al login</p>
+                    
+                    <p:growl id="msg" autoUpdate="true" />
+
+                    <p:panelGrid columns="2" layout="grid">
+
+                        <p:column>
+                            <p:panelGrid columns="1">
+                                <p:outputLabel style="font-size: 16px; font-weight: bold;" id="lblUsuario" value="Usuario" />
+                                <p:inputText style="width: 300px;" id="txtUsuario" autocomplete="off"
+                                 value="#{loginBean.usuario.nombre}" />
+
+                    <p:outputLabel style="font-size: 16px; font-weight: bold;" id="lblClave" value="Clave" />
+                    <p:password style="width: 300px;" id="txtClave" autocomplete="off"
+                                 value="#{loginBean.usuario.clave}" />
+
+                    <h:panelGroup />
+                    <p:commandButton id="btnLogin" ajax="false" value="Login"
+                                     icon="ui-icon-person"
+                                     style="width: 300px;"
+                                     process="@this :frmLogin:txtUsuario: :frmLogin:txtClave"
+                                     onstart="PF('wgvFrmLogin').show();"
+                                     oncomplete="PF('wgvFrmLogin').hide();"
+                                     action="#{loginBean.iniciarSession}" />
+                    </p:panelGrid>
+                        </p:column>
+                        
+                        <p:column>
+                            <img src="../img/indra-web.jpg" width="400px" alt=""/>
+                        </p:column>
+                        
+                        
+                    
+                </p:panelGrid>
+                    </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+        
+            
+        
+        
+    </h:body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ParametrosCreateDlg" widgetVar="ParametrosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateParametrosTitle}">
+            <h:form id="ParametrosCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{parametrosController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateParametrosLabel_grupo}" for="grupo" />
+                        <p:inputText id="grupo" value="#{parametrosController.selected.grupo}" title="#{bundle.CreateParametrosTitle_grupo}" required="true" requiredMessage="#{bundle.CreateParametrosRequiredMessage_grupo}"/>
+                        <p:outputLabel value="#{bundle.CreateParametrosLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{parametrosController.selected.codigo}" title="#{bundle.CreateParametrosTitle_codigo}" required="true" requiredMessage="#{bundle.CreateParametrosRequiredMessage_codigo}"/>
+                        <p:outputLabel value="#{bundle.CreateParametrosLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{parametrosController.selected.descripcion}" title="#{bundle.CreateParametrosTitle_descripcion}" required="true" requiredMessage="#{bundle.CreateParametrosRequiredMessage_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{parametrosController.create}" value="#{bundle.Save}" update="display,:ParametrosListForm:datalist,:growl" oncomplete="handleSubmit(args,'ParametrosCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ParametrosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

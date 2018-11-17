@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HardwareEditDlg" widgetVar="HardwareEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditHardwareTitle}">
+            <h:form id="HardwareEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{hardwareController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{hardwareController.selected.id}" title="#{bundle.EditHardwareTitle_id}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_modelo}" for="modelo" />
+                        <p:inputText id="modelo" value="#{hardwareController.selected.modelo}" title="#{bundle.EditHardwareTitle_modelo}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_modelo}"/>
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_tamanio}" for="tamanio" />
+                        <p:inputText id="tamanio" value="#{hardwareController.selected.tamanio}" title="#{bundle.EditHardwareTitle_tamanio}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_tamanio}"/>
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_color}" for="color" />
+                        <p:inputText id="color" value="#{hardwareController.selected.color}" title="#{bundle.EditHardwareTitle_color}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_color}"/>
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_material}" for="material" />
+                        <p:inputText id="material" value="#{hardwareController.selected.material}" title="#{bundle.EditHardwareTitle_material}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_material}"/>
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_peso}" for="peso" />
+                        <p:inputText id="peso" value="#{hardwareController.selected.peso}" title="#{bundle.EditHardwareTitle_peso}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_peso}"/>
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{hardwareController.selected.cantidad}" title="#{bundle.EditHardwareTitle_cantidad}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_cantidad}"/>
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{hardwareController.selected.estado}" title="#{bundle.EditHardwareTitle_estado}" />
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_stock}" for="stock" />
+                        <p:inputText id="stock" value="#{hardwareController.selected.stock}" title="#{bundle.EditHardwareTitle_stock}" />
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_idMarcaHw}" for="idMarcaHw" />
+                        <p:selectOneMenu id="idMarcaHw" value="#{hardwareController.selected.idMarcaHw}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_idMarcaHw}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{marcaHardwareController.itemsAvailableSelectOne}"
+                                           var="idMarcaHwItem"
+                                           itemValue="#{idMarcaHwItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditHardwareLabel_idTipoHw}" for="idTipoHw" />
+                        <p:selectOneMenu id="idTipoHw" value="#{hardwareController.selected.idTipoHw}" required="true" requiredMessage="#{bundle.EditHardwareRequiredMessage_idTipoHw}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoHardwareController.itemsAvailableSelectOne}"
+                                           var="idTipoHwItem"
+                                           itemValue="#{idTipoHwItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{hardwareController.update}" value="#{bundle.Save}" update="display,:HardwareListForm:datalist,:growl" oncomplete="handleSubmit(args, 'HardwareEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="HardwareEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

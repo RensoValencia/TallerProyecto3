@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PerfilCapacitadorEditDlg" widgetVar="PerfilCapacitadorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar perfil de capacitador">
+            <h:form id="PerfilCapacitadorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{perfilCapacitadorController.selected != null}">
+                        
+                        <p:outputLabel value="#{bundle.EditPerfilCapacitadorLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{perfilCapacitadorController.selected.nombre}" title="#{bundle.EditPerfilCapacitadorTitle_nombre}" required="true" requiredMessage="#{bundle.EditPerfilCapacitadorRequiredMessage_nombre}"/>
+                        
+                        <p:outputLabel value="#{bundle.CreatePerfilCapacitadorLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea id="descripcion" rows="6" cols="33" required="true"
+                                         value="#{perfilCapacitadorController.selected.descripcion}"
+                                         title="#{bundle.CreatePerfilCapacitadorTitle_descripcion}"
+                                         requiredMessage="#{bundle.CreatePerfilCapacitadorRequiredMessage_descripcion}"/>
+                        
+                        <p:outputLabel value="Experiencia general" for="experienciaGeneral" />
+                        <p:inputTextarea id="experienciaGeneral" rows="6" cols="33" required="true"
+                                         value="#{perfilCapacitadorController.selected.experienciaGeneral}" />
+                        
+                        
+                        <p:outputLabel value="Experiencia especifico" for="experienciaEspecifico" />
+                        <p:inputTextarea id="experienciaEspecifico" rows="6" cols="33" required="true"
+                                         value="#{perfilCapacitadorController.selected.experienciaEspecifica}" />
+                        
+                        
+                        <p:outputLabel value="Competencias" for="competencia" />
+                        <p:inputText id="competencia" value="#{perfilCapacitadorController.selected.competencia}" />
+                        
+                        <p:outputLabel value="Formación academica" for="formacionAcademica" />
+                        <p:selectOneMenu id="formacionAcademica" value="#{perfilCapacitadorController.selected.idFormacionAcademica}" >
+                            <f:selectItems value="#{parametrosController.listFormacionAcademica}"
+                                           var="idFormacionAcademica"
+                                           itemValue="#{idFormacionAcademica}" itemLabel="#{idFormacionAcademica.descripcion}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Grado academico" for="gradoAcademico" />
+                        <p:selectOneMenu id="gradoAcademico" value="#{perfilCapacitadorController.selected.idGradoAcademico}" >
+                            <f:selectItems value="#{parametrosController.listGradoAcademico}"
+                                           var="idFormacionAcademica"
+                                           itemValue="#{idFormacionAcademica}" itemLabel="#{idFormacionAcademica.descripcion}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Cursos" for="experienciaCurso" />
+                        <p:inputTextarea id="experienciaCurso" rows="6" cols="33" required="true"
+                                         value="#{perfilCapacitadorController.selected.cursos}" />
+                        
+                        <p:outputLabel value="Conocimiento para el puesto" for="conocimiento" />
+                        <p:inputTextarea id="conocimiento" rows="6" cols="33" required="true"
+                                         value="#{perfilCapacitadorController.selected.conocimiento}" />
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{perfilCapacitadorController.update}" value="Editar" update="display,:PerfilCapacitadorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PerfilCapacitadorEditDialog');"/>
+                    <p:commandButton value="Salir" onclick="PerfilCapacitadorEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

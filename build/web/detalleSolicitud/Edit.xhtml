@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleSolicitudEditDlg" widgetVar="DetalleSolicitudEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDetalleSolicitudTitle}">
+            <h:form id="DetalleSolicitudEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleSolicitudController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDetalleSolicitudLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{detalleSolicitudController.selected.id}" title="#{bundle.EditDetalleSolicitudTitle_id}" required="true" requiredMessage="#{bundle.EditDetalleSolicitudRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditDetalleSolicitudLabel_numeroParticipantes}" for="numeroParticipantes" />
+                        <p:inputText id="numeroParticipantes" value="#{detalleSolicitudController.selected.numeroParticipantes}" title="#{bundle.EditDetalleSolicitudTitle_numeroParticipantes}" />
+                        <p:outputLabel value="#{bundle.EditDetalleSolicitudLabel_idFormacion}" for="idFormacion" />
+                        <p:selectOneMenu id="idFormacion" value="#{detalleSolicitudController.selected.idFormacion}" required="true" requiredMessage="#{bundle.EditDetalleSolicitudRequiredMessage_idFormacion}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{formacionController.itemsAvailableSelectOne}"
+                                           var="idFormacionItem"
+                                           itemValue="#{idFormacionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDetalleSolicitudLabel_idSolCap}" for="idSolCap" />
+                        <p:selectOneMenu id="idSolCap" value="#{detalleSolicitudController.selected.idSolCap}" required="true" requiredMessage="#{bundle.EditDetalleSolicitudRequiredMessage_idSolCap}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{solicitudCapacitacionController.itemsAvailableSelectOne}"
+                                           var="idSolCapItem"
+                                           itemValue="#{idSolCapItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleSolicitudController.update}" value="#{bundle.Save}" update="display,:DetalleSolicitudListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DetalleSolicitudEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DetalleSolicitudEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

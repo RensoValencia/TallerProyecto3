@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <p:growl id="growl" life="3000" autoUpdate="true" />
+
+        <div id="top" class="top">
+            <ui:insert name="top">
+            </ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">
+                    <h:form>
+                        <p>
+                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml">
+                                <h:outputText value="Planes de Capacitación" />
+                            </p:commandLink>   
+                        </p>
+                        <p>
+                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/RegistrarPlanCapacitacion.xhtml">
+                                <h:outputText value="Nuevo plan de capacitación" />
+                            </p:commandLink>   
+                        </p>
+                        </c:when>
+                        <c:otherwise>
+                            <p>
+                            <p:commandLink ajax="false" action="/actualizarSolicitudCapacitacion/frmListadoSolicitudCapacitacion.xhtml">
+                                <h:outputText value="Solicitudes de capacitación" />
+                            </p:commandLink>   
+                        </p>
+                            <p>
+                                <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoCapacitacion.xhtml">
+                                    <h:outputText value="Actualizar Solicitud de Capacitación" />
+                                </p:commandLink>   
+                            </p>
+                    
+                        <p>
+                        <p:commandLink action="/area/List.xhtml">
+                        <h:outputText value="Areas" />
+                    </p:commandLink>   
+                    </p>
+                    
+                        <p>
+                        <p:commandLink action="/formacion/List.xhtml">
+                        <h:outputText value="Formación" />
+                    </p:commandLink>   
+                    </p>
+                        
+                    <p>
+                        <p:commandLink action="/materialesEscritorio/List.xhtml">
+                        <h:outputText value="Materiales escritorio" />
+                    </p:commandLink>   
+                    </p>
+                    
+                    <p>
+                        <p:commandLink action="/tipoMaterial/List.xhtml">
+                        <h:outputText value="Tipo material" />
+                    </p:commandLink>   
+                    </p>
+                        
+                    <p>
+                        <p:commandLink action="/marcaMaterial/List.xhtml">
+                        <h:outputText value="Marca material" />
+                    </p:commandLink>   
+                    </p>
+                    
+                    <p>
+                        <p:commandLink action="/perfil/List.xhtml">
+                        <h:outputText value="Perfiles" />
+                    </p:commandLink>   
+                    </p>
+                        
+                    <p>
+                        <p:commandLink action="/usuario/List.xhtml">
+                        <h:outputText value="Usuario" />
+                    </p:commandLink>   
+                    </p>
+                    
+                    <p>
+                        <p:commandLink action="/perfilCapacitador/List.xhtml">
+                        <h:outputText value="Perfil capacitador" />
+                    </p:commandLink>   
+                    </p>    
+                        
+                    <p>
+                        <p:commandLink action="/parametros/List.xhtml">
+                        <h:outputText value="Parametros" />
+                    </p:commandLink>   
+                    </p>
+                    
+                    <p>Ayuda</p>
+                    </h:form>
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content">Content</ui:insert>
+            </div>
+        </div>
+    </h:body>
+
+</html>

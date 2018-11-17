@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoMaterialViewDlg" widgetVar="TipoMaterialViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewTipoMaterialTitle}">
+            <h:form id="TipoMaterialViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoMaterialController.selected != null}">
+                        <h:outputText value="#{bundle.ViewTipoMaterialLabel_id}"/>
+                        <h:outputText value="#{tipoMaterialController.selected.id}" title="#{bundle.ViewTipoMaterialTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewTipoMaterialLabel_nombre}"/>
+                        <h:outputText value="#{tipoMaterialController.selected.nombre}" title="#{bundle.ViewTipoMaterialTitle_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="TipoMaterialViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

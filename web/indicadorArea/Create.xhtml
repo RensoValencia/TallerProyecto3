@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="IndicadorAreaCreateDlg" widgetVar="IndicadorAreaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateIndicadorAreaTitle}">
+            <h:form id="IndicadorAreaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{indicadorAreaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateIndicadorAreaLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{indicadorAreaController.selected.id}" title="#{bundle.CreateIndicadorAreaTitle_id}" required="true" requiredMessage="#{bundle.CreateIndicadorAreaRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateIndicadorAreaLabel_periodo}" for="periodo" />
+                        <p:inputText id="periodo" value="#{indicadorAreaController.selected.periodo}" title="#{bundle.CreateIndicadorAreaTitle_periodo}" required="true" requiredMessage="#{bundle.CreateIndicadorAreaRequiredMessage_periodo}"/>
+                        <p:outputLabel value="#{bundle.CreateIndicadorAreaLabel_solicitudes}" for="solicitudes" />
+                        <p:inputText id="solicitudes" value="#{indicadorAreaController.selected.solicitudes}" title="#{bundle.CreateIndicadorAreaTitle_solicitudes}" required="true" requiredMessage="#{bundle.CreateIndicadorAreaRequiredMessage_solicitudes}"/>
+                        <p:outputLabel value="#{bundle.CreateIndicadorAreaLabel_atendidos}" for="atendidos" />
+                        <p:inputText id="atendidos" value="#{indicadorAreaController.selected.atendidos}" title="#{bundle.CreateIndicadorAreaTitle_atendidos}" required="true" requiredMessage="#{bundle.CreateIndicadorAreaRequiredMessage_atendidos}"/>
+                        <p:outputLabel value="#{bundle.CreateIndicadorAreaLabel_prioridad}" for="prioridad" />
+                        <p:inputText id="prioridad" value="#{indicadorAreaController.selected.prioridad}" title="#{bundle.CreateIndicadorAreaTitle_prioridad}" required="true" requiredMessage="#{bundle.CreateIndicadorAreaRequiredMessage_prioridad}"/>
+                        <p:outputLabel value="#{bundle.CreateIndicadorAreaLabel_idArea}" for="idArea" />
+                        <p:selectOneMenu id="idArea" value="#{indicadorAreaController.selected.idArea}" required="true" requiredMessage="#{bundle.EditIndicadorAreaRequiredMessage_idArea}">
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="idAreaItem"
+                                           itemValue="#{idAreaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{indicadorAreaController.create}" value="#{bundle.Save}" update="display,:IndicadorAreaListForm:datalist,:growl" oncomplete="handleSubmit(args,'IndicadorAreaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="IndicadorAreaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

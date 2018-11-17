@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RolCreateDlg" widgetVar="RolCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRolTitle}">
+            <h:form id="RolCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rolController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateRolLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{rolController.selected.nombre}" title="#{bundle.CreateRolTitle_nombre}" required="true" requiredMessage="#{bundle.CreateRolRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateRolLabel_nivel}" for="nivel" />
+                        <p:inputText id="nivel" value="#{rolController.selected.nivel}" title="#{bundle.CreateRolTitle_nivel}" />
+                        <p:outputLabel value="#{bundle.CreateRolLabel_idUsuarioCreacion}" for="idUsuarioCreacion" />
+                        <p:inputText id="idUsuarioCreacion" value="#{rolController.selected.idUsuarioCreacion}" title="#{bundle.CreateRolTitle_idUsuarioCreacion}" />
+                        <p:outputLabel value="#{bundle.CreateRolLabel_idUsuarioModificacion}" for="idUsuarioModificacion" />
+                        <p:inputText id="idUsuarioModificacion" value="#{rolController.selected.idUsuarioModificacion}" title="#{bundle.CreateRolTitle_idUsuarioModificacion}" />
+                        <p:outputLabel value="#{bundle.CreateRolLabel_fechaCreacion}" for="fechaCreacion" />
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy" value="#{rolController.selected.fechaCreacion}" title="#{bundle.EditRolTitle_fechaCreacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRolLabel_fechaCreacionHora}" for="fechaCreacionHora" />
+                        <p:calendar id="fechaCreacionHora" pattern="MM/dd/yyyy" value="#{rolController.selected.fechaCreacionHora}" title="#{bundle.EditRolTitle_fechaCreacionHora}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRolLabel_fechaModificacion}" for="fechaModificacion" />
+                        <p:calendar id="fechaModificacion" pattern="MM/dd/yyyy" value="#{rolController.selected.fechaModificacion}" title="#{bundle.EditRolTitle_fechaModificacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRolLabel_fechaModificacionHora}" for="fechaModificacionHora" />
+                        <p:calendar id="fechaModificacionHora" pattern="MM/dd/yyyy" value="#{rolController.selected.fechaModificacionHora}" title="#{bundle.EditRolTitle_fechaModificacionHora}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRolLabel_pcCreacion}" for="pcCreacion" />
+                        <p:inputText id="pcCreacion" value="#{rolController.selected.pcCreacion}" title="#{bundle.CreateRolTitle_pcCreacion}" />
+                        <p:outputLabel value="#{bundle.CreateRolLabel_pcModificacion}" for="pcModificacion" />
+                        <p:inputText id="pcModificacion" value="#{rolController.selected.pcModificacion}" title="#{bundle.CreateRolTitle_pcModificacion}" />
+                        <p:outputLabel value="#{bundle.CreateRolLabel_idSede}" for="idSede" />
+                        <p:inputText id="idSede" value="#{rolController.selected.idSede}" title="#{bundle.CreateRolTitle_idSede}" />
+                        <p:outputLabel value="#{bundle.CreateRolLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{rolController.selected.estado}" title="#{bundle.CreateRolTitle_estado}" />
+                        <p:outputLabel value="#{bundle.CreateRolLabel_idArea}" for="idArea" />
+                        <p:selectOneMenu id="idArea" value="#{rolController.selected.idArea}" >
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="idAreaItem"
+                                           itemValue="#{idAreaItem}" itemLabel="#{idAreaItem.nombre}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{rolController.create}" value="#{bundle.Save}" update="display,:RolListForm:datalist,:growl" oncomplete="handleSubmit(args,'RolCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RolCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

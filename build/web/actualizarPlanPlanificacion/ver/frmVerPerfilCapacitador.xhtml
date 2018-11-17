@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <div id="divTercero" style="display: none;">
+            <p:fieldset legend="Perfil del capacitador"
+                        toggleSpeed="1000" toggleable="true">
+                <p:dataTable id="dtPerfilCapacitador" var="perfilCapacitador"
+                             paginator="true" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" reflow="true" 
+                             rowKey="#{perfilCapacitador.id}"
+                             value="#{registrarPlanCapacitacionBean.listPerfiles}">
+                    <f:facet name="header">
+                        Detalle de formación de especialización
+                    </f:facet>
+                    <p:column headerText="Area">
+                        <h:outputLabel value="#{perfilCapacitador.idDetSol.idFormacion.idArea.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Formacion">
+                        <h:outputLabel value="#{perfilCapacitador.idDetSol.idFormacion.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Perfil de capacitador">
+                        <h:outputLabel value="#{perfilCapacitador.perfilCapacitador.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Honorarios">
+                        <h:outputLabel value="#{perfilCapacitador.valor}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="btnRegresar2" value="Regresar" 
+                                         onstart="PF('wgvDtDetSol').show()"
+                                         oncomplete="PF('wgvDtDetSol').hide()"
+                                         onclick="$('#divSegundo').show(); $('#divTercero').hide();" />
+
+                        <p:commandButton id="btnSalir4" icon="ui-icon-circle-close" 
+                                         onstart="PF('wgvDtDetSol').show()"
+                                         oncomplete="PF('wgvDtDetSol').hide(); PF('wgvDlgVerPlanCapacitacion').hide();"
+                                         value="Salir" />
+                    </f:facet>
+                    <f:facet name="right">
+                        <h:outputLabel style="color: red; font-weight: bold; font-size: 15px;" value="Monto perfil capacitador: "/>
+                        <h:outputLabel id="monto_total2" style="font-weight: bold; font-size: 15px;" value="S/. #{registrarPlanCapacitacionBean.montoTotal2}"/>
+                        <p:spacer with="20" />
+                    </f:facet>    
+                </p:toolbar>
+
+            </p:fieldset>
+        </div>
+    </h:body>
+</html>

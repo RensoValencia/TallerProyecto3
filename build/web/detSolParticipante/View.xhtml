@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetSolParticipanteViewDlg" widgetVar="DetSolParticipanteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDetSolParticipanteTitle}">
+            <h:form id="DetSolParticipanteViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detSolParticipanteController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDetSolParticipanteLabel_id}"/>
+                        <h:outputText value="#{detSolParticipanteController.selected.id}" title="#{bundle.ViewDetSolParticipanteTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDetSolParticipanteLabel_idDetSolicitud}"/>
+                        <h:outputText value="#{detSolParticipanteController.selected.idDetSolicitud}" title="#{bundle.ViewDetSolParticipanteTitle_idDetSolicitud}"/>
+                        <h:outputText value="#{bundle.ViewDetSolParticipanteLabel_idEmpleado}"/>
+                        <h:outputText value="#{detSolParticipanteController.selected.idEmpleado}" title="#{bundle.ViewDetSolParticipanteTitle_idEmpleado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DetSolParticipanteViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

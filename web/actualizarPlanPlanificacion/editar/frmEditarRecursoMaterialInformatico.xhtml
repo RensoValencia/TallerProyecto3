@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+         <div id="divSegundo1" style="display: none">
+                    
+            <p:fieldset legend="Recursos materiales y recursos informaticos">
+
+                <p:outputLabel id="msg" value="#{registrarPlanCapacitacionBean.msg}"
+                               style="font-size: 14px; color: red;"/>
+
+                <p:selectOneRadio id="sorTipoRecurso" 
+                                  onchange="PlanCapacitacionJS.seleccionarTipoRecurso(this.value);"
+                                  value="#{registrarPlanCapacitacionBean.tipoRecursoMaterialEscritorio}">
+                    <f:selectItems value="#{registrarPlanCapacitacionBean.listTipoRecurso}" var="tipoRecurso"
+                                   itemValue="#{tipoRecurso}" itemLabel="#{tipoRecurso.descripcion}" />
+                    <p:ajax  
+                            process="@this"
+                            onstart="PF('wgvDtDetSol').show();"
+                            oncomplete="PF('wgvDtDetSol').hide();"
+                            partialSubmit="true"
+                            listener="#{registrarPlanCapacitacionBean.cargarFechasPorTipo}" />
+                </p:selectOneRadio>
+
+                <div id="recursoMaterial">
+                    <p:panelGrid columns="8">
+                        <h:outputLabel value="Localizado por:"/>
+                        <p:selectOneMenu id="somTipoMaterial" value="#{registrarPlanCapacitacionBean.tipoMaterialSeleccionado}">
+                            <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{registrarPlanCapacitacionBean.listTipoMaterial}"
+                                           var="tipoMaterial" itemValue="#{tipoMaterial}" itemLabel="#{tipoMaterial.nombre}" />
+                        </p:selectOneMenu>    
+                        <p:spacer width="15px" />
+                        <h:outputLabel value="Marca:"/>
+                        <p:selectOneMenu id="somMarcaMaterial" value="#{registrarPlanCapacitacionBean.marcaMaterialSeleccionado}">
+                            <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{registrarPlanCapacitacionBean.listMarcaMaterial}"
+                                           var="marca" itemValue="#{marca}" itemLabel="#{marca.nombre}" />
+                        </p:selectOneMenu>    
+                        <p:spacer width="15px" />
+                        <p:inputText id="txtNombreMaterial" placeholder="Nombre del material" 
+                                     value="#{registrarPlanCapacitacionBean.nombreMaterial}" />
+                        <p:commandButton id="btnBuscarMaterial" value="Buscar" 
+                                         process="@this :frmRegistrarPlanCapacitacion:somTipoMaterial :frmRegistrarPlanCapacitacion:somMarcaMaterial :frmRegistrarPlanCapacitacion:txtNombreMaterial"
+                                         partialSubmit="true"
+                                         icon="ui-icon-search"
+                                         onstart="PF('wgvDtDetSol').show();"
+                                         oncomplete="PF('wgvDtDetSol').hide();"
+                                         action="#{registrarPlanCapacitacionBean.buscarRecursoMaterial}" />
+                    </p:panelGrid>
+                    <p:separator />
+                    <p:fieldset legend="Listado de materiales y/o informática">
+                    <p:dataTable id="dtMaterialEscritorio" var="materialEscritorio"
+                                 rowKey="#{materialEscritorio.id}"
+                                 emptyMessage="."
+                                 paginator="true" rows="10" reflow="true"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+                                 rowIndexVar="cantidad"
+                                 value="#{registrarPlanCapacitacionBean.listMaterialEscritorio}">
+                        <p:column id="colNro" headerText="Nro">
+                            <h:outputLabel value="#{cantidad + 1}"/>
+                        </p:column>
+                        <p:column id="colNombre" headerText="Nombre">
+                            <h:outputLabel value="#{materialEscritorio.descripcion}"/>
+                        </p:column>
+                        <p:column id="colTipoMaterial" headerText="Tipo material">
+                            <h:outputLabel value="#{materialEscritorio.idTipoMat.nombre}"/>
+                        </p:column>
+                        <p:column id="colMaraca" headerText="Marca">
+                            <h:outputLabel value="#{materialEscritorio.idMarca.nombre}"/>
+                        </p:column>
+                        <p:column id="colAgregar" headerText="Agregar">
+                            <p:commandButton id="btnAgregar2" 
+                                             onstart="PF('wgvDtDetSol').show();"
+                                             oncomplete="PF('wgvDtDetSol').hide();"
+                                             icon="ui-icon-plus"
+                                             process="@this"
+                                             partialSubmit="true"
+                                             action="#{registrarPlanCapacitacionBean.agregarMaterialSolicitud(materialEscritorio)}"
+                                             />
+                        </p:column>
+                    </p:dataTable>
+                        </p:fieldset>
+                    <br />
+                    <p:separator />
+                    <br /> 
+                </div>
+
+                <div id="recursoInformatico" style="display: none;">
+
+                    <p:panelGrid columns="8">
+                        <h:outputLabel value="Tipo recurso:"/>
+                        <p:selectOneMenu id="somTipoRecurso" value="#{registrarPlanCapacitacionBean.griTipoRecursoSeleccionado}">
+                            <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{registrarPlanCapacitacionBean.listGriTipoRecurso}"
+                                           var="griTipoRecurso" itemValue="#{griTipoRecurso}" itemLabel="#{griTipoRecurso.nombre}" />
+                        </p:selectOneMenu>    
+                        <p:spacer width="15px" />
+                        <h:outputLabel value="Marca:"/>
+                        <p:selectOneMenu id="somTipoMarca" value="#{registrarPlanCapacitacionBean.griMarcaSeleccionado}">
+                            <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{registrarPlanCapacitacionBean.listGriMarca}"
+                                           var="marcaRi" itemValue="#{marcaRi}" itemLabel="#{marcaRi.nombre}" />
+                        </p:selectOneMenu>    
+                        <p:spacer width="15px" />
+                        <p:inputText id="txtNombreRI" placeholder="Nombre del recurso informatico" 
+                                     value="#{registrarPlanCapacitacionBean.nombreRecursoInformatico}" />
+                        <p:commandButton id="btnBuscarRecursoMaterial" value="Buscar" 
+                                         process="@this :frmRegistrarPlanCapacitacion:somTipoRecurso :frmRegistrarPlanCapacitacion:somTipoMarca :frmRegistrarPlanCapacitacion:txtNombreRI"
+                                         partialSubmit="true"
+                                         icon="ui-icon-search"
+                                         onstart="PF('wgvDtDetSol').show();"
+                                         oncomplete="PF('wgvDtDetSol').hide();"
+                                         action="#{registrarPlanCapacitacionBean.buscarRecursoInformatico}" />
+                    </p:panelGrid>
+
+                    <p:separator />
+
+                    <p:fieldset legend="Listado de materiales y/o informática">
+                    <p:dataTable id="dtMaterialInformatico" var="materialEscritorio"
+                                 rowKey="#{materialEscritorio.id}" reflow="true"
+                                 paginator="true" rows="10"
+                                 emptyMessage="."
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 rowIndexVar="cantidad"
+                                 value="#{registrarPlanCapacitacionBean.listGriRecurso}">
+                        <p:column id="colCheck" selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column id="colNro" headerText="Nro">
+                            <h:outputLabel value="#{cantidad + 1}"/>
+                        </p:column>
+                        <p:column id="colDes" headerText="Descripción">
+                            <h:outputLabel value="#{materialEscritorio.descripcion}"/>
+                        </p:column>
+                        <p:column id="colProcesador" headerText="Procesador">
+                            <h:outputLabel value="#{materialEscritorio.procesador}"/>
+                        </p:column>
+                        <p:column id="colMemoriaRam" headerText="Memoria ram">
+                            <h:outputLabel value="#{materialEscritorio.memoriaRam}"/>
+                        </p:column>
+                            <p:column id="colAgregar22" headerText="Agregar">
+                                <p:commandButton id="btnAgregar2" 
+                                             onstart="PF('wgvDtDetSol').show();"
+                                             oncomplete="PF('wgvDtDetSol').hide();"
+                                             icon="ui-icon-plus"
+                                             process="@this"
+                                             partialSubmit="true"
+                                             action="#{registrarPlanCapacitacionBean.agregarMaterialInformatico(materialEscritorio)}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                </div>
+                <p:separator />
+                <p:fieldset legend="Listado de recursos">
+                <p:dataTable id="dtMaterialInformatico2" var="materialEscritorio2"
+                                 style="width: 700px;"
+                                 paginator="true" rows="10" reflow="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 rowKey="#{materialEscritorio2.id}"
+                                 rowIndexVar="cantidad"
+                                 value="#{registrarPlanCapacitacionBean.listRecursoCapacitacion}">
+                        <f:facet name="header">
+                            Listado de materiales y/o informática agregados
+                        </f:facet>
+                        <p:column id="colNro" headerText="Nro">
+                            <h:outputLabel value="#{cantidad + 1}"/>
+                        </p:column>
+                        <p:column id="colNombre" headerText="Descripción">
+                            <h:outputLabel value="#{materialEscritorio2.descripcion}"/>
+                        </p:column>
+                        <p:column id="colMarca" headerText="Marca">
+                            <h:outputLabel value="#{materialEscritorio2.marca}"/>
+                        </p:column>
+                        <p:column id="colTipo" headerText="Tipo">
+                            <h:outputLabel value="#{materialEscritorio2.tipo}"/>
+                        </p:column>
+                        <p:column id="colTipoRecurso" headerText="Tipo recurso">
+                            <h:outputLabel value="#{materialEscritorio2.nombre}"/>
+                        </p:column>
+                        <p:column id="colCantidad" headerText="Cantidad">
+                            <p:inputText id="txtCantidad1" value="#{materialEscritorio2.cantidad}" />
+                        </p:column>
+                        <p:column id="colValor" headerText="Precio Referencial">
+                            <p:inputText id="txtCantidad2" value="#{materialEscritorio2.valor}" />
+                        </p:column>
+                        <p:column id="colEliminar444" headerText="Remover">
+                            <p:commandButton id="btnEliminar244" 
+                                             onstart="PF('wgvDtDetSol').show();"
+                                             oncomplete="PF('wgvDtDetSol').hide();"
+                                             icon="ui-icon-circle-minus"
+                                             process="@this"
+                                             partialSubmit="true"
+                                             action="#{registrarPlanCapacitacionBean.eliminarMaterialInformatico(materialEscritorio2)}" />
+                        </p:column>
+                    </p:dataTable>
+                    </p:fieldset>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="btnRegresar1" value="Regresar" 
+                                         onstart="PF('wgvDtDetSol').show();"
+                                         oncomplete="PF('wgvDtDetSol').hide();"
+                                         onclick="$('#divPrimero1').show(); $('#divSegundo1').hide();" />
+
+                        <p:commandButton id="btnSiguiente2" icon="ui-icon-arrowthickstop-1-s"
+                                         onstart="PF('wgvDtDetSol').show();"
+                                         oncomplete="PF('wgvDtDetSol').hide();"
+                                         value="#{registrarPlanCapacitacionBean.nombreBoton}"
+                                         process="@this :frmRegistrarPlanCapacitacion:dtMaterialInformatico2"
+                                         partialSubmit="true"
+                                         action="#{registrarPlanCapacitacionBean.siguiente2}">
+                        </p:commandButton>
+                    </f:facet>
+                </p:toolbar>
+            </p:fieldset>
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,179 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29-abr-2018, 11:24:49
+    Author     : RENSO
+*/
+
+label[id = 'frmListSolicitudCapacitacion:lblFechas'] {
+    display: none;
+}
+
+input[id = 'frmListSolicitudCapacitacion:clrFechaDesde_input'] {
+    display: none;
+}
+
+input[id = 'frmListSolicitudCapacitacion:clrFechaHasta_input'] {
+    display: none;
+}
+
+label[id = 'frmListadoPlanCapacitacion:lblFechas'] {
+    display: none;
+}
+
+input[id = 'frmListadoPlanCapacitacion:clrFechaDesde_input'] {
+    display: none;
+}
+
+input[id = 'frmListadoPlanCapacitacion:clrFechaHasta_input'] {
+    display: none;
+}
+
+div[id = 'frmRegistrarPlanCapacitacion:dtSolicitudes'] {
+    width: 100% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtSolicitudes:colNroSol'] {
+    width: 20% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtSolicitudes:colCheck'] {
+    width: 20% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtSolicitudes:colArea'] {
+    width: 60% !important;
+}
+
+div[id = 'frmRegistrarPlanCapacitacion:dtDetSol2'] {
+    width: 100% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtDetSol2:colCheck'] {
+    width: 5% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtDetSol2:colArea'] {
+    width: 15% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtDetSol2:colFormacion'] {
+    width: 15% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtDetSol2:colTipCap'] {
+    width: 15% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtDetSol2:colNivCap'] {
+    width: 15% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtDetSol2:colNroPar'] {
+    width: 10% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtDetSol2:colFecIni'] {
+    width: 10% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtDetSol2:coFecFin'] {
+    width: 10% !important;
+}
+
+table tr td[id = 'col1'] {
+    width: 35% !important;
+}
+
+table tr td[id = 'col2'] {
+    width: 65% !important;
+}
+
+.calendarioFecIniFin {
+    width: 15px !important;
+}
+
+div[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio'] {
+    width: 70% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio:colCheck'] {
+    width: 5% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio:colNro'] {
+    width: 5% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio:colNombre'] {
+    width: 20% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio:colTipoMaterial'] {
+    width: 15% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio:colMaraca'] {
+    width: 15% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio:colAgregar'] {
+    width: 10% !important;
+}
+
+div[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2'] {
+    width: 85% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2:colCheck'] {
+    width: 6% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2:colCodigo'] {
+    width: 8% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2:colNombre'] {
+    width: 20% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2:colTipoMat'] {
+    width: 15% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2:colMarca'] {
+    width: 15% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2:colCantidad'] {
+    width: 5% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2:colValor'] {
+    width: 10% !important;
+}
+
+th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2:colEliminar'] {
+    width: 6% !important;
+}
+
+.sinBorde{
+    border: 0px none !important; 
+    margin: 0px; 
+    padding: 0px;
+}
+
+.anchoLabel {
+    width: 80px !important;
+}
+
+.logo {
+    text-align: left !important;color: white !important;font-size: 26px !important; display: inline !important;
+}
+
+.cerrarSession {
+    display: inline !important; float: right !important;
+}

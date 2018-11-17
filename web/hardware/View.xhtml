@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HardwareViewDlg" widgetVar="HardwareViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewHardwareTitle}">
+            <h:form id="HardwareViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{hardwareController.selected != null}">
+                        <h:outputText value="#{bundle.ViewHardwareLabel_id}"/>
+                        <h:outputText value="#{hardwareController.selected.id}" title="#{bundle.ViewHardwareTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_modelo}"/>
+                        <h:outputText value="#{hardwareController.selected.modelo}" title="#{bundle.ViewHardwareTitle_modelo}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_tamanio}"/>
+                        <h:outputText value="#{hardwareController.selected.tamanio}" title="#{bundle.ViewHardwareTitle_tamanio}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_color}"/>
+                        <h:outputText value="#{hardwareController.selected.color}" title="#{bundle.ViewHardwareTitle_color}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_material}"/>
+                        <h:outputText value="#{hardwareController.selected.material}" title="#{bundle.ViewHardwareTitle_material}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_peso}"/>
+                        <h:outputText value="#{hardwareController.selected.peso}" title="#{bundle.ViewHardwareTitle_peso}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_cantidad}"/>
+                        <h:outputText value="#{hardwareController.selected.cantidad}" title="#{bundle.ViewHardwareTitle_cantidad}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_estado}"/>
+                        <h:outputText value="#{hardwareController.selected.estado}" title="#{bundle.ViewHardwareTitle_estado}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_stock}"/>
+                        <h:outputText value="#{hardwareController.selected.stock}" title="#{bundle.ViewHardwareTitle_stock}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_idMarcaHw}"/>
+                        <h:outputText value="#{hardwareController.selected.idMarcaHw}" title="#{bundle.ViewHardwareTitle_idMarcaHw}"/>
+                        <h:outputText value="#{bundle.ViewHardwareLabel_idTipoHw}"/>
+                        <h:outputText value="#{hardwareController.selected.idTipoHw}" title="#{bundle.ViewHardwareTitle_idTipoHw}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="HardwareViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <h:form id="frmListadoParticipante">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton id="btnAgregarPar" value="Agregar"
+                                     icon="ui-icon-circle-plus"
+                                     disabled="#{crearSolicitudBean.desactivarInductiva}"
+                                     onstart="PF('wgvFrmBuscarSolicitud').show();"
+                                     oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
+                                     process="@this :frmListadoParticipante"
+                                     partialSubmit="true"
+                                     action="#{crearSolicitudBean.agregarListadoParticipantes2}" />
+                </f:facet>
+            </p:toolbar>
+            <p:dataTable id="dtListadoParticipante" 
+                         var="participante"
+                         reflow="true"
+                         scrollable="true" scrollHeight="350"
+                         rowIndexVar="cantidad"
+                         rowKey="#{participante.id}"
+                         emptyMessage="Listado de participantes inscritos"
+                         value="#{crearSolicitudBean.listParticipante}">
+                <p:column id="colNro" headerText="Nro">
+                    <h:outputText value="#{cantidad + 1}" />
+                </p:column>
+                <p:column id="colNombres" headerText="Nombres">
+                    <h:outputText value="#{participante.idEmpleado.nombres}" />
+                </p:column>
+                <p:column id="colApellidos" headerText="Apellidos">
+                    <h:outputText value="#{participante.idEmpleado.apellidos}" />
+                </p:column>
+                <p:column id="colPerfil" headerText="Perfil">
+                    <h:outputText value="#{participante.idEmpleado.idRol.nombre}" />
+                </p:column>
+                <p:column id="colRemover" headerText="Eliminar">
+                    <p:commandButton id="btnRemoverParticipante"
+                                 icon="ui-icon-circle-minus" 
+                                 onstart="PF('wgvFrmBuscarSolicitud').show();"
+                                 oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
+                                 process="@this :frmListadoParticipante:dtListadoParticipante"
+                                 partialSubmit="true"
+                                 action="#{crearSolicitudBean.eliminarParticipante(participante)}">
+                        <p:confirm header="Mensaje de validacion" 
+                                   message="¿Estas seguro de eliminar al participante?" icon="ui-icon-alert" />
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>

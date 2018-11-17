@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetSolParticipanteCreateDlg" widgetVar="DetSolParticipanteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDetSolParticipanteTitle}">
+            <h:form id="DetSolParticipanteCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detSolParticipanteController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDetSolParticipanteLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{detSolParticipanteController.selected.id}" title="#{bundle.CreateDetSolParticipanteTitle_id}" required="true" requiredMessage="#{bundle.CreateDetSolParticipanteRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateDetSolParticipanteLabel_idDetSolicitud}" for="idDetSolicitud" />
+                        <p:selectOneMenu id="idDetSolicitud" value="#{detSolParticipanteController.selected.idDetSolicitud}" required="true" requiredMessage="#{bundle.EditDetSolParticipanteRequiredMessage_idDetSolicitud}">
+                            <f:selectItems value="#{detalleSolicitudController.itemsAvailableSelectOne}"
+                                           var="idDetSolicitudItem"
+                                           itemValue="#{idDetSolicitudItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDetSolParticipanteLabel_idEmpleado}" for="idEmpleado" />
+                        <p:selectOneMenu id="idEmpleado" value="#{detSolParticipanteController.selected.idEmpleado}" >
+                            <f:selectItems value="#{empleadoController.itemsAvailableSelectOne}"
+                                           var="idEmpleadoItem"
+                                           itemValue="#{idEmpleadoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detSolParticipanteController.create}" value="#{bundle.Save}" update="display,:DetSolParticipanteListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetSolParticipanteCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DetSolParticipanteCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

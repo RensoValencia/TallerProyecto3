@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaterialesEscritorioEditDlg" widgetVar="MaterialesEscritorioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMaterialesEscritorioTitle}">
+            <h:form id="MaterialesEscritorioEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{materialesEscritorioController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMaterialesEscritorioLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{materialesEscritorioController.selected.id}" title="#{bundle.EditMaterialesEscritorioTitle_id}" required="true" requiredMessage="#{bundle.EditMaterialesEscritorioRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditMaterialesEscritorioLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{materialesEscritorioController.selected.codigo}" title="#{bundle.EditMaterialesEscritorioTitle_codigo}" required="true" requiredMessage="#{bundle.EditMaterialesEscritorioRequiredMessage_codigo}"/>
+                        <p:outputLabel value="#{bundle.EditMaterialesEscritorioLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{materialesEscritorioController.selected.descripcion}" title="#{bundle.EditMaterialesEscritorioTitle_descripcion}" required="true" requiredMessage="#{bundle.EditMaterialesEscritorioRequiredMessage_descripcion}"/>
+                        <p:outputLabel value="#{bundle.EditMaterialesEscritorioLabel_idMarca}" for="idMarca" />
+                        <p:selectOneMenu id="idMarca" value="#{materialesEscritorioController.selected.idMarca}" required="true" requiredMessage="#{bundle.EditMaterialesEscritorioRequiredMessage_idMarca}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{marcaMaterialController.itemsAvailableSelectOne}"
+                                           var="idMarcaItem"
+                                           itemValue="#{idMarcaItem}" itemLabel="#{idMarcaItem.nombre}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMaterialesEscritorioLabel_idTipoMat}" for="idTipoMat" />
+                        <p:selectOneMenu id="idTipoMat" value="#{materialesEscritorioController.selected.idTipoMat}" required="true" requiredMessage="#{bundle.EditMaterialesEscritorioRequiredMessage_idTipoMat}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoMaterialController.itemsAvailableSelectOne}"
+                                           var="idTipoMatItem"
+                                           itemValue="#{idTipoMatItem}" itemLabel="#{idTipoMatItem.nombre}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{materialesEscritorioController.update}" value="#{bundle.Save}" update="display,:MaterialesEscritorioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MaterialesEscritorioEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MaterialesEscritorioEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <p:dialog id="dlgAprobarPlan" 
+                      modal="true" 
+                      header="Aprobar plan planificación" 
+                      widgetVar="wgvDlgAprobarPlan"
+                      resizable="false" 
+                      position="center"
+                      closeOnEscape="true"
+                      minimizable="false" 
+                      width="30%" height="70%">
+                    <h:form id="frmActualizarObservacion">
+                    <p:panelGrid columns="7" layout="grid">
+                    
+                        <h:outputLabel id="lblTipo" value="Tipo:" style="font-weight: bold;" />
+
+                            <p:selectOneMenu id="cmbEstadoAprobar" 
+                                         value="#{registrarPlanCapacitacionBean.estadoAprobadoSeleccionado}">
+                                <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                <f:selectItems value="#{registrarPlanCapacitacionBean.lstEstadoAproObs}" var="estadoCapa"
+                                               itemValue="#{estadoCapa}" itemLabel="#{estadoCapa.descripcion}" />
+                            </p:selectOneMenu>
+                        
+                            <p:inputTextarea id="txtObservacion" value="#{registrarPlanCapacitacionBean.observacion}" 
+                                             rows="5" cols="30" />
+                        
+                        <p:commandButton id="cbGuardar"
+                                         process="@this:frmActualizarObservacion"
+                                         partialSubmit="true"
+                                         onstart="PF('wgvDtPlanesCapacitacion').show()"
+                                         oncomplete="PF('wgvDtPlanesCapacitacion').hide()"
+                                         action="#{registrarPlanCapacitacionBean.actualizarPlan}"
+                                         value="Guardar" icon="ui-icon-search" />
+                        
+                    </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+    </h:body>
+</html>

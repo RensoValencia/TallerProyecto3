@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <div id="divTercero" style="display: none;">
+            <p:fieldset legend="Perfil del capacitador"
+                        toggleSpeed="1000" toggleable="true">
+                <p:dataTable id="dtPerfilCapacitador" var="perfilCapacitador"
+                             paginator="true" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" reflow="true" 
+                             rowKey="#{perfilCapacitador.id}"
+                             value="#{registrarPlanCapacitacionBean.listPerfiles}">
+                    <f:facet name="header">
+                        Detalle de formación de especialización
+                    </f:facet>
+                    <p:column headerText="Area">
+                        <h:outputLabel value="#{perfilCapacitador.idDetSol.idFormacion.idArea.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Formacion">
+                        <h:outputLabel value="#{perfilCapacitador.idDetSol.idFormacion.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Perfil de capacitador">
+                        <p:selectOneMenu id="console" value="#{perfilCapacitador.perfilCapacitador}" style="width:125px">
+                            <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItems value="#{registrarPlanCapacitacionBean.listPerfilCapacitador}" var="perfCap"
+                                           itemLabel="#{perfCap.nombre}" itemValue="#{perfCap}" />
+                        </p:selectOneMenu>
+                    </p:column>
+                    <p:column headerText="Honorarios">
+                        <p:inputText id="txtHonorarios" value="#{perfilCapacitador.valor}" />
+                    </p:column>
+                </p:dataTable>
+
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="btnRegresar2" value="Regresar" 
+                                         onclick="$('#divSegundo').show(); $('#divTercero').hide();" />
+
+                        <p:commandButton id="btnSiguiente3" icon="ui-icon-arrowthickstop-1-s" value="Guardar"
+                                         process="@this :frmRegistrarPlanCapacitacion:dtPerfilCapacitador"
+                                         partialSubmit="true"
+                                         action="#{registrarPlanCapacitacionBean.siguiente3}">
+                        </p:commandButton>
+                    </f:facet>
+                </p:toolbar>
+
+            </p:fieldset>
+        </div>
+    </h:body>
+</html>

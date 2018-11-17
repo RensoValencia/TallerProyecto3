@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GriTipoRecursoCreateDlg" widgetVar="GriTipoRecursoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateGriTipoRecursoTitle}">
+            <h:form id="GriTipoRecursoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{griTipoRecursoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateGriTipoRecursoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{griTipoRecursoController.selected.id}" title="#{bundle.CreateGriTipoRecursoTitle_id}" required="true" requiredMessage="#{bundle.CreateGriTipoRecursoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateGriTipoRecursoLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{griTipoRecursoController.selected.codigo}" title="#{bundle.CreateGriTipoRecursoTitle_codigo}" required="true" requiredMessage="#{bundle.CreateGriTipoRecursoRequiredMessage_codigo}"/>
+                        <p:outputLabel value="#{bundle.CreateGriTipoRecursoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{griTipoRecursoController.selected.nombre}" title="#{bundle.CreateGriTipoRecursoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateGriTipoRecursoRequiredMessage_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{griTipoRecursoController.create}" value="#{bundle.Save}" update="display,:GriTipoRecursoListForm:datalist,:growl" oncomplete="handleSubmit(args,'GriTipoRecursoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="GriTipoRecursoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

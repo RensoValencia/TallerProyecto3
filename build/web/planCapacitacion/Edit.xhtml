@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanCapacitacionEditDlg" widgetVar="PlanCapacitacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPlanCapacitacionTitle}">
+            <h:form id="PlanCapacitacionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planCapacitacionController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPlanCapacitacionLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{planCapacitacionController.selected.id}" title="#{bundle.EditPlanCapacitacionTitle_id}" required="true" requiredMessage="#{bundle.EditPlanCapacitacionRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditPlanCapacitacionLabel_periodo}" for="periodo" />
+                        <p:inputText id="periodo" value="#{planCapacitacionController.selected.periodo}" title="#{bundle.EditPlanCapacitacionTitle_periodo}" required="true" requiredMessage="#{bundle.EditPlanCapacitacionRequiredMessage_periodo}"/>
+                        <p:outputLabel value="#{bundle.EditPlanCapacitacionLabel_fechaElaboracion}" for="fechaElaboracion" />
+                        <p:calendar id="fechaElaboracion" pattern="MM/dd/yyyy" value="#{planCapacitacionController.selected.fechaElaboracion}" title="#{bundle.EditPlanCapacitacionTitle_fechaElaboracion}" required="true" requiredMessage="#{bundle.EditPlanCapacitacionRequiredMessage_fechaElaboracion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPlanCapacitacionLabel_fechaEjecucion}" for="fechaEjecucion" />
+                        <p:calendar id="fechaEjecucion" pattern="MM/dd/yyyy" value="#{planCapacitacionController.selected.fechaEjecucion}" title="#{bundle.EditPlanCapacitacionTitle_fechaEjecucion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPlanCapacitacionLabel_fechaAprobacion}" for="fechaAprobacion" />
+                        <p:calendar id="fechaAprobacion" pattern="MM/dd/yyyy" value="#{planCapacitacionController.selected.fechaAprobacion}" title="#{bundle.EditPlanCapacitacionTitle_fechaAprobacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditPlanCapacitacionLabel_idTipoPlan}" for="idTipoPlan" />
+                        <p:selectOneMenu id="idTipoPlan" value="#{planCapacitacionController.selected.idTipoPlan}" required="true" requiredMessage="#{bundle.EditPlanCapacitacionRequiredMessage_idTipoPlan}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="idTipoPlanItem"
+                                           itemValue="#{idTipoPlanItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditPlanCapacitacionLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{planCapacitacionController.selected.estado}" required="true" requiredMessage="#{bundle.EditPlanCapacitacionRequiredMessage_estado}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="estadoItem"
+                                           itemValue="#{estadoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planCapacitacionController.update}" value="#{bundle.Save}" update="display,:PlanCapacitacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PlanCapacitacionEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PlanCapacitacionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

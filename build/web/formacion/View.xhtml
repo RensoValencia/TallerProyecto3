@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FormacionViewDlg" widgetVar="FormacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Detalle de la formación">
+            <h:form id="FormacionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{formacionController.selected != null}">
+                        
+                        <h:outputText value="#{bundle.ViewFormacionLabel_nombre}"/>
+                        <h:outputText value="#{formacionController.selected.nombre}" title="#{bundle.ViewFormacionTitle_nombre}"/>
+                        
+                        <h:outputText value="Tipo de formación:"/>
+                        <h:outputText value="#{formacionController.selected.idTipoFormacion}" title="#{bundle.ViewFormacionTitle_idTipoFormacion}"/>
+                        
+                        <h:outputText value="#{bundle.ViewFormacionLabel_proposito}"/>
+                        <h:outputText value="#{formacionController.selected.proposito}" title="#{bundle.ViewFormacionTitle_proposito}"/>
+                        
+                        <h:outputText value="Tipo de sala:"/>
+                        <h:outputText value="#{formacionController.selected.tipoSala}" title="#{bundle.ViewFormacionTitle_tipoSala}"/>
+                        
+                        <h:outputText value="Máximo de participantes"/>
+                        <h:outputText value="#{formacionController.selected.maximoParticipantes}" title="#{bundle.ViewFormacionTitle_maximoParticipantes}"/>
+                        
+                        <h:outputText value="#{bundle.ViewFormacionLabel_temario}"/>
+                        <h:outputText value="#{formacionController.selected.temario}" title="#{bundle.ViewFormacionTitle_temario}"/>
+                        
+                        <h:outputText value="Número de horas"/>
+                        <h:outputText value="#{formacionController.selected.numeroHoras}" title="#{bundle.ViewFormacionTitle_numeroHoras}"/>
+                        
+                        
+                        <h:outputText value="Area"/>
+                        <h:outputText value="#{formacionController.selected.idArea.nombre}" title="#{bundle.ViewFormacionTitle_idArea}"/>
+                        
+                        <h:outputText value="Tipo de capacitación"/>
+                        <h:outputText value="#{formacionController.selected.idTipoModalidad.descripcion}" title="#{bundle.ViewFormacionTitle_idTipoModalidad}"/>
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="FormacionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

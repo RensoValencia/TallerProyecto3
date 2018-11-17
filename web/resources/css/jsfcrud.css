@@ -1,0 +1,60 @@
+.ui-widget {
+    font-size: 12px !important;
+}
+.ui-layout-north {
+    z-index: 20 !important;
+    overflow: visible !important;;
+}
+.ui-layout-north .ui-layout-unit-content {
+    overflow: visible !important;
+}
+.ui-widget-header {
+    text-align: center;
+    text-transform: uppercase;
+}
+.ui-button {
+    margin-top: 10px !important;
+}
+
+.lblGeneral {
+    color: red !important;
+    font-weight: bolder !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+}
+
+.txtGeneral {
+    font-weight: bolder !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+}
+
+.btnBuscar {
+    font-size: 15px !important; 
+    width: 160px; height: 28px !important;
+    color: blue !important;
+}
+
+@media only screen and (max-width: 650px) {
+    #top {
+        height: 100px !important;
+        font-size: 15px !important;
+    }
+    
+    #left {
+        display: none !important;
+        width: 0px !important;
+    }
+    
+    .left_content {
+        margin-left: 0px !important;
+    }
+}
+
+input[id^='frmRegistrarPlanCapacitacion:dtMaterialInformatico2'] {
+    width: 65px !important;
+}
+
+input[id^='frmRegistrarPlanCapacitacion:dtDetSol2'] {
+    width: 85px !important;
+}

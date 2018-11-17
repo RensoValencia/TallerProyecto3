@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Registrar solicitud de capacitacion</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <p:dialog id="dlgCrearSolicitudCapacitacion" 
+                          modal="true" 
+                          header="Crear solicitud de capacitacion" 
+                          widgetVar="wgvDlgCrearSolicitudCapacitacion"
+                          resizable="false" 
+                          position="top"
+                          closeOnEscape="true"
+                          minimizable="false" 
+                          width="95%" height="85%">
+        <h:form id="frmCrearSolicitudCapacitacion">
+        
+            <p:blockUI id="block" block="frmCrearSolicitudCapacitacion" widgetVar="wgvFrmCrearSolicitudCapacitacion">
+                <p:graphicImage url="../img/load.gif" />
+            </p:blockUI>
+            
+            <p:fieldset legend="Registrar Solicitud de Capacitación">
+                <p:panelGrid columns="10" layout="grid">
+                            <p:column>
+                                <p:outputLabel styleClass="anchoLabel" value="Tipo de capacitación:"/>
+                                <p:spacer width="10" />
+                                <!-- (especializacion, correctivo, inductivo) -->
+                                <p:selectOneMenu id="somTipoModalidadCrud"
+                                                 disabled="#{crearSolicitudBean.desactivarComboTipCap}"
+                                                 value="#{crearSolicitudBean.tipoModalidadSeleccionada}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="" />
+                                    <f:selectItems value="#{parametrosController.listTipoModalidad}"
+                                                   var="tipoModalidad" itemValue="#{tipoModalidad}" 
+                                                   itemLabel="#{tipoModalidad.descripcion}" />
+                                    <p:ajax update=":frmCrearSolicitudCapacitacion:somTipoFormacionCrud: :frmCrearSolicitudCapacitacion:somFormacionCrud" 
+                                            process="@this :frmCrearSolicitudCapacitacion:somTipoModalidadCrud:"
+                                            partialSubmit="true"
+                                            onstart="PF('wgvFrmCrearSolicitudCapacitacion').show();"
+                                            oncomplete="PF('wgvFrmCrearSolicitudCapacitacion').hide();"
+                                            listener="#{crearSolicitudBean.buscarTipoFormacionYCurso()}" />
+                                            />
+                                </p:selectOneMenu>
+                            </p:column>
+                    
+                            <p:column>
+                                <h:outputLabel styleClass="anchoLabel" value="Tipo formación:"/>
+                                <p:spacer width="10" />
+                                <p:selectOneMenu id="somTipoFormacionCrud" value="#{crearSolicitudBean.tipoFormacionSeleccionada}"
+                                                 filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{crearSolicitudBean.listTipoFormacion}"
+                                                   var="tipoFormacion" itemValue="#{tipoFormacion}" itemLabel="#{tipoFormacion.descripcion}" />
+                                    <p:ajax update=":frmCrearSolicitudCapacitacion:somFormacionCrud" 
+                                            process="@this :frmCrearSolicitudCapacitacion:somTipoModalidadCrud: :frmCrearSolicitudCapacitacion:somTipoFormacionCrud:"
+                                            partialSubmit="true"
+                                            onstart="PF('wgvFrmCrearSolicitudCapacitacion').show();"
+                                            oncomplete="PF('wgvFrmCrearSolicitudCapacitacion').hide();"
+                                            listener="#{crearSolicitudBean.buscarFormacion()}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                    
+                            <p:column>
+                                <h:outputLabel styleClass="anchoLabel" value="Formación:"/>
+                                <p:spacer width="10" />
+                                <p:selectOneMenu id="somFormacionCrud" value="#{crearSolicitudBean.formacionSeleccionada}"
+                                                 filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{crearSolicitudBean.listFormacion}"
+                                                   var="curso" itemValue="#{curso}" itemLabel="#{curso.nombre}" />
+                                </p:selectOneMenu>
+                            </p:column>
+
+                            <p:commandButton id="btnAgregar" action="#{crearSolicitudBean.agregarDetalleSolicitud}"
+                                             value="Agregar"
+                                             icon="ui-icon-circle-plus"
+                                             onstart="PF('wgvFrmCrearSolicitudCapacitacion').show();"
+                                             oncomplete="PF('wgvFrmCrearSolicitudCapacitacion').hide();"
+                                             process="@this :frmCrearSolicitudCapacitacion" partialSubmit="true" />
+
+                            <h:panelGroup />
+                        </p:panelGrid>
+                    <hr />
+                    <p:dataTable id="dtListDetalleSolicitud"
+                                 reflow="true"
+                                 var="detalleSolicitud"
+                                 rowIndexVar="cantidad"
+                                 emptyMessage="Listado de cursos por solicitud"
+                                 value="#{crearSolicitudBean.listDetalleSolicitud}">
+                        <p:column id="colNro" headerText="Nro">
+                            <h:outputText value="#{cantidad + 1}" />
+                        </p:column>
+                        <p:column id="colTipoFormacion" headerText="Tipo formación">
+                            <h:outputText value="#{detalleSolicitud.idFormacion.idTipoFormacion.descripcion}" />
+                        </p:column>
+                        <p:column id="colFormacion" headerText="Formación">
+                            <h:outputText value="#{detalleSolicitud.idFormacion.nombre}" />
+                        </p:column>
+                        <p:column id="colMaxPar" headerText="Maximo participantes">
+                            <h:outputText value="#{detalleSolicitud.idFormacion.maximoParticipantes}" />
+                        </p:column>
+                        <p:column id="colInscritos" headerText="Participantes inscritos">
+                            <h:outputText value="#{detalleSolicitud.numeroParticipantes}" />
+                        </p:column>
+                        <p:column id="colAgregar" headerText="Ver participantes">
+                            <p:inputText id="txtCantidadDet"
+                                         value="#{detalleSolicitud.numeroParticipantes}"
+                                         rendered="#{crearSolicitudBean.tipoModalidadInductivo.id eq detalleSolicitud.idFormacion.idTipoModalidad.id}" />
+                            <p:commandButton icon="ui-icon-circle-plus"
+                                             process="@this"
+                                             rendered="#{crearSolicitudBean.tipoModalidadInductivo.id ne detalleSolicitud.idFormacion.idTipoModalidad.id}"
+                                             partialSubmit="true"
+                                             onstart="PF('wgvFrmCrearSolicitudCapacitacion').show();"
+                                             oncomplete="PF('wgvFrmCrearSolicitudCapacitacion').hide();"
+                                             action="#{crearSolicitudBean.agregarListadoParticipantes(detalleSolicitud)}" />
+                        </p:column>
+                        <p:column id="colRemover" headerText="Remover">
+                            <p:commandButton id="btnRemover"
+                                             icon="ui-icon-circle-minus" 
+                                             onstart="PF('wgvFrmBuscarSolicitud').show();"
+                                             oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
+                                             process="@this :frmCrearSolicitudCapacitacion:dtListDetalleSolicitud"
+                                             partialSubmit="true"
+                                             action="#{crearSolicitudBean.eliminarCurso(detalleSolicitud)}">
+                                <p:confirm header="Mensaje de validacion" 
+                                           message="¿Estas seguro de eliminar el detalle de solicitud?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                        </p:column>
+                    </p:dataTable>  
+            
+                    <p:commandButton value="Guardar"
+                                     icon="ui-icon-disk"
+                                     action="#{crearSolicitudBean.guardarSolicitud}"
+                                     onstart="PF('wgvFrmCrearSolicitudCapacitacion').show();"
+                                     oncomplete="PF('wgvFrmCrearSolicitudCapacitacion').hide();"/>
+            
+                    <p:commandButton value="Enviar"
+                                     icon="ui-icon-disk"
+                                     action="#{crearSolicitudBean.actualizarSolicitud}"
+                                     process="@this :frmCrearSolicitudCapacitacion"
+                                     partialSubmit="true"
+                                     onstart="PF('wgvDlgCrearSolicitudCapacitacion').show();">
+                        <p:confirm header="Mensaje de validacion" 
+                                           message="¿Estas seguro de enviar la solicitud?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    
+                    <p:commandButton id="btnSalirAgregar" value="Salir" 
+                                     icon="ui-icon-circle-close"
+                                     oncomplete="PF('wgvDlgCrearSolicitudCapacitacion').hide()"  />
+                    
+                    </p:fieldset>
+            </h:form>
+            <hr />
+            <ui:include src="/actualizarSolicitudCapacitacion/frmListadoParticipante.xhtml" />
+            </p:dialog>
+    </h:body>
+</html>

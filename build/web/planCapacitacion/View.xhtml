@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanCapacitacionViewDlg" widgetVar="PlanCapacitacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPlanCapacitacionTitle}">
+            <h:form id="PlanCapacitacionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planCapacitacionController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPlanCapacitacionLabel_id}"/>
+                        <h:outputText value="#{planCapacitacionController.selected.id}" title="#{bundle.ViewPlanCapacitacionTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewPlanCapacitacionLabel_periodo}"/>
+                        <h:outputText value="#{planCapacitacionController.selected.periodo}" title="#{bundle.ViewPlanCapacitacionTitle_periodo}"/>
+                        <h:outputText value="#{bundle.ViewPlanCapacitacionLabel_fechaElaboracion}"/>
+                        <h:outputText value="#{planCapacitacionController.selected.fechaElaboracion}" title="#{bundle.ViewPlanCapacitacionTitle_fechaElaboracion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPlanCapacitacionLabel_fechaEjecucion}"/>
+                        <h:outputText value="#{planCapacitacionController.selected.fechaEjecucion}" title="#{bundle.ViewPlanCapacitacionTitle_fechaEjecucion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPlanCapacitacionLabel_fechaAprobacion}"/>
+                        <h:outputText value="#{planCapacitacionController.selected.fechaAprobacion}" title="#{bundle.ViewPlanCapacitacionTitle_fechaAprobacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewPlanCapacitacionLabel_idTipoPlan}"/>
+                        <h:outputText value="#{planCapacitacionController.selected.idTipoPlan}" title="#{bundle.ViewPlanCapacitacionTitle_idTipoPlan}"/>
+                        <h:outputText value="#{bundle.ViewPlanCapacitacionLabel_estado}"/>
+                        <h:outputText value="#{planCapacitacionController.selected.estado}" title="#{bundle.ViewPlanCapacitacionTitle_estado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PlanCapacitacionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

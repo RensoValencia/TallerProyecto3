@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <p:dialog id="dlgIndicador" 
+                      modal="true" 
+                      header="Seleccionar participantes para el detalle de capacitacion" 
+                      widgetVar="wgvDlgIndicador"
+                      resizable="false" 
+                      position="center"
+                      closeOnEscape="true"
+                      minimizable="false" 
+                      width="65%" height="70%">
+                <h:form id="frmListadoIndicador">
+                    <p:dataTable id="dtListadoIndicador" 
+                                 var="participante"
+                                 reflow="true"
+                                 paginatorPosition="bottom"
+                                 rowIndexVar="cantidad"
+                                 rowKey="#{participante.id}"
+                                 value="#{registrarPlanCapacitacionBean.listIndicadorArea}">
+                        <p:column id="colNro" headerText="Nro">
+                            <h:outputText value="#{cantidad + 1}" />
+                        </p:column>
+                        <p:column id="colTipoFormacion" headerText="Perido">
+                            <h:outputText value="#{participante.periodo}" />
+                        </p:column>
+                        <p:column id="colFormacion" headerText="Area">
+                            <h:outputText value="#{participante.idArea.nombre}" />
+                        </p:column>
+                        <p:column id="colMaxPar" headerText="Solicitudes">
+                            <h:outputText value="#{participante.solicitudes}" />
+                        </p:column>
+                        <p:column id="colAtendidos" headerText="Atenciones">
+                            <h:outputText value="#{participante.atendidos}" />
+                        </p:column>
+
+                        <p:column id="colPrioridad" headerText="Prioridad">
+                            <h:outputText value="#{participante.prioridad}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+        </p:dialog>
+    </h:body>
+</html>

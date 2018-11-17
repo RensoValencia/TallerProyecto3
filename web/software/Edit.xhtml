@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SoftwareEditDlg" widgetVar="SoftwareEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSoftwareTitle}">
+            <h:form id="SoftwareEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{softwareController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{softwareController.selected.id}" title="#{bundle.EditSoftwareTitle_id}" required="true" requiredMessage="#{bundle.EditSoftwareRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{softwareController.selected.descripcion}" title="#{bundle.EditSoftwareTitle_descripcion}" required="true" requiredMessage="#{bundle.EditSoftwareRequiredMessage_descripcion}"/>
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_codLicencia}" for="codLicencia" />
+                        <p:inputText id="codLicencia" value="#{softwareController.selected.codLicencia}" title="#{bundle.EditSoftwareTitle_codLicencia}" required="true" requiredMessage="#{bundle.EditSoftwareRequiredMessage_codLicencia}"/>
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_fechaExpiracion}" for="fechaExpiracion" />
+                        <p:calendar id="fechaExpiracion" pattern="MM/dd/yyyy" value="#{softwareController.selected.fechaExpiracion}" title="#{bundle.EditSoftwareTitle_fechaExpiracion}" required="true" requiredMessage="#{bundle.EditSoftwareRequiredMessage_fechaExpiracion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_tipoExpiracion}" for="tipoExpiracion" />
+                        <p:inputText id="tipoExpiracion" value="#{softwareController.selected.tipoExpiracion}" title="#{bundle.EditSoftwareTitle_tipoExpiracion}" required="true" requiredMessage="#{bundle.EditSoftwareRequiredMessage_tipoExpiracion}"/>
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{softwareController.selected.cantidad}" title="#{bundle.EditSoftwareTitle_cantidad}" required="true" requiredMessage="#{bundle.EditSoftwareRequiredMessage_cantidad}"/>
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{softwareController.selected.estado}" title="#{bundle.EditSoftwareTitle_estado}" />
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_stock}" for="stock" />
+                        <p:inputText id="stock" value="#{softwareController.selected.stock}" title="#{bundle.EditSoftwareTitle_stock}" />
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_idMarcaSw}" for="idMarcaSw" />
+                        <p:selectOneMenu id="idMarcaSw" value="#{softwareController.selected.idMarcaSw}" required="true" requiredMessage="#{bundle.EditSoftwareRequiredMessage_idMarcaSw}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{marcaSoftwareController.itemsAvailableSelectOne}"
+                                           var="idMarcaSwItem"
+                                           itemValue="#{idMarcaSwItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSoftwareLabel_idTipoSw}" for="idTipoSw" />
+                        <p:selectOneMenu id="idTipoSw" value="#{softwareController.selected.idTipoSw}" required="true" requiredMessage="#{bundle.EditSoftwareRequiredMessage_idTipoSw}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoSoftwareController.itemsAvailableSelectOne}"
+                                           var="idTipoSwItem"
+                                           itemValue="#{idTipoSwItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{softwareController.update}" value="#{bundle.Save}" update="display,:SoftwareListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SoftwareEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SoftwareEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <div id="divPrimero">
+            <p:fieldset legend="Ver plan de capacitación">
+                
+                
+                <h:outputLabel style="color: red; font-weight: bold; font-size: 15px;" value="Monto Total: "/>
+                <h:outputLabel id="monto_total4" style="font-weight: bold; font-size: 15px;" value="S/. #{registrarPlanCapacitacionBean.montoGeneral}"/>
+                
+                <p:dataTable id="dtDetSol2" var="detSol2"
+                             paginatorPosition="bottom"
+                             scrollable="true"
+                             scrollHeight="350"
+                             paginator="true" rows="10" reflow="true"
+                             emptyMessage="Listado de capacitaciones para configurar."
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowIndexVar="cantidad"
+                             rowKey="#{detSol2.id}"
+                             value="#{registrarPlanCapacitacionBean.listCapacitacion}">
+                    <f:facet name="header">
+                        Listado de formaciones planificadas
+                    </f:facet>
+                    <p:column id="colArea" headerText="Area" filterBy="#{detSol2.idDetSol.idFormacion.idArea.nombre}">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.idArea.nombre}"/>
+                    </p:column>
+                    <p:column id="colFormacion1" headerText="Formacion" filterBy="#{detSol2.idDetSol.idFormacion.nombre}">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.nombre}"/>
+                    </p:column>
+                    <p:column id="colFormacion2" headerText="Tipo de capacitación">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.idTipoModalidad.descripcion}"/>
+                    </p:column>
+                    <p:column id="colNroPar" headerText="Numero de participantes">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.maximoParticipantes}"/>
+                    </p:column>
+                    <p:column id="colHoras" headerText="Numero de horas">
+                        <h:outputLabel value="#{detSol2.idDetSol.idFormacion.numeroHoras}"/>
+                    </p:column>
+                    <p:column id="colFecIni" headerText="Fecha inicio">
+                        <h:outputText value="#{detSol2.fechaInicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column id="coFecFin" headerText="Fecha fin">
+                        <h:outputText value="#{detSol2.fechaFin}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="btnSiguiente1" icon="ui-icon-arrowthickstop-1-s" value="Siguiente"
+                                         action="#{registrarPlanCapacitacionBean.siguiente1}"
+                                         onstart="PF('wgvDtDetSol').show();"
+                                         oncomplete="PF('wgvDtDetSol').hide();"
+                                         process="@this  
+                                         :frmVerPlanCapacitacion:dtDetSol2"
+                                         partialSubmit="false">
+                        </p:commandButton>
+
+                        <p:commandButton id="btnSalir" icon="ui-icon-circle-close" 
+                                         onstart="PF('wgvDtDetSol').show()"
+                                         oncomplete="PF('wgvDtDetSol').hide(); PF('wgvDlgVerPlanCapacitacion').hide();"
+                                         value="Salir" />
+                    </f:facet>
+                    <f:facet name="right">
+                        <h:outputLabel style="display: none; color: red; font-weight: bold; font-size: 15px;" value="Número total de inscritos: "/>
+                        <h:outputLabel id="monto_total3" style="display: none; font-weight: bold; font-size: 15px;" value="#{registrarPlanCapacitacionBean.montoTotal3}"/>
+                        <p:spacer with="20" />
+                    </f:facet>    
+                </p:toolbar>
+
+            </p:fieldset>        
+        </div>
+    </h:body>
+</html>

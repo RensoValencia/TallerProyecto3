@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SolicitudCapacitacionCreateDlg" widgetVar="SolicitudCapacitacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSolicitudCapacitacionTitle}">
+            <h:form id="SolicitudCapacitacionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solicitudCapacitacionController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{solicitudCapacitacionController.selected.id}" title="#{bundle.CreateSolicitudCapacitacionTitle_id}" required="true" requiredMessage="#{bundle.CreateSolicitudCapacitacionRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_fechaDocumento}" for="fechaDocumento" />
+                        <p:calendar id="fechaDocumento" pattern="MM/dd/yyyy" value="#{solicitudCapacitacionController.selected.fechaDocumento}" title="#{bundle.EditSolicitudCapacitacionTitle_fechaDocumento}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_fechaAtencion}" for="fechaAtencion" />
+                        <p:calendar id="fechaAtencion" pattern="MM/dd/yyyy" value="#{solicitudCapacitacionController.selected.fechaAtencion}" title="#{bundle.EditSolicitudCapacitacionTitle_fechaAtencion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_observacion}" for="observacion" />
+                        <p:inputText id="observacion" value="#{solicitudCapacitacionController.selected.observacion}" title="#{bundle.CreateSolicitudCapacitacionTitle_observacion}" />
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_periodo}" for="periodo" />
+                        <p:inputText id="periodo" value="#{solicitudCapacitacionController.selected.periodo}" title="#{bundle.CreateSolicitudCapacitacionTitle_periodo}" />
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_cantDetSol}" for="cantDetSol" />
+                        <p:inputText id="cantDetSol" value="#{solicitudCapacitacionController.selected.cantDetSol}" title="#{bundle.CreateSolicitudCapacitacionTitle_cantDetSol}" />
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_idTipoModalidad}" for="idTipoModalidad" />
+                        <p:selectOneMenu id="idTipoModalidad" value="#{solicitudCapacitacionController.selected.idTipoModalidad}" >
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="idTipoModalidadItem"
+                                           itemValue="#{idTipoModalidadItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_idEstado}" for="idEstado" />
+                        <p:selectOneMenu id="idEstado" value="#{solicitudCapacitacionController.selected.idEstado}" >
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="idEstadoItem"
+                                           itemValue="#{idEstadoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_idTipoCapacitacion}" for="idTipoCapacitacion" />
+                        <p:selectOneMenu id="idTipoCapacitacion" value="#{solicitudCapacitacionController.selected.idTipoCapacitacion}" >
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="idTipoCapacitacionItem"
+                                           itemValue="#{idTipoCapacitacionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSolicitudCapacitacionLabel_idArea}" for="idArea" />
+                        <p:selectOneMenu id="idArea" value="#{solicitudCapacitacionController.selected.idArea}" required="true" requiredMessage="#{bundle.EditSolicitudCapacitacionRequiredMessage_idArea}">
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="idAreaItem"
+                                           itemValue="#{idAreaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{solicitudCapacitacionController.create}" value="#{bundle.Save}" update="display,:SolicitudCapacitacionListForm:datalist,:growl" oncomplete="handleSubmit(args,'SolicitudCapacitacionCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SolicitudCapacitacionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
