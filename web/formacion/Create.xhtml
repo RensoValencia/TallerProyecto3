@@ -62,6 +62,14 @@
                                            var="idTipoModalidadItem"
                                            itemValue="#{idTipoModalidadItem}" itemLabel="#{idTipoModalidadItem.descripcion}"/>
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Perfil capacitador" for="idPerfilCapa" />
+                        <p:selectOneMenu id="idPerfilCapa" value="#{formacionController.selected.idPerfilCapacitador}" >
+                            <f:selectItems value="#{perfilCapacitadorController.items}"
+                                           var="idPerfilCapa"
+                                           itemValue="#{idPerfilCapa}" itemLabel="#{idPerfilCapa.nombre}"/>
+                        </p:selectOneMenu>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{formacionController.create}" 
                                      value="Guardar" 

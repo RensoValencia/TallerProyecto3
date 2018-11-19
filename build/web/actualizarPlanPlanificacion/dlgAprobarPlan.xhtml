@@ -8,39 +8,65 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
         <p:dialog id="dlgAprobarPlan" 
-                      modal="true" 
-                      header="Aprobar plan planificación" 
-                      widgetVar="wgvDlgAprobarPlan"
-                      resizable="false" 
-                      position="center"
-                      closeOnEscape="true"
-                      minimizable="false" 
-                      width="30%" height="70%">
-                    <h:form id="frmActualizarObservacion">
-                    <p:panelGrid columns="7" layout="grid">
-                    
-                        <h:outputLabel id="lblTipo" value="Tipo:" style="font-weight: bold;" />
+                  modal="true" 
+                  header="Aprobar plan planificación" 
+                  widgetVar="wgvDlgAprobarPlan"
+                  resizable="false" 
+                  position="center"
+                  closeOnEscape="true"
+                  minimizable="false" 
+                  width="40%" height="70%">
+            <h:form id="frmActualizarObservacion">
 
-                            <p:selectOneMenu id="cmbEstadoAprobar" 
-                                         value="#{registrarPlanCapacitacionBean.estadoAprobadoSeleccionado}">
-                                <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
-                                <f:selectItems value="#{registrarPlanCapacitacionBean.lstEstadoAproObs}" var="estadoCapa"
-                                               itemValue="#{estadoCapa}" itemLabel="#{estadoCapa.descripcion}" />
-                            </p:selectOneMenu>
+                <h2>Nro de plan de capacitación: 
+                    <h:outputLabel id="lblNroPlan" 
+                                   value="#{registrarPlanCapacitacionBean.planCapa}" 
+                                   style="font-weight: bold;" />
+                </h2>
+
+                <p:panelGrid columns="2" layout="grid">
+
+                    <p:column>
+                        <b>Evaluación</b>
+                        <p>Observaciones sobre la evaluación</p>
+                        <p:inputTextarea id="txtObservacion" 
+                                         value="#{registrarPlanCapacitacionBean.observacion}" 
+                                         rows="10" cols="30" />
+                    </p:column>
+                    
+                    <p:column>
+                        <h:outputLabel id="lblTipo" value="Tipo:" style="font-weight: bold;" />
+                        <br />
+                        <p:selectOneMenu id="cmbEstadoAprobar" 
+                                     value="#{registrarPlanCapacitacionBean.estadoAprobadoSeleccionado}">
+                        <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                        <f:selectItems value="#{registrarPlanCapacitacionBean.lstEstadoAproObs}" var="estadoCapa"
+                                       itemValue="#{estadoCapa}" itemLabel="#{estadoCapa.descripcion}" />
+                        </p:selectOneMenu>
+                        <br />
+                        (Aprobar / Observar)
                         
-                            <p:inputTextarea id="txtObservacion" value="#{registrarPlanCapacitacionBean.observacion}" 
-                                             rows="5" cols="30" />
+                        <br />
+                        <p:commandButton id="btnSalirYa" icon="ui-icon-circle-close" 
+                                         oncomplete="PF('wgvDlgAprobarPlan').hide();"
+                                         value="Salir" />
                         
+                        <br />
                         <p:commandButton id="cbGuardar"
-                                         process="@this:frmActualizarObservacion"
-                                         partialSubmit="true"
-                                         onstart="PF('wgvDtPlanesCapacitacion').show()"
-                                         oncomplete="PF('wgvDtPlanesCapacitacion').hide()"
-                                         action="#{registrarPlanCapacitacionBean.actualizarPlan}"
-                                         value="Guardar" icon="ui-icon-search" />
+                                     process="@this:frmActualizarObservacion"
+                                     partialSubmit="true"
+                                     onstart="PF('wgvDtPlanesCapacitacion').show()"
+                                     oncomplete="PF('wgvDtPlanesCapacitacion').hide()"
+                                     action="#{registrarPlanCapacitacionBean.actualizarPlan}"
+                                     value="Guardar" icon="ui-icon-search" />
                         
-                    </p:panelGrid>
-                    </h:form>
-                </p:dialog>
+                    </p:column>
+                    
+
+                    
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
     </h:body>
 </html>

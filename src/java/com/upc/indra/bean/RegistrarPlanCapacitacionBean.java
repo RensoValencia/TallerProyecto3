@@ -125,7 +125,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
     @Getter @Setter private String nombreBoton;
     @Getter boolean hayEspecializacion = false;
     @Getter @Setter private Parametros estadoAprobadoSeleccionado;
-    private PlanCapacitacion planCapa;
+    @Getter private PlanCapacitacion planCapa;
     
     @Getter String msg = "";
     @Getter @Setter private List<Integer> lstAnios;
@@ -604,10 +604,9 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
                 
                 int i = 0;
                 for(Capacitacion capaa: listPerfiles) {
-                    if(recursCapa.size() > 0) {
+                    if(recursCapa.size() > i) {
                         System.out.println("i: " + i);
                         System.out.println("recursCapa.get(i): " + recursCapa.get(0));
-//                        System.out.println("recursCapa.get(i): " + recursCapa.get(1));
                         RecursoCapacitacion recurso = recursCapa.get(i);
                         PerfilCapacitador perfil = perfilCapacitadorFacade.findById(recurso.getIdObjeto());
                         capaa.setIdRecurso(recurso.getId());
@@ -625,8 +624,13 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
                 ControladorAbstracto.getExternalContext().redirect(Constante.PATH_PLAN_CAPA + Constante.PAGE_LST_PLAN_CAPA);
             }
         } else {
-            ControladorAbstracto.updateComponent("frmRegistrarPlanCapacitacion:dtPerfilCapacitador");
-            ControladorAbstracto.executeJavascript("$('#divSegundo').hide(); $('#divSegundo1').hide(); $('#divTercero').show(); $('#divTercero1').show();");
+            if(hayEspecializacion) {
+                ControladorAbstracto.updateComponent("frmRegistrarPlanCapacitacion:dtPerfilCapacitador");
+                ControladorAbstracto.executeJavascript("$('#divSegundo').hide(); $('#divSegundo1').hide(); $('#divTercero').show(); $('#divTercero1').show();");
+            } else {
+                JsfUtil.addSuccessMessage(ConstanteMensaje.OK_REGISTRO_PLAN);
+                ControladorAbstracto.getExternalContext().redirect(Constante.PATH_PLAN_CAPA + Constante.PAGE_LST_PLAN_CAPA);
+            }
         }
         
         } catch(Exception e) {
@@ -720,6 +724,8 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
     
     public void evaluarPlanCapacitacion(PlanCapacitacion planCapacitacion) {
         planCapa = planCapacitacion;
+        
+        ControladorAbstracto.updateComponent("frmActualizarObservacion:lblNroPlan");         
         ControladorAbstracto.executeJavascript("PF('wgvDlgAprobarPlan').show();");
     }
     

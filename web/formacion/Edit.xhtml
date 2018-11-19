@@ -61,6 +61,14 @@
                                            var="idTipoModalidadItem"
                                            itemValue="#{idTipoModalidadItem}" itemLabel="#{idTipoModalidadItem.descripcion}"/>
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Perfil capacitador" for="idPerfilCapa" />
+                        <p:selectOneMenu id="idPerfilCapa" value="#{formacionController.selected.idPerfilCapacitador}" >
+                            <f:selectItems value="#{perfilCapacitadorController.items}"
+                                           var="idPerfilCapa"
+                                           itemValue="#{idPerfilCapa}" itemLabel="#{idPerfilCapa.nombre}"/>
+                        </p:selectOneMenu>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{formacionController.update}" value="Editar" update="display,:FormacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FormacionEditDialog');"/>
                     <p:commandButton value="Salir" onclick="FormacionEditDialog.hide()"/>
