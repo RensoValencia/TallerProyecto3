@@ -1,25 +1,13 @@
 #target folder
 
-/OlvaERP-ejb/target/
-/OlvaERP-Maestro-web/target/
-/OlvaERP-ear/target/
-/OlvaERP-Configuracion-web/target/
-/OlvaERP-Recojo-web/target/
-/OlvaERP-web/target/
-
-/OlvaERP-apis/target/
-
-/.idea
-OlvaERP-ejb/nbproject/
 OlvaERP-ear/OlvaERP-ear.iml
 OlvaERP-ejb/OlvaERP-ejb.iml
-#OlvaERP-ejb/src/main/resources/META-INF/persistence.xml
 OlvaERP-Maestro-web/OlvaERP-Maestro-web.iml
-
 
 
 #netbeans files
 
+nbproject/
 nbproject/private/
 build/
 nbbuild/
@@ -31,3 +19,4 @@ rebel.xml
 *.cfg
 /target/
 /TallerProyecto3/nbproject/
+/TallerProyecto3/build/

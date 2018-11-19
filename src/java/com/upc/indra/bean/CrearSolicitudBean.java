@@ -37,7 +37,7 @@ import lombok.Getter;
 import lombok.Setter;
 /**
  * @author Gabriel Quiroz
- * @date 10/11/2018
+ * @date 12/11/2018
  * @version 1.0
  * @description Crear todas las solicitudes de todas las areas que demanden una capacitacion
  */
