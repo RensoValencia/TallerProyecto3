@@ -93,6 +93,10 @@ public class Formacion implements Serializable {
     @Temporal(TemporalType.DATE)
     @Getter @Setter private Date fechaCreacion;
     
+    @JoinColumn(name = "ID_PERFIL_CAPACITADOR", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Getter @Setter private PerfilCapacitador idPerfilCapacitador;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFormacion", fetch = FetchType.LAZY)
     private Set<DetalleSolicitud> detalleSolicitudSet;
 

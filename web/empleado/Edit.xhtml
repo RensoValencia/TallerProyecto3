@@ -15,6 +15,11 @@
                         
                         <p:outputLabel value="#{bundle.EditEmpleadoLabel_nombres}" for="nombres" />
                         <p:inputText id="nombres" value="#{empleadoController.selected.nombres}" title="#{bundle.EditEmpleadoTitle_nombres}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_nombres}"/>
+                        
+                        <p:outputLabel value="Capacitador" for="sbcCapacitador" />
+                        <p:selectBooleanCheckbox id="sbcCapacitador" 
+                                                     value="#{empleadoController.selected.flgCapacitacion}" />
+                        
                         <p:outputLabel value="#{bundle.EditEmpleadoLabel_apellidos}" for="apellidos" />
                         <p:inputText id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{bundle.EditEmpleadoTitle_apellidos}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_apellidos}"/>
                         <p:outputLabel value="#{bundle.EditEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />

@@ -22,7 +22,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
+import lombok.Getter;
+import lombok.Setter;
 /**
  * @author RENSO
  * @date 06-nov-2018
@@ -80,6 +81,18 @@ public class Empleado implements Serializable {
     @JoinColumn(name = "ID_ROL", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol idRol;
+    
+    @Column(name = "FLG_CAPACITACION")
+    private Character flgCapacitacion;
+
+    public boolean getFlgCapacitacion() {
+        return flgCapacitacion != null? flgCapacitacion.equals('1'): Boolean.FALSE;
+    }
+
+    public void setFlgCapacitacion(boolean flgCapacitacion) {
+        this.flgCapacitacion = flgCapacitacion ? '1' : '0';
+    }
+    
     @OneToMany(mappedBy = "idEmpleado", fetch = FetchType.LAZY)
     private Set<DetSolParticipante> detSolParticipanteSet;
     @OneToMany(mappedBy = "idEmpleado", fetch = FetchType.LAZY)
