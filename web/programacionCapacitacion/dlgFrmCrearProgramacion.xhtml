@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Listado de agregar participantes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <p:dialog id="dlgSeleccionarParticipantesSeleccionar" 
+                  modal="true" 
+                  header="Porgramar Formación de capacitación" 
+                  widgetVar="wgvDlgFrmCrearProgramacion"
+                  resizable="false" 
+                  position="center top"
+                  closeOnEscape="true"
+                  minimizable="false" 
+                  showEffect="fade" hideEffect="fade" width="98%" maximizable="true"                   
+                  height="90%">
+            
+            <h:form id="frmCrearProgramacion">
+                <div class="ui-fluid">
+                    
+                    <p:panel id="pnlDataCapa" header="Información de la Formación a programar" style="margin-bottom: 8px" rendered="#{crearProgramacionBean.regCapacitacion!=null}" >
+                        <div class="ui-g" >
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Tipo de formación: "/>
+                                <p:outputLabel value="#{crearProgramacionBean.regCapacitacion.idDetSol.idFormacion.idTipoFormacion.descripcion}" style="font-weight: bold;"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Nombre de Formación: " />
+                                <p:outputLabel value="#{crearProgramacionBean.regCapacitacion.idDetSol.idFormacion.nombre}" style="font-weight: bold;" />
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Estado: "/>
+                                <p:outputLabel value="#{crearProgramacionBean.regCapacitacion.estado.descripcion}" style="font-weight: bold;"/> 
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Modalidad: " />
+                                <p:outputLabel value="#{crearProgramacionBean.regCapacitacion.idDetSol.idFormacion.idTipoModalidad.descripcion}" style="font-weight: bold;" /> 
+                            </div>
+                        </div>
+                        <div class="ui-g" >
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Inicio: "/>
+                                <p:calendar id="fecIniServicio" 
+                                            value="#{crearProgramacionBean.fecIniServicio}" locale="es"
+                                            navigator="true"
+                                            showOn="button"
+                                            readonlyInput="true"
+                                            pattern="dd/MM/yyyy">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:calendar>                                
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Fin: " />
+                                <p:calendar id="fecFinServicio" 
+                                            value="#{crearProgramacionBean.fecFinServicio}" locale="es"
+                                            navigator="true"
+                                            showOn="button"
+                                            readonlyInput="true"
+                                            pattern="dd/MM/yyyy">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:calendar>                                
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Cupo: "/>
+                                <p:outputLabel value="#{crearProgramacionBean.regCapacitacion.idDetSol.idFormacion.maximoParticipantes}" style="font-weight: bold;" /> 
+
+                            </div>
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Insrcitos: " />
+                                <p:outputLabel value="#{crearProgramacionBean.regCapacitacion.idDetSol.idFormacion.maximoParticipantes}" style="font-weight: bold;" /> 
+                            </div>
+                        </div>
+                    </p:panel>
+                
+                    <p:panel id="pnlDataSala" header="Seleccionar Sala" style="margin-bottom: 8px" rendered="#{crearProgramacionBean.regCapacitacion!=null}" >
+                        <div class="ui-g" >
+                            <div class="ui-g-12 ui-md-4 ui-lg-3">
+                                <p:outputLabel value="Tipo de sala: "/>
+                                <p:outputLabel value="#{crearProgramacionBean.regCapacitacion.idDetSol.idFormacion.tipoSala.descripcion}" style="font-weight: bold;" />
+<!--                                <p:inputText id="idTipoSala" value="#{crearProgramacionBean.regCapacitacion.idDetSol.idFormacion.tipoSala.descripcion}" />-->
+                            </div>
+                            
+                            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                                <p:outputLabel value="Seleccione sala: " />
+                                <p:selectOneMenu id="institucion" autoWidth="false" >
+                                    <f:selectItem itemLabel="-- Elige Sala --" itemValue="#{null}" />
+                                </p:selectOneMenu>
+                            </div>
+                        </div>                        
+                    </p:panel>
+                    
+                    <p:panel id="pnlDataCapaHora" header="Del capacitador y Horario" style="margin-bottom: 8px" rendered="#{crearProgramacionBean.regCapacitacion!=null}" >
+                        <div class="ui-g" >
+                            <div class="ui-g-12 ui-md-6 ui-lg-8">
+                                <p:outputLabel value="Capacitador: "/>
+                                <p:selectOneMenu id="capacitador" autoWidth="false" >
+                                    <f:selectItem itemLabel="-- Elige Capacitador --" itemValue="#{null}" />
+                                </p:selectOneMenu>
+                            </div>
+                        </div>                        
+                    </p:panel>
+
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-lg-3"> </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <p:commandButton value="Guardar"
+                                             icon="ui-icon-disk"
+                                             onstart="PF('wgvFrmBuscarSolicitud').show();"
+                                             oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
+                                             action="#{crearSolicitudBean.guardarParticipante}">
+                                <p:confirm header="Mensaje de validacion" 
+                                           message="¿Estas seguro agregar solo a estos participante, por favor verifica?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <p:commandButton value="Cancelar" actionListener="#{crearProgramacionBean.closeCrearProgramacion}" id="btnCancelVal" 
+                                             process="@this" update="@none" partialSubmit="true"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-12 ui-lg-3"> </div>
+                    </div>
+                                        
+                </div>
+                    
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+        </p:dialog>
+        
+    </h:body>
+</html>

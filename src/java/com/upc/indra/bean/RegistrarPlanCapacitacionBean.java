@@ -502,24 +502,9 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
         final String nombreMetodo = "buscarRecursoInformatico";
         
         try {
-        
-            if(null == griTipoRecursoSeleccionado) {
-                JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELEC_TIP_REC_INF);
-                return;
-            }
 
-            if(null == griMarcaSeleccionado) {
-                JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELEC_TIP_REC_INF_MARCA);
-                return;
-            }
-
-            if(null == nombreRecursoInformatico || nombreRecursoInformatico.equals(STR_VACIO)) {
-                JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELEC_TIP_REC_INF_NOMBRE);
-                return;
-            }
-
-            listGriRecurso = griRecursoFacade.findByTipoRecursoMarcaAndNombre(
-                    griTipoRecursoSeleccionado.getId(), griMarcaSeleccionado.getId(), nombreRecursoInformatico);
+            listGriRecurso = griRecursoFacade.findByTipoRecursoMarcaAndNombre2(
+                    griTipoRecursoSeleccionado, griMarcaSeleccionado, nombreRecursoInformatico);
             
             if(UtilList.isEmpty(listGriRecurso)) {
                 JsfUtil.addErrorMessage(ConstanteMensaje.ERR_LIST_VACIO);
@@ -537,23 +522,8 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
         final String nombreMetodo = "buscarRecursoMaterial";
         
         try {
-        
-            if(null == tipoMaterialSeleccionado) {
-                JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELEC_TIP_MAT);
-                return;
-            }
 
-            if(null == marcaMaterialSeleccionado) {
-                JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELEC_TIP_MAT_MARCA);
-                return;
-            }
-
-            if(null == nombreMaterial || nombreMaterial.equals(Constante.STR_VACIO)) {
-                JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELEC_TIP_MAT_NOMBRE);
-                return;
-            }
-
-            listMaterialEscritorio = materialesEscritorioFacade.findByTipMatAndMarEsc(
+            listMaterialEscritorio = materialesEscritorioFacade.findByTipMatAndMarEsc2(
                     tipoMaterialSeleccionado, marcaMaterialSeleccionado, nombreMaterial);
 
             if(UtilList.isEmpty(listMaterialEscritorio)) {
@@ -731,18 +701,8 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
     
     public void listarCapacitaciones() {
         
-        if(null == anioSeleccionadoBuscar || 0 == anioSeleccionadoBuscar.intValue()) {
-            JsfUtil.addErrorMessage(ConstanteMensaje.ERR_ANIO_SELECCIONADO);
-            return;
-        }
-        
-        if(null == estadoPlanCapacitacionSeleccionada) {
-            JsfUtil.addErrorMessage(ConstanteMensaje.ERR_TIP_ESTADO);
-            return;
-        }
-
-        listPlanCapacitacion = planCapacitacionFacade.findByTipoPeriodoAndEstado(anioSeleccionadoBuscar, 
-                estadoPlanCapacitacionSeleccionada.getId());
+        listPlanCapacitacion = planCapacitacionFacade.findByTipoPeriodoAndEstado2(anioSeleccionadoBuscar, 
+                estadoPlanCapacitacionSeleccionada);
         
         if(UtilList.isEmpty(listPlanCapacitacion)) {
             JsfUtil.addErrorMessage(ConstanteMensaje.ERR_RESULTADO_VACIO);

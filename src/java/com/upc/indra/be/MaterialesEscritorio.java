@@ -67,6 +67,16 @@ public class MaterialesEscritorio implements Serializable {
     public MaterialesEscritorio(Integer id) {
         this.id = id;
     }
+    
+    public MaterialesEscritorio(Integer id, String codigo, String descripcion, Integer idTipoMat, String idTipoMatDes, Integer idMarca, String idMarcaDesc) {
+        this.id = id;
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.idTipoMat = new TipoMaterial(idTipoMat);
+        this.idTipoMat.setNombre(idTipoMatDes);
+        this.idMarca = new MarcaMaterial(idMarca);
+        this.idMarca.setNombre(idMarcaDesc);
+    }
 
     public MaterialesEscritorio(Integer id, String codigo, String descripcion) {
         this.id = id;

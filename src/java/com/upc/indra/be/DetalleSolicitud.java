@@ -82,6 +82,21 @@ public class DetalleSolicitud implements Serializable {
         this.idSolCap.setPeriodo(periodo);
         this.idSolCap.setIdTipoModalidad(idTipoMod);
     }
+    
+    public DetalleSolicitud(Integer id, String idFormato, Date fechaDocumento, Integer idEstado, String idEstadoDescripcion, Date fechaAtencion, 
+            String observacion, Integer idArea, Integer periodo, Integer idTipoMod, String idTipModDescripcion) {
+        this.idSolCap = new SolicitudCapacitacion(id);
+        this.idSolCap.setIdFormato(idFormato);
+        this.idSolCap.setFechaDocumento(fechaDocumento);
+        this.idSolCap.setIdEstado(new Parametros(idEstado));
+        this.idSolCap.getIdEstado().setDescripcion(idEstadoDescripcion);
+        this.idSolCap.setFechaAtencion(fechaAtencion);
+        this.idSolCap.setObservacion(observacion);
+        this.idSolCap.setIdArea(new Area(idArea));
+        this.idSolCap.setPeriodo(periodo);
+        this.idSolCap.setIdTipoModalidad(new Parametros(idTipoMod));
+        this.idSolCap.getIdTipoModalidad().setDescripcion(idTipModDescripcion);
+    }
 
     public Integer getId() {
         return id;

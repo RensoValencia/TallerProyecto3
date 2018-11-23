@@ -19,9 +19,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author RENSO
@@ -65,6 +68,8 @@ public class SolicitudCapacitacion implements Serializable {
     @JoinColumn(name = "ID_ESTADO", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Parametros idEstado;
+    
+    @Transient @Getter @Setter private String idFormato;
     
     @JoinColumn(name = "ID_AREA", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

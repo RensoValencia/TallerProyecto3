@@ -38,7 +38,13 @@
                                     <p:commandLink ajax="false" action="/perfilCapacitador/List.xhtml">
                                         <h:outputText value="Perfil Capacitador" />
                                     </p:commandLink>   
-                                </p>   
+                                </p> 
+                                <p>
+                                    <p:commandLink ajax="false" action="/programacionCapacitacion/frmListadoPlanes.xhtml">
+                                        <h:outputText value="Programación de capacitación" />
+                                    </p:commandLink>
+                                </p>
+                                
                             </c:when>
                             <c:when test="#{user.idEmpleado.idRol.nivel eq 6}">
 
@@ -190,6 +196,11 @@
                                     <p:commandLink ajax="false" action="/griMarca/List.xhtml">
                                         <h:outputText value="Marca" />
                                     </p:commandLink>   
+                                </p>
+                                <p>
+                                    <p:commandLink ajax="false" action="/programacionCapacitacion/frmListadoPlanes.xhtml">
+                                        <h:outputText value="Programación de capacitación" />
+                                    </p:commandLink>
                                 </p>
                             </c:when>
                             <c:when test="#{user.idEmpleado.idRol.nivel eq 1}">

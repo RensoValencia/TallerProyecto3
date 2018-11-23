@@ -1,22 +1,5 @@
 #target folder
 
-OlvaERP-ear/OlvaERP-ear.iml
-OlvaERP-ejb/OlvaERP-ejb.iml
-OlvaERP-Maestro-web/OlvaERP-Maestro-web.iml
-
-
-#netbeans files
-
-nbproject/
-nbproject/private/
-build/
-nbbuild/
 dist/
-nbdist/
-nbactions.xml
-rebel.xml
-.nb-gradle/
-*.cfg
-/target/
-/TallerProyecto3/nbproject/
-/TallerProyecto3/build/
+nbproject/
+build/

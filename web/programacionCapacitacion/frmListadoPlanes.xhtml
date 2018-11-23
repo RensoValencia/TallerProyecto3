@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Listado de solicitudes de capacitaciones</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="planCapacitacion.css"/>
+        <h:outputScript library="js" name="planCapacitacion.js"/>
+        <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}" />
+    </h:head>
+    <h:body>
+        <ui:composition template="../templateIndra.xhtml">
+            <ui:define name="top">
+                <div style="text-align: left;color: white;font-size: 26px; display: inline">
+                    <img src="../img/indra.png" width="150px"  alt=""/>
+                </div>
+                <div style="display: inline; float: right;">
+                    <h:form>
+                        <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                            - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                            <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
+                        <p:commandLink action="/usuario/Login.xhtml"
+                                       actionListener="#{loginBean.cerrarSesion()}">
+                            <h:outputText value="Cerrar sesión" />
+                        </p:commandLink>
+                    </h:form>
+                </div>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="frmBuscarPlanes">
+                    <p:blockUI id="block" block="frmBuscarPlanes" widgetVar="wgvFrmBuscarPlanes">
+                        <p:graphicImage url="../img/load.gif" />
+                    </p:blockUI>
+
+                    <p:fieldset legend="Planes aprobados">  
+                        <p:panelGrid columns="10" layout="grid">
+                            <p:column>
+                                <h:outputLabel id="lblPeriodo" value="Periodo:" styleClass="lblGeneral" />
+                                <p:spacer width="5" />
+                                <p:selectOneMenu id="cmbPeriodo" value="#{crearProgramacionBean.anioSeleccionado}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="2015" itemValue="#{2015}" />
+                                    <f:selectItem itemLabel="2016" itemValue="#{2016}" />
+                                    <f:selectItem itemLabel="2017" itemValue="#{2017}" />
+                                    <f:selectItem itemLabel="2018" itemValue="#{2018}" />
+                                    <f:selectItem itemLabel="2019" itemValue="#{2019}" />
+                                    <f:selectItem itemLabel="2020" itemValue="#{2020}" />
+                                    <f:selectItem itemLabel="2021" itemValue="#{2021}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:commandButton id="btnBuscar" action="#{crearProgramacionBean.buscarPlanes}"
+                                             value="Buscar"
+                                             styleClass="btnBuscar"
+                                             icon="ui-icon-circle-plus"
+                                             onstart="PF('wgvFrmBuscarPlanes').show();"
+                                             oncomplete="PF('wgvFrmBuscarPlanes').hide();"
+                                             process="@this :frmBuscarPlanes" />
+
+                            <h:panelGroup />
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <p:dataTable id="dtLstPlanes" 
+                                 var="itemPlan"
+                                 reflow="true"
+                                 emptyMessage="Por favor, Busque el listado de Planes"
+                                 rowIndexVar="cantidad"
+                                 selectionMode="single"
+                                 rowKey="#{itemPlan.id}"
+                                 value="#{crearProgramacionBean.listPlanes}">
+                        <p:ajax event="rowSelect" 
+                            onstart="PF('wgvFrmBuscarPlanes').show();"
+                            oncomplete="PF('wgvFrmBuscarPlanes').hide();"
+                            listener="#{crearProgramacionBean.onRowSelect}" />
+                        <p:column id="colNro" headerText="Item">
+                            <h:outputText value="#{cantidad + 1}" />
+                        </p:column>
+                        <p:column id="colNroPlan" headerText="Nro Plan">
+                            <h:outputText value="#{itemPlan.id}" />
+                        </p:column>
+                        <p:column id="colAnioSol" headerText="Periodo">
+                            <h:outputText value="#{itemPlan.periodo}" />
+                        </p:column>
+                        <p:column id="colEstado" headerText="Estado">
+                            <h:outputText value="#{itemPlan.estado.descripcion}" />
+                        </p:column>
+                        <p:column id="colFecEjecucion" headerText="Fecha Ejecución">
+                            <h:outputText value="#{itemPlan.fechaEjecucion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"
+                                                   timeZone="America/Lima" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+
+                    <br />
+                    <p:dataTable id="dtDetCapa" var="detCapa"
+                                 paginatorPosition="bottom"
+                                 scrollable="true"
+                                 paginator="true" rows="10" reflow="true"
+                                 emptyMessage="Listado de capacitaciones para configurar."
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" rowIndexVar="cantidad"
+                                 rowKey="#{detCapa.id}"
+                                 value="#{crearProgramacionBean.listCapacitacion}">
+                        <f:facet name="header">
+                            Capacitaciones
+                        </f:facet>                        
+                        <p:column id="colId" headerText="Codigo">
+                            <h:outputLabel value="#{detCapa.id}"/>
+                        </p:column>
+                        <p:column id="colFormacion1" headerText="Formacion" filterBy="#{detCapa.idDetSol.idFormacion.nombre}">
+                            <h:outputLabel value="#{detCapa.idDetSol.idFormacion.nombre}"/>
+                        </p:column>
+                        <p:column id="colFormacion2" headerText="Tipo de capacitación">
+                            <h:outputLabel value="#{detCapa.idDetSol.idFormacion.idTipoModalidad.descripcion}"/>
+                        </p:column>
+                        <p:column id="colFecIni" headerText="Fecha inicio">
+                            <h:outputText value="#{detCapa.fechaInicio}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column id="coFecFin" headerText="Fecha fin">
+                            <h:outputText value="#{detCapa.fechaFin}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column id="colNroPar" headerText="Nro de participantes">
+                            <h:outputLabel value="#{detCapa.idDetSol.idFormacion.maximoParticipantes}"/>
+                        </p:column>
+                        <p:column id="colEstado" headerText="Estado" filterBy="#{detCapa.estado.descripcion}">
+                            <h:outputLabel value="#{detCapa.estado.descripcion}"/>
+                        </p:column>
+                        <p:column id="coOpc">
+                            <p:commandButton id="btnProgramar" 
+                                             onstart="PF('wgvFrmBuscarPlanes').show();"
+                                             oncomplete="PF('wgvFrmBuscarPlanes').hide();"
+                                             icon="ui-icon-calendar"
+                                             process="@this"
+                                             partialSubmit="true"
+                                             action="#{crearProgramacionBean.loadCrearProgramacion(detCapa)}" />
+
+                        </p:column>
+                    </p:dataTable>
+                    
+                </h:form>
+
+                <ui:include src="dlgFrmCrearProgramacion.xhtml" />
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

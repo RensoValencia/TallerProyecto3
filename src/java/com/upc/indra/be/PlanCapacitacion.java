@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -36,6 +37,7 @@ import lombok.Setter;
 @NamedQuery(name = "PlanCapacitacion.findAll", query = "SELECT p FROM PlanCapacitacion p"),
     @NamedQuery(name = "PlanCapacitacion.findById", query = "SELECT p FROM PlanCapacitacion p WHERE p.id = :id"),
     @NamedQuery(name = "PlanCapacitacion.findByPeriodo", query = "SELECT p FROM PlanCapacitacion p WHERE p.periodo = :periodo"),
+    @NamedQuery(name = "PlanCapacitacion.findByEstado", query = "SELECT p FROM PlanCapacitacion p WHERE p.estado.id = :estado"),
     @NamedQuery(name = "PlanCapacitacion.findByFechaElaboracion", query = "SELECT p FROM PlanCapacitacion p WHERE p.fechaElaboracion = :fechaElaboracion"),
     @NamedQuery(name = "PlanCapacitacion.findByFechaEjecucion", query = "SELECT p FROM PlanCapacitacion p WHERE p.fechaEjecucion = :fechaEjecucion"),
     @NamedQuery(name = "PlanCapacitacion.findByFechaAprobacion", query = "SELECT p FROM PlanCapacitacion p WHERE p.fechaAprobacion = :fechaAprobacion"),
@@ -70,6 +72,8 @@ public class PlanCapacitacion implements Serializable {
     private Set<RecursoCapacitacion> recursoCapacitacionSet;
     
     
+    @Transient @Getter @Setter private String idFormato;
+    
     @JoinColumn(name = "ESTADO", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Parametros estado;
@@ -88,6 +92,19 @@ public class PlanCapacitacion implements Serializable {
         this.id = id;
         this.periodo = periodo;
         this.fechaElaboracion = fechaElaboracion;
+    }
+    
+    public PlanCapacitacion(Integer id, String idFormato, Integer periodo, Date fechaElaboracion, Date fechaEjecucion, Integer idEstado, 
+            String idEstadoDescripcion, Date fechaAprobacion, String observacion) {
+        this.id = id;
+        this.idFormato = idFormato;
+        this.periodo = periodo;
+        this.fechaElaboracion = fechaElaboracion;
+        this.fechaEjecucion = fechaEjecucion;
+        this.setEstado(new Parametros(idEstado));
+        this.getEstado().setDescripcion(idEstadoDescripcion);
+        this.fechaAprobacion = fechaAprobacion;
+        this.observacion = observacion;
     }
 
     public Integer getId() {

@@ -7,6 +7,8 @@ import com.upc.indra.be.MaterialesEscritorio;
 import com.upc.indra.be.Parametros;
 import com.upc.indra.be.PlanCapacitacion;
 import com.upc.indra.be.RecursoCapacitacion;
+import com.upc.indra.bean.util.Constante;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -94,6 +96,50 @@ public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
         return listParametros;
     }
     
+    public List<PlanCapacitacion> findByPeriodo2(Integer periodo) {
+        List<PlanCapacitacion> listParametros = null;
+        try {
+            Query query = em.createNamedQuery("PlanCapacitacion.findByPeriodo");
+            query.setParameter("periodo", periodo);
+            
+            listParametros = query.getResultList();
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            listParametros = null;
+        }
+        return listParametros;
+    }
+    
+    public List<PlanCapacitacion> findByEstado2(Integer estado) {
+        List<PlanCapacitacion> listParametros = null;
+        try {
+            Query query = em.createNamedQuery("PlanCapacitacion.findByEstado");
+            query.setParameter("estado", estado);
+            
+            listParametros = query.getResultList();
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            listParametros = null;
+        }
+        return listParametros;
+    }
+    
+    public PlanCapacitacion findByEstado(Integer estado) {
+        PlanCapacitacion listParametros = null;
+        try {
+            Query query = em.createNamedQuery("PlanCapacitacion.findByEstado");
+            query.setParameter("estado", estado);
+            
+            listParametros = (PlanCapacitacion) query.getSingleResult();
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            listParametros = null;
+        }
+        return listParametros;
+    }
     
     public List<PlanCapacitacion> findByTipoPeriodoAndEstado(Integer periodo, Integer estado) {
         List<PlanCapacitacion> listParametros = null;
@@ -103,6 +149,55 @@ public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
             query.setParameter("estado", estado);
             
             listParametros = query.getResultList();
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+            listParametros = null;
+        }
+        return listParametros;
+    }
+    
+    public List<PlanCapacitacion> findByTipoPeriodoAndEstado2(Integer periodo, Parametros estado) {
+        List<PlanCapacitacion> listParametros = new ArrayList<>();
+        
+        StringBuilder sql = new StringBuilder();
+        
+        sql.append("SELECT PC.ID, LPAD(PC.ID, 8, '0'), PC.PERIODO, PC.FECHA_ELABORACION, PC.FECHA_EJECUCION, PC.ESTADO ");
+        sql.append(",EST.DESCRIPCION, PC.FECHA_APROBACION, PC.OBSERVACION ");
+        sql.append("FROM CA_PLAN_CAPACITACION PC ");
+        sql.append("INNER JOIN CA_PARAMETROS EST ON EST.ID = PC.ESTADO ");
+        
+        if(Constante.SIN_PERIODO.compareTo(periodo) != 0 || null != estado) {
+            sql.append("WHERE 1 = 1 ");
+        }
+
+        if(Constante.SIN_PERIODO.compareTo(periodo) != 0) {
+             sql.append(" AND PC.PERIODO = ").append(periodo).append(" ");
+        }
+
+        if (null != estado) {
+            sql.append(" AND PC.ESTADO = ").append(estado.getId()).append(" ");
+        } 
+        
+        try {
+            Query query = em.createNativeQuery(sql.toString());
+            List<Object[]> listResult = (List<Object[]>) query.getResultList();
+            
+            PlanCapacitacion planCapacitacion;
+            for(Object[] result: listResult) {
+                planCapacitacion = new PlanCapacitacion(
+                        (Integer) result[0],
+                        (String) result[1], 
+                        (Integer) result[2],
+                        (Date) result[3],
+                        (Date) result[4],
+                        (Integer) result[5],
+                        (String) result[6],
+                        (Date) result[7],
+                        (String) result[8]
+                );
+                listParametros.add(planCapacitacion);
+            }
             
         }catch(Exception e) {
             e.printStackTrace();
@@ -196,5 +291,21 @@ public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
                 recCap2.setIdPlanificacion(planCapacitacion);
                 em.persist(recCap2);
             }
+    }
+    
+    public List<PlanCapacitacion> findByTipoPeriodo(Integer periodo) {
+        List<PlanCapacitacion> listParametros = null;
+        try {
+            //Query query = em.createNamedQuery("PlanCapacitacion.findByPeriodo");
+            Query query = em.createQuery("SELECT p FROM PlanCapacitacion p where p.periodo = :periodo and p.estado.id = 36");
+            query.setParameter("periodo", periodo);
+            
+            listParametros = query.getResultList();
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+            listParametros = null;
+        }
+        return listParametros;
     }
 }

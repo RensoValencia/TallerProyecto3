@@ -21,7 +21,7 @@
                         <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
                             - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
                             <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
-                        <p:commandLink action="/usuario/Login.xhtml"
+                            <p:commandLink action="/usuario/Login.xhtml"
                                        actionListener="#{loginBean.cerrarSesion()}">
                             <h:outputText value="Cerrar sesión" />
                         </p:commandLink>
@@ -77,7 +77,7 @@
                                  rowsPerPageTemplate="5,10,15"
                                  value="#{registrarPlanCapacitacionBean.listPlanCapacitacion}">
                         <p:column id="colNroPlan" headerText="Nro plan" sortBy="#{plan.id}">
-                            <h:outputText value="#{plan.id}" />
+                            <h:outputText value="#{plan.idFormato}" />
                         </p:column>
                         <p:column id="colEstado" headerText="Estado" sortBy="#{plan.estado.descripcion}">
                             <h:outputText value="#{plan.estado.descripcion}" />

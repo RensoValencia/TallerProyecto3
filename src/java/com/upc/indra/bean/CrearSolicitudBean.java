@@ -112,7 +112,7 @@ public class CrearSolicitudBean implements Serializable{
     public void buscarSolicitudCapacitacion() {
         
         try {
-            if(null == estadoSolicitudCapacitacion) {
+            /*if(null == estadoSolicitudCapacitacion) {
                  JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELECCIONE_TIP_ESTADO);     
                 return;
             }
@@ -130,9 +130,9 @@ public class CrearSolicitudBean implements Serializable{
             if(null == tipoFormacionSeleccionada) {
                 JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELECCIONE_TIP_FORMACION);     
                 return;
-            }
+            }*/
 
-            listSolicitud = detalleSolicitudFacade.findByEstadoTipoCapaAnioYCurso(estadoSolicitudCapacitacion, tipoModalidadSeleccionada, 
+            listSolicitud = detalleSolicitudFacade.findByEstadoTipoCapaAnioYCurso2(estadoSolicitudCapacitacion, tipoModalidadSeleccionada, 
                     anioSeleccionado, tipoFormacionSeleccionada, area);
 
             if(listSolicitud.isEmpty()) {

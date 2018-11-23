@@ -121,7 +121,7 @@ public class GriRecurso implements Serializable {
     public GriRecurso(Integer id) {
         this.id = id;
     }
-
+    
     public GriRecurso(Integer id, String descripcion, String so, String procesador, String memoriaRam, String discoDuro, String pulgadas, String capacidad, String serie, String tipoExpiracion, Date fechaExpiracion) {
         this.id = id;
         this.descripcion = descripcion;
@@ -134,6 +134,18 @@ public class GriRecurso implements Serializable {
         this.serie = serie;
         this.tipoExpiracion = tipoExpiracion;
         this.fechaExpiracion = fechaExpiracion;
+    }
+
+    public GriRecurso(Integer id, String descripcion, String procesador, String memoriaRam, Integer idMarca, 
+            String idMarcaDescripcion, Integer idTipoRecu, String idTipoRecuDescripcion) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.procesador = procesador;
+        this.memoriaRam = memoriaRam;
+        this.setIdGriMarca(new GriMarca(idMarca));
+        this.getIdGriMarca().setNombre(idMarcaDescripcion);
+        this.setIdGriTipoRecurso(new GriTipoRecurso(idTipoRecu));
+        this.getIdGriTipoRecurso().setNombre(idTipoRecuDescripcion);
     }
 
     public Integer getId() {
