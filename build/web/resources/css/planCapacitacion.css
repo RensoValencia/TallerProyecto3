@@ -96,6 +96,7 @@ table tr td[id = 'col2'] {
     width: 15px !important;
 }
 
+/*
 div[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio'] {
     width: 70% !important;
 }
@@ -123,7 +124,7 @@ th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio:colMaraca'] {
 th[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio:colAgregar'] {
     width: 10% !important;
 }
-
+*/
 div[id = 'frmRegistrarPlanCapacitacion:dtMaterialEscritorio2'] {
     width: 85% !important;
 }

@@ -42,16 +42,6 @@
                     <p:column id="colHoras" headerText="Numero de horas">
                         <h:outputLabel value="#{detSol2.idDetSol.idFormacion.numeroHoras}"/>
                     </p:column>
-                    <p:column id="colFecIni" headerText="Fecha inicio">
-                        <h:outputText value="#{detSol2.fechaInicio}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column id="coFecFin" headerText="Fecha fin">
-                        <h:outputText value="#{detSol2.fechaFin}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                        </h:outputText>
-                    </p:column>
                 </p:dataTable>
 
                 <p:toolbar>

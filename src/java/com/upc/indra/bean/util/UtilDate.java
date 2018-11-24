@@ -18,4 +18,8 @@ public class UtilDate {
         
         return calendar.get(Calendar.YEAR);
     }
+    
+    public static int getAnioSiguiente() {
+        return getAnioActual() + Constante.ANIO_ADICIONAL;
+    }
 }

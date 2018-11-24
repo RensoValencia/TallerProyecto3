@@ -7,6 +7,8 @@ public class ConstanteMensaje {
     public static final String MESSAGE_ERROR_INESPERADO = "Ha sucedido un error inesperado. Por favor comunicarse con el área de sistemas.";
     
     public static final String ERR_LIST_VACIO = "No es encontraron resultados con los criterios ingresados";
+    public static final String ERR_SESION_EXPIRO = "Su sesión ha expirada, vuelva a iniciar sesión";
+    
     /* CUS 01*/
     public static final String ERR_SELECCIONE_TIP_ESTADO = "Por favor, Ud. debe seleccionar el tipo de estado";
     public static final String ERR_SELECCIONE_TIP_CAPA = "Por favor, Ud. debe seleccionar el tipo de capacitacion";

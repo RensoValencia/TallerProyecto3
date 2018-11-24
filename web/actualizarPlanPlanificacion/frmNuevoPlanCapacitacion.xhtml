@@ -121,24 +121,6 @@
                     <p:column id="colHoras" headerText="Numero de horas">
                         <h:outputLabel value="#{detSol2.idDetSol.idFormacion.numeroHoras}"/>
                     </p:column>
-                    <p:column id="colFecIni" headerText="Fecha inicio">
-                        <p:calendar id="clrFechaInicio" 
-                                    locale="es"
-                                    styleClass="calendarioFecIniFin"
-                                    pattern="dd/mm/yyyy"
-                                    mask="99/99/9999"
-                                    placeholder="dd/mm/yyyy"
-                                    value="#{detSol2.fechaInicio}" />
-                    </p:column>
-                    <p:column id="coFecFin" headerText="Fecha fin">
-                        <p:calendar id="clrFechaFin"
-                                    locale="es"
-                                    styleClass="calendarioFecIniFin"
-                                    pattern="dd/mm/yyyy"
-                                    mask="99/99/9999"
-                                    placeholder="dd/mm/yyyy"
-                                    value="#{detSol2.fechaFin}" />
-                    </p:column>
                     <p:column id="colEliminar" headerText="Remover">
                         <p:commandButton id="btnEliminar" 
                                          onstart="PF('wgvDtDetSol').show();"

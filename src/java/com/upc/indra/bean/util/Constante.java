@@ -11,6 +11,7 @@ public class Constante {
     public static final int MAXIMO_DETALLE_SOLICITUD = 3;
     public static final int LIMITE_NO_PERMITIDO = 0;
     public static final int CANTIDAD_MINIMA = 1;
+    public static final int ANIO_ADICIONAL = 1;
     public static final String STR_VACIO = "";
     public static final String STR_GUION = " - ";
     public static final String FORMATO_FECHA = "dd/MM/yyyy";

@@ -11,6 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="planCapacitacion.css"/>
         <h:outputScript library="js" name="planCapacitacion.js"/>
+        <h:outputScript library="js" name="validacionCampos.js"/>
         <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}" />
     </h:head>
     <p:dialog id="dlgEditarPlanCapacitacion" 
@@ -18,10 +19,11 @@
                       header="Revisar plan de capacitación" 
                       widgetVar="wgvDlgEditarPlanCapacitacion"
                       resizable="false" 
-                      position="center"
+                      position="top"
+                      scrollable="true" 
                       closeOnEscape="true"
                       minimizable="false" 
-                      width="85%" height="65%">
+                      width="85%" height="50%">
             <ui:include src="/actualizarPlanPlanificacion/dlgIndicadores.xhtml" />          
         
             <h:form id="frmRegistrarPlanCapacitacion">

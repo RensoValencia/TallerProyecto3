@@ -11,7 +11,6 @@ $(document).ready(function() {
 PlanCapacitacionJS = {  
 
     seleccionarTipoPlan: function(valor) {
-        console.warn("123 -> " + valor);
         if(valor === '7') {
             PlanCapacitacionJS.ocultarTipoPlanInterna();
         } else {
