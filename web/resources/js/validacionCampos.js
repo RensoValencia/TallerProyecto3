@@ -152,6 +152,10 @@ ValidacionCamposJS = {
         }, 100);
     },
     
+    validarOnPasteLetras: function(input) {
+        this.validarOnPaste(input, this.LETRAS_DIERESIS);
+    },
+    
     validarOnPasteSoloNumeros: function(input) {
         this.validarOnPaste(input, this.SOLO_NUMEROS);
     },

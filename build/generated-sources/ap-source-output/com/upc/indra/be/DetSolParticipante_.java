@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-11-24T11:57:17")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-11-29T21:44:12")
 @StaticMetamodel(DetSolParticipante.class)
 public class DetSolParticipante_ { 
 

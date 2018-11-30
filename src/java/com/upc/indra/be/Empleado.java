@@ -70,10 +70,11 @@ public class Empleado implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaAlta;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "FECHA_BAJA")
     @Temporal(TemporalType.DATE)
     private Date fechaBaja;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "ESTADO")

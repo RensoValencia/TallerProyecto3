@@ -12,7 +12,7 @@ package com.upc.indra.enu;
 public enum EstadoSolicitudCapacitacionEnum {
 
     PENDIENTE("1"),
-    OBSERVADA("2"),
+    ENVIADO("2"),
     APROBADO("3"),
     RECHAZADO("4"),
     EN_PROCESO("5");

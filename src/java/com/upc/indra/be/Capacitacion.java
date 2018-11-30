@@ -143,7 +143,6 @@ public class Capacitacion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.upc.indra.be.Capacitacion[ id=" + id + " ]";
+        return "Capacitacion{" + "id=" + id + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", estado=" + estado + ", idDetSol=" + idDetSol + ", idPlanCapacitacion=" + idPlanCapacitacion + ", perfilCapacitador=" + perfilCapacitador + ", cantidad=" + cantidad + ", valor=" + valor + ", idRecurso=" + idRecurso + ", idObjecto=" + idObjecto + '}';
     }
-
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -25,6 +26,9 @@ import javax.persistence.criteria.Root;
 @Stateless
 public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
 
+    
+    @Inject private ConstanteSingleton constanteSingleton;
+    
     @PersistenceContext(unitName = "TallerProyecto3PU")
     private EntityManager em;
 
@@ -179,6 +183,8 @@ public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
             sql.append(" AND PC.ESTADO = ").append(estado.getId()).append(" ");
         } 
         
+        sql.append("ORDER BY PC.FECHA_CREACION DESC ");
+        
         try {
             Query query = em.createNativeQuery(sql.toString());
             List<Object[]> listResult = (List<Object[]>) query.getResultList();
@@ -212,36 +218,35 @@ public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
         
         em.persist(planCapacitacion);
         
-        //Este es el detalle de capacitacion
-            for(DetalleSolicitud detSoll: detalleSolicitudSeleccionadas) {
-                Capacitacion capa = new Capacitacion();
-                capa.setFechaInicio(detSoll.getFechaInicio());
-                capa.setFechaFin(detSoll.getFechaFin());
-                capa.setEstado(new Parametros(new Integer("10")));
-                capa.setIdDetSol(detSoll);
-                capa.setIdPlanCapacitacion(planCapacitacion);
-                em.persist(capa);
-            }
+        for(DetalleSolicitud detSoll: detalleSolicitudSeleccionadas) {
+            Capacitacion capa = new Capacitacion();
+            capa.setFechaInicio(detSoll.getFechaInicio());
+            capa.setFechaFin(detSoll.getFechaFin());
+            capa.setEstado(constanteSingleton.getEstadoCapacitacionPendiente());
+            capa.setIdDetSol(detSoll);
+            capa.setIdPlanCapacitacion(planCapacitacion);
+            em.persist(capa);
+        }
             
-            for(MaterialesEscritorio me: materialEscritorioSeleccionados) {
-                RecursoCapacitacion recCap = new RecursoCapacitacion();
-                recCap.setCantidad(me.getCantidad());
-                recCap.setValor(me.getValor());
-                recCap.setIdTipoRecurso(new Parametros(new Integer("30")));
-                recCap.setIdObjeto(me.getId());
-                recCap.setIdPlanificacion(planCapacitacion);
-                em.persist(recCap);
-            } 
+        for(MaterialesEscritorio me: materialEscritorioSeleccionados) {
+            RecursoCapacitacion recCap = new RecursoCapacitacion();
+            recCap.setCantidad(me.getCantidad());
+            recCap.setValor(me.getValor());
+            recCap.setIdTipoRecurso(constanteSingleton.getTipoRecursoMaterialEscritorio());
+            recCap.setIdObjeto(me.getId());
+            recCap.setIdPlanificacion(planCapacitacion);
+            em.persist(recCap);
+        } 
             
-            for(GriRecurso me: griRecursoSeleccionados) {
-                RecursoCapacitacion recCap = new RecursoCapacitacion();
-                recCap.setCantidad(me.getCantidadTempl());
-                recCap.setValor(me.getValor());
-                recCap.setIdTipoRecurso(new Parametros(new Integer("31")));
-                recCap.setIdObjeto(me.getId());
-                recCap.setIdPlanificacion(planCapacitacion);
-                em.persist(recCap);
-            } 
+        for(GriRecurso me: griRecursoSeleccionados) {
+            RecursoCapacitacion recCap = new RecursoCapacitacion();
+            recCap.setCantidad(me.getCantidadTempl());
+            recCap.setValor(me.getValor());
+            recCap.setIdTipoRecurso(constanteSingleton.getTipoRecursoMaterialRecursoInformatico());
+            recCap.setIdObjeto(me.getId());
+            recCap.setIdPlanificacion(planCapacitacion);
+            em.persist(recCap);
+        } 
     }
     
     public void grabarPlanDeCapacitacionYPerfil(List<MaterialesEscritorio> materialEscritorioSeleccionados, 
@@ -256,7 +261,7 @@ public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
                 Capacitacion capa = new Capacitacion();
                 capa.setFechaInicio(detSoll.getFechaInicio());
                 capa.setFechaFin(detSoll.getFechaFin());
-                capa.setEstado(new Parametros(new Integer("10")));
+                capa.setEstado(constanteSingleton.getEstadoCapacitacionPendiente());
                 capa.setIdDetSol(detSoll);
                 capa.setIdPlanCapacitacion(planCapacitacion);
                 em.persist(capa);
@@ -266,7 +271,7 @@ public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
                 RecursoCapacitacion recCap = new RecursoCapacitacion();
                 recCap.setCantidad(me.getCantidad());
                 recCap.setValor(me.getValor());
-                recCap.setIdTipoRecurso(new Parametros(new Integer("30")));
+                recCap.setIdTipoRecurso(constanteSingleton.getTipoRecursoMaterialEscritorio());
                 recCap.setIdObjeto(me.getId());
                 recCap.setIdPlanificacion(planCapacitacion);
                 em.persist(recCap);
@@ -276,7 +281,7 @@ public class PlanCapacitacionFacade extends AbstractFacade<PlanCapacitacion> {
                 RecursoCapacitacion recCap = new RecursoCapacitacion();
                 recCap.setCantidad(me.getCantidadTempl());
                 recCap.setValor(me.getValor());
-                recCap.setIdTipoRecurso(new Parametros(new Integer("31")));
+                recCap.setIdTipoRecurso(constanteSingleton.getTipoRecursoMaterialRecursoInformatico());
                 recCap.setIdObjeto(me.getId());
                 recCap.setIdPlanificacion(planCapacitacion);
                 em.persist(recCap);

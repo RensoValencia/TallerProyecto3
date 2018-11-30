@@ -5,7 +5,7 @@ package com.upc.indra.enu;
  */
 public enum EstadoCapacitacion {
 
-    PENDIENTE("1"), ENVIADO("2"), APROBADO("3"), RECHAZADO("4"), EN_PROCESO("5");
+    PENDIENTE("1"), PROGRAMADO("2"), APROBADO("3"), RECHAZADO("4"), EN_PROCESO("5");
     
     private final String value;
 

@@ -39,7 +39,9 @@
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="Máximo de participantes:" for="maximoParticipantes" />
-                        <p:inputText id="maximoParticipantes" value="#{formacionController.selected.maximoParticipantes}" title="#{bundle.CreateFormacionTitle_maximoParticipantes}" required="true" requiredMessage="#{bundle.CreateFormacionRequiredMessage_maximoParticipantes}"/>
+                        <p:inputText id="maximoParticipantes" 
+                                     onkeypress="return ValidacionCamposJS.soloNumerosEnteros(event);"
+                                     value="#{formacionController.selected.maximoParticipantes}" title="#{bundle.CreateFormacionTitle_maximoParticipantes}" required="true" requiredMessage="#{bundle.CreateFormacionRequiredMessage_maximoParticipantes}"/>
                         
                         <p:outputLabel value="#{bundle.CreateFormacionLabel_temario}" for="temario" />
                         <p:inputTextarea id="temario" rows="6" cols="33" required="true"
@@ -48,7 +50,9 @@
                                          requiredMessage="#{bundle.EditFormacionRequiredMessage_temario}"/>
                         
                         <p:outputLabel value="Número de horas" for="numeroHoras" />
-                        <p:inputText id="numeroHoras" value="#{formacionController.selected.numeroHoras}" title="#{bundle.CreateFormacionTitle_numeroHoras}" />
+                        <p:inputText id="numeroHoras" 
+                                     onkeypress="return ValidacionCamposJS.soloNumerosEnteros(event);"
+                                     value="#{formacionController.selected.numeroHoras}" title="#{bundle.CreateFormacionTitle_numeroHoras}" />
                         
                         <p:outputLabel value="Area:" for="idArea" />
                         <p:selectOneMenu id="idArea" value="#{formacionController.selected.idArea}" >
@@ -73,8 +77,8 @@
                     </p:panelGrid>
                     <p:commandButton actionListener="#{formacionController.create}" 
                                      value="Guardar" 
-                                     update="display,:FormacionListForm:datalist,:growl" 
-                                     oncomplete="handleSubmit(args,'FormacionCreateDialog');">
+                                     icon="ui-icon-disk"
+                                     update="display,:FormacionListForm:datalist,:growl">
                         <p:confirm header="Confirmación" 
                            message="¿Estas seguro de guardar la formación?" icon="ui-icon-alert" />
                     </p:commandButton>
@@ -83,7 +87,9 @@
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                     </p:confirmDialog>
                     
-                    <p:commandButton value="Salir" onclick="FormacionCreateDialog.hide()"/>
+                    <p:commandButton value="Salir" 
+                                     icon="ui-icon-circle-close"
+                                     onclick="FormacionCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
             

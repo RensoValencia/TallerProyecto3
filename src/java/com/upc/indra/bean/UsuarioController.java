@@ -3,6 +3,7 @@ package com.upc.indra.bean;
 import com.upc.indra.be.Usuario;
 import com.upc.indra.bean.util.JsfUtil;
 import com.upc.indra.bean.util.JsfUtil.PersistAction;
+import com.upc.indra.bean.util.UtilSeguridad;
 import com.upc.indra.dao.UsuarioFacade;
 
 import java.io.Serializable;
@@ -83,6 +84,7 @@ public class UsuarioController implements Serializable {
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
+            selected.setClave(UtilSeguridad.encriptar(selected.getClave()));
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {

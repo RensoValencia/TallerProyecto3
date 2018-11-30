@@ -89,9 +89,27 @@ public class Formacion implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Parametros idTipoModalidad;
     
+    @JoinColumn(name = "ID_USUARIO_CREACION", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Getter @Setter private Usuario idUsuarioCreacion;
+    
+    @JoinColumn(name = "ID_USUARIO_MODIFICACION", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Getter @Setter private Usuario idUsuarioModificacion;
+    
+    @Column(name = "PC_CREACION")
+    @Getter @Setter private String pcCreacion;
+    
+    @Column(name = "PC_MODIFICACION")
+    @Getter @Setter private String pcModificacion;
+    
     @Column(name = "FECHA_CREACION")
     @Temporal(TemporalType.DATE)
     @Getter @Setter private Date fechaCreacion;
+    
+    @Column(name = "FECHA_MODIFICACION")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Getter @Setter private Date fechaModificacion;
     
     @JoinColumn(name = "ID_PERFIL_CAPACITADOR", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)

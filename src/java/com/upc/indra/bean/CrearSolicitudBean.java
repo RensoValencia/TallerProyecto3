@@ -26,7 +26,6 @@ import com.upc.indra.dao.EmpleadoFacade;
 import com.upc.indra.enu.GrupoParametrosEnum;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -82,8 +81,6 @@ public class CrearSolicitudBean implements Serializable{
     private Area area;
     private DetalleSolicitud detalleSolicitudSeleccionada;
     private DetalleSolicitud ds;
-    private Parametros tipoCapacitacion;
-    private Calendar calendar;
     private Parametros tipoModalidadEspecializacion;
     
     public CrearSolicitudBean() {
@@ -97,8 +94,6 @@ public class CrearSolicitudBean implements Serializable{
             listTipoCapacitacion = parametrosFacade.findByGrupo(GrupoParametrosEnum.TIPO_PLAN_PLANIFICACION.getValue());
             usuarioLogueado = (Usuario) ControladorAbstracto.getSessionProperty(Constante.USER);
             area = usuarioLogueado.getIdEmpleado().getIdRol().getIdArea();
-            calendar = Calendar.getInstance();
-            calendar.setTime(new Date()); 
             estSolCapEnviada = constanteSingleton.getEstadoSolicitudCapacitacionEnviado();
             tipoModalidadInductivo = constanteSingleton.getTipoModalidadInductivo();
             tipoModalidadEspecializacion = constanteSingleton.getTipoModalidadEspecializacion();
@@ -112,33 +107,12 @@ public class CrearSolicitudBean implements Serializable{
     public void buscarSolicitudCapacitacion() {
         
         try {
-            /*if(null == estadoSolicitudCapacitacion) {
-                 JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELECCIONE_TIP_ESTADO);     
-                return;
-            }
-
-            if(null == tipoModalidadSeleccionada) {
-                 JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELECCIONE_TIP_CAPA);     
-                return;
-            }
-
-            if(null ==  anioSeleccionado || anioSeleccionado.equals(Constante.SIN_PERIODO)) {
-                 JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELECCIONE_TIP_PERIODO);     
-                return;
-            }
-
-            if(null == tipoFormacionSeleccionada) {
-                JsfUtil.addErrorMessage(ConstanteMensaje.ERR_SELECCIONE_TIP_FORMACION);     
-                return;
-            }*/
-
             listSolicitud = detalleSolicitudFacade.findByEstadoTipoCapaAnioYCurso2(estadoSolicitudCapacitacion, tipoModalidadSeleccionada, 
                     anioSeleccionado, tipoFormacionSeleccionada, area);
 
-            if(listSolicitud.isEmpty()) {
+            if(UtilList.isEmpty(listSolicitud)) {
                 listSolicitud = new ArrayList<>();
                 JsfUtil.addErrorMessage(ConstanteMensaje.ERR_RESULTADO_VACIO);     
-                return;
             }
             ControladorAbstracto.updateComponent("frmBuscarSolicitudCapacitacion:dtLstSolicitud");
         } catch(Exception e) {
@@ -150,10 +124,13 @@ public class CrearSolicitudBean implements Serializable{
     public void buscarFormacion() {
         
         try {
-            listFormacion = formacionFacade.findByIdAreaIdTipoFormacionAndIdTipoModalidad(
-                area.getId(), 
-                tipoFormacionSeleccionada.getId(), 
-                tipoModalidadSeleccionada.getId());
+            
+            if(null != tipoFormacionSeleccionada && tipoModalidadSeleccionada != null) {
+                listFormacion = formacionFacade.findByIdAreaIdTipoFormacionAndIdTipoModalidad(area.getId(), 
+                    tipoFormacionSeleccionada.getId(), tipoModalidadSeleccionada.getId());
+            }
+            
+            
         } catch(Exception e) {
             e.printStackTrace();
             JsfUtil.addErrorMessage(e.getMessage() + STR_GUION + MESSAGE_ERROR_INESPERADO);
@@ -167,7 +144,7 @@ public class CrearSolicitudBean implements Serializable{
             
             List<Parametros> listadoFormacion = new ArrayList<>();
 
-            if(tipoModalidadEspecializacion.getId().compareTo(tipoModalidadSeleccionada.getId()) == 0) {
+            if(null != tipoModalidadSeleccionada && (tipoModalidadEspecializacion.getId().compareTo(tipoModalidadSeleccionada.getId()) == 0)) {
                 listadoFormacion.add(parametrosFacade.findById(constanteSingleton.getTipoFormacionCurso().getId()));
                 listTipoFormacion = listadoFormacion;
                 listFormacion = formacionFacade.findByIdAreaIdTipoFormacionAndIdTipoModalidad(
@@ -175,11 +152,10 @@ public class CrearSolicitudBean implements Serializable{
                         constanteSingleton.getTipoFormacionCurso().getId(),
                         tipoModalidadSeleccionada.getId());
 
-            } else if(constanteSingleton.getTipoModalidadCorrectivo().getId().compareTo(tipoModalidadSeleccionada.getId()) == 0) {
+            } else if(null != tipoModalidadSeleccionada && (constanteSingleton.getTipoModalidadCorrectivo().getId().compareTo(tipoModalidadSeleccionada.getId()) == 0)) {
                 listTipoFormacion = parametrosFacade.findByGrupo(GrupoParametrosEnum.TIPO_FORMACION.getValue());
                 listFormacion = new ArrayList<>();
-            } else if(constanteSingleton.getTipoModalidadInductivo().getId().compareTo(
-                    tipoModalidadSeleccionada.getId()) == 0) {
+            } else if(null != tipoModalidadSeleccionada && (constanteSingleton.getTipoModalidadInductivo().getId().compareTo(tipoModalidadSeleccionada.getId()) == 0)) {
                 desactivarInductiva = true;
                 listadoFormacion.add(parametrosFacade.findById(constanteSingleton.getTipoFormacionTaller().getId()));
                 listTipoFormacion = listadoFormacion;            
@@ -198,7 +174,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void seleccionarDetalleSolicitud() {
     
-        final String nombreMethodo = "seleccionarDetalleSolicitud";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();;
         
         try {
             tipoModalidadSeleccionada = soliCap.getIdTipoModalidad();
@@ -232,7 +208,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void agregarDetalleSolicitud() {
      
-        final String nombreMethodo = "agregarDetalleSolicitud";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();;
         
         try {
             if(tipoModalidadSeleccionada  == null) {
@@ -253,7 +229,7 @@ public class CrearSolicitudBean implements Serializable{
             if(soliCap == null || null == soliCap.getId()) {
                 
                 SolicitudCapacitacion solCapConsulta = solicitudCapacitacionFacade.findByAreaIdTipModAndPeriodo(area, 
-                    tipoModalidadSeleccionada, UtilDate.getAnioActual() + 1);
+                    tipoModalidadSeleccionada, UtilDate.getAnioSiguiente());
             
                 if(null != solCapConsulta) {
                     JsfUtil.addErrorMessage(ConstanteMensaje.ERR_TIP_MODALIDAD_X_ANIO);     
@@ -265,7 +241,7 @@ public class CrearSolicitudBean implements Serializable{
                 soliCap.setObservacion(ConstanteMensaje.OK_CREACION_SOLICITUD);
                 soliCap.setIdArea(area); 
                 soliCap.setIdEstado(constanteSingleton.getEstadoSolicitudCapacitacionPendiente());
-                soliCap.setPeriodo(UtilDate.getAnioActual() + 1);
+                soliCap.setPeriodo(UtilDate.getAnioSiguiente());
                 soliCap.setIdTipoModalidad(tipoModalidadSeleccionada);
 
                 ds = new DetalleSolicitud();
@@ -318,7 +294,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void eliminarCurso(DetalleSolicitud ds) {
         
-        final String nombreMethodo = "eliminarCurso";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();;
         
         try {
             List<DetSolParticipante> part = detSolParticipanteFacade.findByDetSol(ds);
@@ -329,7 +305,7 @@ public class CrearSolicitudBean implements Serializable{
             listParticipante = new ArrayList<>();
             desactivarComboTipCap = true;
             
-            if(listDetalleSolicitud.isEmpty()) {
+            if(UtilList.isEmpty(listDetalleSolicitud)) {
                 solicitudCapacitacionFacade.eliminar(soliCap);
                 soliCap = null;
                 desactivarComboTipCap = false;
@@ -346,7 +322,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void eliminarParticipante(DetSolParticipante dsp) {
         
-        final String nombreMethodo = "eliminarCurso";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();
         
         try {
             detSolParticipanteFacade.eliminarParticipante(dsp, detalleSolicitudSeleccionada);
@@ -362,7 +338,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void agregarListadoParticipantes(DetalleSolicitud ds) {
         
-        final String nombreMethodo = "agregarListadoParticipantes";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();
         
         try {
             detalleSolicitudSeleccionada = ds; 
@@ -381,7 +357,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void agregarListadoParticipantes2() {
         
-        final String nombreMethodo = "agregarListadoParticipantes2";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();
         
         try {
             List<Empleado> eliminarTodo = new ArrayList<>();
@@ -406,7 +382,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void guardarParticipante() {    
         
-        final String nombreMethodo = "guardarParticipante";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();
         
         try {
             if(listParticipanteTemp.isEmpty()) {
@@ -420,13 +396,16 @@ public class CrearSolicitudBean implements Serializable{
             }
 
             detSolParticipanteFacade.guardar(detalleSolicitudSeleccionada, listParticipanteTemp);
-            agregarListadoParticipantes(detalleSolicitudSeleccionada);
+            
+            listParticipante = detSolParticipanteFacade.findByDetSol(detalleSolicitudSeleccionada);
+            
             listParticipanteTemp = new ArrayList<>();
             listDetalleSolicitud = detalleSolicitudFacade.findBySolCap(soliCap);
 
             JsfUtil.addSuccessMessage(ConstanteMensaje.OK_AGREGAR_PARTICIPANTE);
             ControladorAbstracto.updateComponent("frmCrearSolicitudCapacitacion:dtListDetalleSolicitud"); 
             ControladorAbstracto.updateComponent("frmListadoParticipante:dtListadoParticipante"); 
+            ControladorAbstracto.updateComponent("frmListadoParticipante:dtListadoParticipante");
             ControladorAbstracto.executeJavascript("PF('wgvDlgSeleccionarParticipantesSeleccionar').hide();");
         } catch(Exception e) {
             e.printStackTrace();
@@ -445,7 +424,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void actualizarSolicitud() {
         
-        final String nombreMethodo = "actualizarSolicitud";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();
         
         try {
             
@@ -465,7 +444,7 @@ public class CrearSolicitudBean implements Serializable{
             }
             
             SolicitudCapacitacion solCapConsulta = solicitudCapacitacionFacade.findByAreaIdTipModAndPeriodo(area, 
-                    tipoModalidadSeleccionada, calendar.get(Calendar.YEAR));
+                    tipoModalidadSeleccionada, UtilDate.getAnioSiguiente());
             
             if(null == soliCap.getId()) {
                 if(null != solCapConsulta) {
@@ -523,7 +502,7 @@ public class CrearSolicitudBean implements Serializable{
     
     public void guardarSolicitud() {
         
-        final String nombreMethodo = "guardarSolicitud";
+        final String nombreMethodo = Thread.currentThread().getStackTrace()[1].getMethodName();
         
         try {
             if(null == tipoModalidadSeleccionada) {
@@ -542,7 +521,7 @@ public class CrearSolicitudBean implements Serializable{
             }
             
             SolicitudCapacitacion solCapConsulta = solicitudCapacitacionFacade.findByAreaIdTipModAndPeriodo(area, 
-                    tipoModalidadSeleccionada, calendar.get(Calendar.YEAR));
+                    tipoModalidadSeleccionada, UtilDate.getAnioSiguiente());
             
             if(null == soliCap.getId()) {
                 if(null != solCapConsulta) {

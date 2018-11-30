@@ -9,7 +9,8 @@
         <h:form id="frmListadoParticipante">
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton id="btnAgregarPar" value="Agregar"
+                    <p:commandButton id="btnAgregarPar" value="AGREGAR"
+                                     styleClass="btnBuscar"
                                      icon="ui-icon-circle-plus"
                                      disabled="#{crearSolicitudBean.desactivarInductiva}"
                                      onstart="PF('wgvFrmBuscarSolicitud').show();"
@@ -22,7 +23,7 @@
             <p:dataTable id="dtListadoParticipante" 
                          var="participante"
                          reflow="true"
-                         scrollable="true" scrollHeight="350"
+                         scrollable="true" scrollHeight="150"
                          rowIndexVar="cantidad"
                          rowKey="#{participante.id}"
                          emptyMessage="Listado de participantes inscritos"
@@ -39,7 +40,7 @@
                 <p:column id="colPerfil" headerText="Perfil">
                     <h:outputText value="#{participante.idEmpleado.idRol.nombre}" />
                 </p:column>
-                <p:column id="colRemover" headerText="Eliminar">
+                <p:column id="colRemover" headerText="Remover">
                     <p:commandButton id="btnRemoverParticipante"
                                  icon="ui-icon-circle-minus" 
                                  onstart="PF('wgvFrmBuscarSolicitud').show();"

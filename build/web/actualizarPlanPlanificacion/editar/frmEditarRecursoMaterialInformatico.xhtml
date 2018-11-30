@@ -19,8 +19,7 @@
                                   value="#{registrarPlanCapacitacionBean.tipoRecursoMaterialEscritorio}">
                     <f:selectItems value="#{registrarPlanCapacitacionBean.listTipoRecurso}" var="tipoRecurso"
                                    itemValue="#{tipoRecurso}" itemLabel="#{tipoRecurso.descripcion}" />
-                    <p:ajax  
-                            process="@this"
+                    <p:ajax process="@this"
                             onstart="PF('wgvDtDetSol').show();"
                             oncomplete="PF('wgvDtDetSol').hide();"
                             partialSubmit="true"
@@ -57,7 +56,7 @@
                                          action="#{registrarPlanCapacitacionBean.buscarRecursoMaterial}" />
                     </p:panelGrid>
                     <p:separator />
-                    <p:fieldset legend="Listado de materiales y/o informática">
+                    <p:fieldset legend="LISTADO DE MATERIALES Y/O INFORMÁTICA">
                     <p:dataTable id="dtMaterialEscritorio" var="materialEscritorio"
                                  rowKey="#{materialEscritorio.id}"
                                  emptyMessage="."
@@ -127,7 +126,7 @@
 
                     <p:separator />
 
-                    <p:fieldset legend="Listado de materiales y/o informática">
+                    <p:fieldset legend="LISTADO DE MATERIALES Y/O INFORMÁTICA">
                     <p:dataTable id="dtMaterialInformatico" var="materialEscritorio"
                                  rowKey="#{materialEscritorio.id}" reflow="true"
                                  paginator="true" rows="10"
@@ -192,9 +191,8 @@
                             <h:outputLabel value="#{materialEscritorio2.nombre}"/>
                         </p:column>
                         <p:column id="colCantidad" headerText="Cantidad">
-                            <p:inputText id="txtCantidad1" 
+                            <p:inputText id="txtCantidad1" autocomplete="off"
                                          onkeypress="return ValidacionCamposJS.soloNumerosEnteros(event);"
-                                         autocomplete="off"
                                          value="#{materialEscritorio2.cantidad}" />
                         </p:column>
                         <p:column id="colValor" headerText="Precio Referencial">

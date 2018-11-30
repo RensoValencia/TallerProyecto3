@@ -37,7 +37,9 @@
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="Máximo de participantes:" for="maximoParticipantes" />
-                        <p:inputText id="maximoParticipantes" value="#{formacionController.selected.maximoParticipantes}" title="#{bundle.EditFormacionTitle_maximoParticipantes}" required="true" requiredMessage="#{bundle.EditFormacionRequiredMessage_maximoParticipantes}"/>
+                        <p:inputText id="maximoParticipantes" 
+                                     onkeypress="return ValidacionCamposJS.soloNumerosEnteros(event);"
+                                     value="#{formacionController.selected.maximoParticipantes}" title="#{bundle.EditFormacionTitle_maximoParticipantes}" required="true" requiredMessage="#{bundle.EditFormacionRequiredMessage_maximoParticipantes}"/>
                         
                         <p:outputLabel value="#{bundle.EditFormacionLabel_temario}" for="temario" />
                         
@@ -47,7 +49,9 @@
                                          requiredMessage="#{bundle.EditFormacionRequiredMessage_temario}"/>
                         
                         <p:outputLabel value="Número de horas" for="numeroHoras" />
-                        <p:inputText id="numeroHoras" value="#{formacionController.selected.numeroHoras}" title="#{bundle.EditFormacionTitle_numeroHoras}" />
+                        <p:inputText id="numeroHoras" 
+                                     onkeypress="return ValidacionCamposJS.soloNumerosEnteros(event);"
+                                     value="#{formacionController.selected.numeroHoras}" title="#{bundle.EditFormacionTitle_numeroHoras}" />
                         
                         <p:outputLabel value="#{bundle.CreateFormacionLabel_idArea}" for="idArea" />
                         <p:selectOneMenu id="idArea" value="#{formacionController.selected.idArea}" >
@@ -70,8 +74,20 @@
                         </p:selectOneMenu>
                         
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{formacionController.update}" value="Editar" update="display,:FormacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FormacionEditDialog');"/>
-                    <p:commandButton value="Salir" onclick="FormacionEditDialog.hide()"/>
+                    <p:commandButton actionListener="#{formacionController.update}"
+                                     icon="ui-icon-disk"
+                                     value="Editar" update="display,:FormacionListForm:datalist,:growl" 
+                                     oncomplete="handleSubmit(args, 'FormacionEditDialog');">
+                        <p:confirm header="Confirmación" 
+                           message="¿Estas seguro de editar la formación?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    <p:commandButton value="Salir" 
+                                     icon="ui-icon-circle-close"
+                                     onclick="FormacionEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

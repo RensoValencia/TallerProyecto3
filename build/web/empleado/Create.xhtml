@@ -27,7 +27,10 @@
                         <p:outputLabel value="#{bundle.CreateEmpleadoLabel_fechaAlta}" for="fechaAlta" />
                         <p:calendar id="fechaAlta" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaAlta}" title="#{bundle.EditEmpleadoTitle_fechaAlta}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_fechaAlta}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateEmpleadoLabel_fechaBaja}" for="fechaBaja" />
-                        <p:calendar id="fechaBaja" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaBaja}" title="#{bundle.EditEmpleadoTitle_fechaBaja}" required="true" requiredMessage="#{bundle.EditEmpleadoRequiredMessage_fechaBaja}" showOn="button"/>
+                        <p:calendar id="fechaBaja" pattern="MM/dd/yyyy" 
+                                    value="#{empleadoController.selected.fechaBaja}"
+                                    title="#{bundle.EditEmpleadoTitle_fechaBaja}" 
+                                    showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateEmpleadoLabel_estado}" for="estado" />
                         <p:inputText id="estado" value="#{empleadoController.selected.estado}" title="#{bundle.CreateEmpleadoTitle_estado}" required="true" requiredMessage="#{bundle.CreateEmpleadoRequiredMessage_estado}"/>
                         <p:outputLabel value="#{bundle.CreateEmpleadoLabel_idRol}" for="idRol" />

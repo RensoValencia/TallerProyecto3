@@ -4,6 +4,7 @@ import static com.upc.indra.bean.util.Constante.STR_VACIO;
 import com.upc.indra.bean.util.ConstanteMensaje;
 import com.upc.indra.be.Formacion;
 import com.upc.indra.be.Parametros;
+import com.upc.indra.be.Usuario;
 import com.upc.indra.bean.util.Constante;
 import static com.upc.indra.bean.util.ConstanteMensaje.MESSAGE_ERROR_INESPERADO;
 import com.upc.indra.bean.util.ControladorAbstracto;
@@ -12,6 +13,7 @@ import com.upc.indra.bean.util.JsfUtil.PersistAction;
 import com.upc.indra.bean.util.UtilList;
 import com.upc.indra.dao.FormacionFacade;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -37,6 +39,8 @@ import lombok.Setter;
 @SessionScoped
 public class FormacionController implements Serializable {
 
+    private Usuario usuarioLogueado;
+    
     @EJB private com.upc.indra.dao.FormacionFacade ejbFacade;
     private List<Formacion> items = null;
     @Getter @Setter private Formacion selected;
@@ -48,6 +52,7 @@ public class FormacionController implements Serializable {
     
     @PostConstruct
     public void init() {
+        usuarioLogueado = (Usuario) ControladorAbstracto.getSessionProperty(Constante.USER);
         formacionBuscar = new Formacion();
     }
 
@@ -95,13 +100,26 @@ public class FormacionController implements Serializable {
     }
 
     public void create() {
+        
+        if(UtilList.isNotEmpty(ejbFacade.findByNombre(selected.getNombre()))) {
+            JsfUtil.addErrorMessage("Por favor, Ud. debe ingresar otro curso, el que intenta registrar ya existe"); 
+            return;
+        }
+        ControladorAbstracto.executeJavascript("PF('FormacionCreateDialog').hide();");
+        
+        selected.setIdUsuarioCreacion(usuarioLogueado);
+        selected.setPcCreacion(Constante.HOST_CREACION);
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("FormacionCreated"));
+        
         if (!JsfUtil.isValidationFailed()) {
             items = null; 
         }
     }
 
     public void update() {
+        selected.setIdUsuarioModificacion(usuarioLogueado);
+        selected.setPcModificacion(Constante.HOST_MODIFACION);
+        selected.setFechaModificacion(new Date());
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("FormacionUpdated"));
     }
 

@@ -28,10 +28,8 @@ public class ConstanteSingleton {
     @Getter @Setter public Parametros tipoModalidadCorrectivo;
     @Getter @Setter public Parametros tipoModalidadEspecializacion;
     
-    
     @Getter @Setter public Parametros tipoFormacionCurso;
     @Getter @Setter public Parametros tipoFormacionTaller;
-    
     
     @Getter @Setter public Parametros tipoPlanCapacitacionInterna;
     @Getter @Setter public Parametros tipoPlanCapacitacionExterna;
@@ -46,7 +44,10 @@ public class ConstanteSingleton {
     @Getter @Setter public Parametros tipoRecursoMaterialEscritorio;
     @Getter @Setter public Parametros tipoRecursoMaterialRecursoInformatico;
     @Getter @Setter public Parametros tipoRecursoPerfilCapacitador;
+    
     @Getter @Setter public Parametros estadoCapacitacionPendiente;
+    @Getter @Setter public Parametros estadoCapacitacionProgramado;
+    
     @Getter @Setter public Parametros estadoSolicitudCapacitacionEnProceso;
     @Getter @Setter public Parametros estadoSolicitudCapacitacionAprobado;
     
@@ -78,13 +79,13 @@ public class ConstanteSingleton {
                 EstadoSolicitudCapacitacionEnum.PENDIENTE.getValue());
         
         estadoSolicitudCapacitacionEnviado = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_SOLICITUD_CAPACITACION.getValue(), 
-                EstadoCapacitacion.ENVIADO.getValue());
+                EstadoSolicitudCapacitacionEnum.ENVIADO.getValue());
         
         estadoSolicitudCapacitacionEnProceso = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_SOLICITUD_CAPACITACION.getValue(), 
-                EstadoCapacitacion.EN_PROCESO.getValue());
+                EstadoSolicitudCapacitacionEnum.EN_PROCESO.getValue());
 
         estadoSolicitudCapacitacionAprobado = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_SOLICITUD_CAPACITACION.getValue(), 
-                EstadoCapacitacion.APROBADO.getValue());        
+                EstadoSolicitudCapacitacionEnum.APROBADO.getValue());        
         
         estadoPlanCapacitacionPendiente = parametrosFacade.findByGrupoCodigo(
                 GrupoParametrosEnum.ESTADO_PLAN_CAPACITACION.getValue(), EstadoPlanCapacitacion.PENDIENTE.getValue());
@@ -105,6 +106,7 @@ public class ConstanteSingleton {
         tipoRecursoPerfilCapacitador = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.TIPO_RECURSO.getValue(), TipoRecurso.PERFIL.getValue());
         
         estadoCapacitacionPendiente = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_CAPACITACION.getValue(), EstadoCapacitacion.PENDIENTE.getValue());
+        estadoCapacitacionProgramado = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_CAPACITACION.getValue(), EstadoCapacitacion.PROGRAMADO.getValue());
         
     }
     

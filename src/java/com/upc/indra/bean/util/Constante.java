@@ -15,7 +15,14 @@ public class Constante {
     public static final String STR_VACIO = "";
     public static final String STR_GUION = " - ";
     public static final String FORMATO_FECHA = "dd/MM/yyyy";
+    public static final String CODIGO_ENCRIPTACION = "SHA-256";
     public static final String PATH_PLAN_CAPA = "/TallerProyecto3/faces/actualizarPlanPlanificacion/";
     public static final String PAGE_LST_PLAN_CAPA = "frmListadoPlanCapacitacion.xhtml";
+    
+    
+    public static final String HOST_CREACION = "HOST_CREACION";
+    public static final String HOST_MODIFACION = "HOST_MODIFICACION";
+    
+    
     
 }

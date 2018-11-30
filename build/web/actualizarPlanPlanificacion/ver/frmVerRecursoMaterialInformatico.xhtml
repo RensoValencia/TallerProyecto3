@@ -11,6 +11,8 @@
                     
             <p:fieldset legend="Recursos materiales y recursos informaticos">
 
+                <p:outputLabel id="msg" value="#{registrarPlanCapacitacionBean.msg}"
+                               style="font-size: 14px; color: red;"/>
                 
                 <p:dataTable id="dtMaterialInformatico2" var="materialEscritorio2"
                                  scrollable="true"
@@ -57,7 +59,7 @@
                         <p:commandButton id="btnSiguiente2" icon="ui-icon-arrowthickstop-1-s" 
                                          onstart="PF('wgvDtDetSol').show()"
                                          oncomplete="PF('wgvDtDetSol').hide()"
-                                         value="Siguiente"
+                                         value="#{registrarPlanCapacitacionBean.nombreBoton eq 'Guardar'? 'Salir': registrarPlanCapacitacionBean.nombreBoton}"
                                          process="@this :frmVerPlanCapacitacion:dtMaterialInformatico2"
                                          partialSubmit="true"
                                          action="#{registrarPlanCapacitacionBean.siguiente2}" />

@@ -35,15 +35,19 @@
                     <p:blockUI id="block" block="frmBuscarSolicitudCapacitacion" widgetVar="wgvFrmBuscarSolicitud">
                         <p:graphicImage url="../img/load.gif" />
                     </p:blockUI>
+                    
+                    <p:focus for="somEstadoSolicitudCapacitacion" />
 
                     <p:fieldset legend="Buscar Solicitud de Capacitación">
                         <p:panelGrid columns="8" layout="grid">
                             <p:column>
-                                <h:outputLabel styleClass="lblGeneral" value="Estado:" style="font-weight: bold;" />
+                                <p:outputLabel id="lblEstado" styleClass="lblGeneral" value="Estado:" style="font-weight: bold;" />
+                                <p:tooltip id="toolTipEstado" for="lblEstado" value="Por favor, Ud. debe seleccionar el estado de la solicitud" position="top" />
                             </p:column>
                             <p:column>
                                 <!-- (pendiente, aprobada, rechazada, etc)-->
-                                <p:selectOneMenu id="somEstadoSolicitudCapacitacion" value="#{crearSolicitudBean.estadoSolicitudCapacitacion}">
+                                <p:selectOneMenu id="somEstadoSolicitudCapacitacion" filter="true" filterMatchMode="contains"
+                                                 value="#{crearSolicitudBean.estadoSolicitudCapacitacion}">
                                     <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
                                     <f:selectItems value="#{parametrosController.listEstadoSolicitud}" var="estadoSolicitudCapacitacion"
                                                    itemValue="#{estadoSolicitudCapacitacion}" 
@@ -51,11 +55,13 @@
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <h:outputLabel styleClass="lblGeneral" value="Tipo de capacitación:" style="font-weight: bold;" />
+                                <p:outputLabel id="lblTipoCapa" styleClass="lblGeneral" value="Tipo de capacitación:" style="font-weight: bold;" />
+                                <p:tooltip id="toolTipCapa" for="lblTipoCapa" value="Por favor, Ud. debe seleccionar el tipo de capacitación" position="top" />
                             </p:column>
                             <p:column>
                                 <!-- (inductivo, instructivo, especializacion)-->
-                                <p:selectOneMenu id="somTipoCapacitacion" value="#{crearSolicitudBean.tipoModalidadSeleccionada}">
+                                <p:selectOneMenu id="somTipoCapacitacion" filter="true" filterMatchMode="contains"
+                                                 value="#{crearSolicitudBean.tipoModalidadSeleccionada}">
                                     <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
                                     <f:selectItems value="#{parametrosController.listTipoModalidad}" var="tipoModalidad"
                                                    itemValue="#{tipoModalidad}" 
@@ -70,10 +76,12 @@
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <p:outputLabel styleClass="lblGeneral" value="Tipo de formación:" style="font-weight: bold;"/>
+                                
+                                <p:outputLabel id="lblTipoForm" styleClass="lblGeneral" value="Tipo de formación:" style="font-weight: bold;"/>
+                                <p:tooltip id="toolTipForm" for="lblTipoForm" value="Por favor, Ud. debe seleccionar el tipo de formación" position="top" />
                                 <p:spacer width="10" />
                                 <!-- (curso, taller) -->
-                                <p:selectOneMenu id="somTipoFormacion"
+                                <p:selectOneMenu id="somTipoFormacion" filter="true" filterMatchMode="contains"
                                                  value="#{crearSolicitudBean.tipoFormacionSeleccionada}">
                                     <f:selectItem itemLabel="[SELECCIONE]" itemValue="" />
                                     <f:selectItems value="#{crearSolicitudBean.listTipoFormacion}"
@@ -83,6 +91,7 @@
                             </p:column>
                             <p:column>
                                 <h:outputLabel id="lblPeriodo" value="Periodo:" styleClass="lblGeneral" />
+                                <p:tooltip id="toolPeriodo" for="lblPeriodo" value="Por favor, Ud. debe seleccionar el año de solicitud" position="top" />
                                 <p:spacer width="5" />
                                 <p:selectOneMenu id="cmbPeriodo" value="#{crearSolicitudBean.anioSeleccionado}">
                                     <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
@@ -96,7 +105,7 @@
                                 </p:selectOneMenu>
                             </p:column>
                             <p:commandButton id="btnBuscar" action="#{crearSolicitudBean.buscarSolicitudCapacitacion}"
-                                             value="Buscar"
+                                             value="BUSCAR"
                                              styleClass="btnBuscar"
                                              icon="ui-icon-circle-plus"
                                              onstart="PF('wgvFrmBuscarSolicitud').show();"
@@ -108,7 +117,10 @@
                     </p:fieldset>
                     <p:dataTable id="dtLstSolicitud" 
                                  var="detalleSolicitud"
-                                 reflow="true"
+                                 scrollable="true" scrollHeight="250"
+                                 paginator="true" rows="10" reflow="true"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,50,100" paginatorPosition="bottom"
                                  emptyMessage="Por favor, Busque el listado de solicitudes"
                                  rowIndexVar="cantidad"
                                  value="#{crearSolicitudBean.listSolicitud}">
@@ -153,8 +165,9 @@
                         </p:column>
                     </p:dataTable>
 
-                    <p:commandButton value="Nueva solicitud"
+                    <p:commandButton value="NUEVA SOLICITUD"
                                      icon="ui-icon-disk"
+                                     styleClass="btnBuscar"
                                      action="#{crearSolicitudBean.nuevaSolicitudCapacitacion}"
                                      onstart="PF('wgvDlgCrearSolicitudCapacitacion').show();" />
 

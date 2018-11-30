@@ -3,6 +3,7 @@ package com.upc.indra.bean;
 import com.upc.indra.be.Usuario;
 import com.upc.indra.bean.util.ControladorAbstracto;
 import com.upc.indra.bean.util.JsfUtil;
+import com.upc.indra.bean.util.UtilSeguridad;
 import com.upc.indra.dao.UsuarioFacade;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -41,7 +42,8 @@ public class LoginBean implements Serializable{
             } else if(usuario.getClave() == null && usuario.getClave().equals("")) {
                 JsfUtil.addErrorMessage("Por favor ingrese su clave.");
             } else {
-                Usuario user = usuarioFacade.findByUserAndPass(usuario.getNombre(), usuario.getClave());
+                Usuario user = usuarioFacade.findByUserAndPass(usuario.getNombre(), 
+                        UtilSeguridad.encriptar(usuario.getClave()));
 
                 if(null != user) {
                     ControladorAbstracto.setSessionProperty("user", user);

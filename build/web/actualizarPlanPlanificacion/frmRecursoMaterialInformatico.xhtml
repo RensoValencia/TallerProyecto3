@@ -30,20 +30,24 @@
                 <div id="recursoMaterial">
                     <p:panelGrid columns="8">
                         <h:outputLabel value="Localizado por:"/>
-                        <p:selectOneMenu id="somTipoMaterial" value="#{registrarPlanCapacitacionBean.tipoMaterialSeleccionado}">
+                        <p:selectOneMenu id="somTipoMaterial" filter="true" filterMatchMode="contains"
+                                         value="#{registrarPlanCapacitacionBean.tipoMaterialSeleccionado}">
                             <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{registrarPlanCapacitacionBean.listTipoMaterial}"
                                            var="tipoMaterial" itemValue="#{tipoMaterial}" itemLabel="#{tipoMaterial.nombre}" />
                         </p:selectOneMenu>    
                         <p:spacer width="15px" />
                         <h:outputLabel value="Marca:"/>
-                        <p:selectOneMenu id="somMarcaMaterial" value="#{registrarPlanCapacitacionBean.marcaMaterialSeleccionado}">
+                        <p:selectOneMenu id="somMarcaMaterial" filter="true" filterMatchMode="contains"
+                                         value="#{registrarPlanCapacitacionBean.marcaMaterialSeleccionado}">
                             <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{registrarPlanCapacitacionBean.listMarcaMaterial}"
                                            var="marca" itemValue="#{marca}" itemLabel="#{marca.nombre}" />
                         </p:selectOneMenu>    
                         <p:spacer width="15px" />
-                        <p:inputText id="txtNombreMaterial" placeholder="Nombre del material" 
+                        <p:inputText id="txtNombreMaterial" 
+                                     onkeypress="return ValidacionCamposJS.validaLetras(event);"
+                                     placeholder="Nombre del material" 
                                      value="#{registrarPlanCapacitacionBean.nombreMaterial}" />
                         <p:commandButton id="btnBuscarMaterial" value="Buscar" 
                                          process="@this :frmRegistrarPlanCapacitacion:somTipoMaterial :frmRegistrarPlanCapacitacion:somMarcaMaterial :frmRegistrarPlanCapacitacion:txtNombreMaterial"
@@ -58,6 +62,7 @@
                     <p:dataTable id="dtMaterialEscritorio" var="materialEscritorio"
                                  rowKey="#{materialEscritorio.id}"
                                  emptyMessage="."
+                                 scrollable="true" scrollHeight="90"
                                  paginator="true" rows="10" reflow="true"
                                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
@@ -87,8 +92,6 @@
                         </p:column>
                     </p:dataTable>
                         </p:fieldset>
-                    <br />
-                    <p:separator />
                     <br /> 
                 </div>
 
@@ -96,20 +99,23 @@
 
                     <p:panelGrid columns="8">
                         <h:outputLabel value="Localizado por:"/>
-                        <p:selectOneMenu id="somTipoRecurso" value="#{registrarPlanCapacitacionBean.griTipoRecursoSeleccionado}">
+                        <p:selectOneMenu id="somTipoRecurso" filter="true" filterMatchMode="contains"
+                                         value="#{registrarPlanCapacitacionBean.griTipoRecursoSeleccionado}">
                             <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{registrarPlanCapacitacionBean.listGriTipoRecurso}"
                                            var="griTipoRecurso" itemValue="#{griTipoRecurso}" itemLabel="#{griTipoRecurso.nombre}" />
                         </p:selectOneMenu>    
                         <p:spacer width="15px" />
                         <h:outputLabel value="Marca:"/>
-                        <p:selectOneMenu id="somTipoMarca" value="#{registrarPlanCapacitacionBean.griMarcaSeleccionado}">
+                        <p:selectOneMenu id="somTipoMarca" filter="true" filterMatchMode="contains"
+                                         value="#{registrarPlanCapacitacionBean.griMarcaSeleccionado}">
                             <f:selectItem itemLabel="[SELECCIONE]" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{registrarPlanCapacitacionBean.listGriMarca}"
                                            var="marcaRi" itemValue="#{marcaRi}" itemLabel="#{marcaRi.nombre}" />
                         </p:selectOneMenu>    
                         <p:spacer width="15px" />
                         <p:inputText id="txtNombreRI" placeholder="Nombre del recurso informatico" 
+                                     onkeypress="return ValidacionCamposJS.validaLetras(event);"
                                      value="#{registrarPlanCapacitacionBean.nombreRecursoInformatico}" />
                         <p:commandButton id="btnBuscarRecursoMaterial" value="Buscar" 
                                          process="@this :frmRegistrarPlanCapacitacion:somTipoRecurso :frmRegistrarPlanCapacitacion:somTipoMarca :frmRegistrarPlanCapacitacion:txtNombreRI"
@@ -127,6 +133,7 @@
                                  rowKey="#{materialEscritorio.id}" reflow="true"
                                  paginator="true" rows="10"
                                  emptyMessage="."
+                                 scrollable="true" scrollHeight="90"
                                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,15"
                                  rowIndexVar="cantidad"
@@ -159,7 +166,7 @@
                 <p:separator />
                 <p:fieldset legend="Listado de recursos">
                 <p:dataTable id="dtMaterialInformatico2" var="materialEscritorio2"
-                                 style="width: 700px;"
+                                 scrollable="true" scrollHeight="140"
                                  paginator="true" rows="10" reflow="true"
                                  paginatorPosition="bottom"
                                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -186,10 +193,14 @@
                             <h:outputLabel value="#{materialEscritorio2.nombre}"/>
                         </p:column>
                         <p:column id="colCantidad" headerText="Cantidad">
-                            <p:inputText id="txtCantidad1" value="#{materialEscritorio2.cantidad}" />
+                            <p:inputText id="txtCantidad1" autocomplete="off"
+                                         onkeypress="return ValidacionCamposJS.soloNumerosEnteros(event);"
+                                         value="#{materialEscritorio2.cantidad}" />
                         </p:column>
                         <p:column id="colValor" headerText="Precio Referencial">
-                            <p:inputText id="txtCantidad2" value="#{materialEscritorio2.valor}" />
+                            <p:inputText id="txtCantidad2" autocomplete="off" 
+                                         onkeypress="return ValidacionCamposJS.soloNumeros(event);"
+                                         value="#{materialEscritorio2.valor}" />
                         </p:column>
                         <p:column id="colEliminar444" headerText="Remover">
                             <p:commandButton id="btnEliminar244" 

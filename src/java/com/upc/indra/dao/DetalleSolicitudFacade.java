@@ -130,6 +130,7 @@ public class DetalleSolicitudFacade extends AbstractFacade<DetalleSolicitud> {
         sql.append("FROM ca_detalle_solicitud DS ");
         sql.append("INNER JOIN ca_solicitud_capacitacion SC ON SC.`ID` = DS.`ID_SOL_CAP` ");
         sql.append("INNER JOIN ca_parametros tc ON tc.`ID` = sc.`ID_TIPO_MODALIDAD` ");
+        sql.append("INNER JOIN ca_formacion cf ON cf.id = ds.`ID_FORMACION` ");
         sql.append("INNER JOIN ca_parametros est ON est.`ID` = sc.`ID_ESTADO` ");
         sql.append("WHERE sc.`ID_AREA` = ").append(idArea.getId()).append(" "); 
         
@@ -146,8 +147,10 @@ public class DetalleSolicitudFacade extends AbstractFacade<DetalleSolicitud> {
         }
         
         if(null != idTipForm) {
-            sql.append(" AND ds.`ID_FORMACION` = ").append(idTipForm.getId()).append(" ");
+            sql.append(" AND cf.id_tipo_formacion = ").append(idTipForm.getId()).append(" ");
         }
+        
+        sql.append(" ORDER BY SC.FECHA_CREACION DESC ");
         
         try {
             Query query = em.createNativeQuery(sql.toString());

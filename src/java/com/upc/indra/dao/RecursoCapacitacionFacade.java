@@ -49,20 +49,33 @@ public class RecursoCapacitacionFacade extends AbstractFacade<RecursoCapacitacio
     
     public void actualizarPerfiles(List<Capacitacion> listada) {
     
+        System.out.println("listada: " + listada);
+        
         for(Capacitacion rrrr: listada) {
         
-            CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
-            CriteriaUpdate<RecursoCapacitacion> updateSedePaquete = null;
-            Root entitySedePaquete = null;
+            if(null != rrrr.getIdRecurso()) {
+                CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
+                CriteriaUpdate<RecursoCapacitacion> updateSedePaquete = null;
+                Root entitySedePaquete = null;
 
-            updateSedePaquete = criteriaBuilder.createCriteriaUpdate(RecursoCapacitacion.class);
-            entitySedePaquete = updateSedePaquete.from(RecursoCapacitacion.class);
+                updateSedePaquete = criteriaBuilder.createCriteriaUpdate(RecursoCapacitacion.class);
+                entitySedePaquete = updateSedePaquete.from(RecursoCapacitacion.class);
 
-            updateSedePaquete.set("valor", rrrr.getValor());
-            updateSedePaquete.set("idObjeto", rrrr.getPerfilCapacitador().getId());
+                updateSedePaquete.set("valor", rrrr.getValor());
+                updateSedePaquete.set("idObjeto", rrrr.getPerfilCapacitador().getId());
+
+                updateSedePaquete.where(criteriaBuilder.equal(entitySedePaquete.get("id"), rrrr.getIdRecurso()));
+                this.em.createQuery(updateSedePaquete).executeUpdate();
+            } else {
+                RecursoCapacitacion ff = new RecursoCapacitacion();
+                ff.setIdPlanificacion(rrrr.getIdPlanCapacitacion());
+                ff.setIdObjeto(rrrr.getPerfilCapacitador().getId());
+                ff.setCantidad(1);
+                ff.setValor(rrrr.getValor());
+                ff.setIdTipoRecurso(constanteSingleton.getTipoRecursoPerfilCapacitador());
+                em.persist(ff);
+            }
             
-            updateSedePaquete.where(criteriaBuilder.equal(entitySedePaquete.get("id"), rrrr.getIdRecurso()));
-            this.em.createQuery(updateSedePaquete).executeUpdate();
         }
         
     }

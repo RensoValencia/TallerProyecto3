@@ -41,9 +41,13 @@
 
                             <p:column>
                                 <h:outputLabel id="lblPeriodo" value="Periodo:" styleClass="lblGeneral" />
+                                <p:tooltip id="toolLblPeriodo" for="lblPeriodo" value="Por favor, Ud. debe seleccionar el periodo" position="top"/>
                                 <p:spacer width="5" />
                                 <p:selectOneMenu id="cmbPeriodo" value="#{registrarPlanCapacitacionBean.anioSeleccionadoBuscar}">
                                     <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="2015" itemValue="#{2015}" />
+                                    <f:selectItem itemLabel="2016" itemValue="#{2016}" />
+                                    <f:selectItem itemLabel="2017" itemValue="#{2017}" />
                                     <f:selectItem itemLabel="2018" itemValue="#{2018}" />
                                     <f:selectItem itemLabel="2019" itemValue="#{2019}" />
                                     <f:selectItem itemLabel="2020" itemValue="#{2020}" />
@@ -51,7 +55,8 @@
                                 </p:selectOneMenu>
                             </p:column>       
                             <h:outputLabel id="lblSituacion" value="Estado:" styleClass="lblGeneral" />
-
+                            <p:tooltip id="toolLblSituacion" for="lblSituacion" value="Por favor, Ud. debe seleccionar el periodo estado" position="top"/>
+                            
                             <p:selectOneMenu id="cmbSituacion" value="#{registrarPlanCapacitacionBean.estadoPlanCapacitacionSeleccionada}">
                                 <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
                                 <f:selectItems value="#{parametrosController.listEstadoTipoCapacitacion}" var="estadoCapa"
@@ -72,6 +77,7 @@
                                  paginatorPosition="bottom"
                                  rowIndexVar="cantidad" reflow="true"
                                  paginator="true" rows="10"
+                                 scrollable="true" scrollHeight="250"
                                  emptyMessage="No existen planes de capacitación"
                                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,15"

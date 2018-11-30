@@ -55,8 +55,6 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.SelectEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 /**
  * @author Jerson
  * @date 14/11/2018
@@ -158,7 +156,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
     
     private void iniciarObjetos() {
         
-        final String nombreMetodo =  Thread.currentThread().getStackTrace()[1].getMethodName();
+        final String nombreMetodo = Thread.currentThread().getStackTrace()[1].getMethodName();
         
         try {
             planCapacitacion = new PlanCapacitacion();
@@ -387,7 +385,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
                 capacitacionFacade.actualizarTodos(listCapacitacion);
             }        
             ControladorAbstracto.updateComponent("frmRegistrarPlanCapacitacion:msg", 
-                    "frmRegistrarPlanCapacitacion:btnSiguiente2");
+                    "frmRegistrarPlanCapacitacion:btnSiguiente2", "frmVerPlanCapacitacion:msg", "frmVerPlanCapacitacion:btnSiguiente2");
             ControladorAbstracto.executeJavascript("$('#divPrimero').hide(); $('#divPrimero1').hide(); $('#divSegundo').show(); $('#divSegundo1').show();");
         } catch(Exception e) {
             e.printStackTrace();
@@ -540,8 +538,6 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
                 int i = 0;
                 for(Capacitacion capaa: listPerfiles) {
                     if(recursCapa.size() > i) {
-                        System.out.println("i: " + i);
-                        System.out.println("recursCapa.get(i): " + recursCapa.get(0));
                         RecursoCapacitacion recurso = recursCapa.get(i);
                         PerfilCapacitador perfil = perfilCapacitadorFacade.findById(recurso.getIdObjeto());
                         capaa.setIdRecurso(recurso.getId());
@@ -555,7 +551,8 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
                 ControladorAbstracto.updateComponent("frmRegistrarPlanCapacitacion:dtPerfilCapacitador");
                 ControladorAbstracto.executeJavascript("$('#divSegundo').hide(); $('#divSegundo1').hide(); $('#divTercero').show(); $('#divTercero1').show();");
             } else {
-                JsfUtil.addSuccessMessage(ConstanteMensaje.OK_REGISTRO_PLAN);
+                JsfUtil.addErrorMessage(ConstanteMensaje.OK_REGISTRO_PLAN);
+                Thread.sleep(2000);
                 ControladorAbstracto.getExternalContext().redirect(Constante.PATH_PLAN_CAPA + Constante.PAGE_LST_PLAN_CAPA);
             }
         } else {
@@ -564,6 +561,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
                 ControladorAbstracto.executeJavascript("$('#divSegundo').hide(); $('#divSegundo1').hide(); $('#divTercero').show(); $('#divTercero1').show();");
             } else {
                 JsfUtil.addSuccessMessage(ConstanteMensaje.OK_REGISTRO_PLAN);
+                Thread.sleep(2000);
                 ControladorAbstracto.getExternalContext().redirect(Constante.PATH_PLAN_CAPA + Constante.PAGE_LST_PLAN_CAPA);
             }
         }
@@ -604,7 +602,8 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
         }
         
         JsfUtil.addSuccessMessage(ConstanteMensaje.OK_REGISTRO_PLAN);
-            ControladorAbstracto.getExternalContext().redirect(Constante.PATH_PLAN_CAPA+Constante.PAGE_LST_PLAN_CAPA);
+        Thread.sleep(2000);
+        ControladorAbstracto.getExternalContext().redirect(Constante.PATH_PLAN_CAPA+Constante.PAGE_LST_PLAN_CAPA);
         } catch(Exception e) {
             e.printStackTrace();
             JsfUtil.addErrorMessage(nombreMetodo + STR_GUION + MESSAGE_ERROR_INESPERADO);
@@ -613,7 +612,6 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
     
     public void cargarFechasPorTipo() {
     
-        System.out.println("Se ejecuta");
         listSolicitudCapacitacion = solicitudCapacitacionFacade.findByIdTipoPlanCapacitacionAndEstado(getAnioSiguiente(), estadoSolCapEnviado);
        
         ControladorAbstracto.updateComponent("frmRegistrarPlanCapacitacion:dtSolicitudes");
@@ -645,7 +643,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
         
         String redireccion = STR_VACIO;
         
-        PlanCapacitacion planCapa = planCapacitacionFacade.findByPeriodo(UtilDate.getAnioActual() + 1);
+        PlanCapacitacion planCapa = planCapacitacionFacade.findByPeriodo(UtilDate.getAnioSiguiente());
         
         if(null != planCapa) {
             JsfUtil.addErrorMessage(ConstanteMensaje.MAX_PLANES_ANIO);
@@ -670,8 +668,8 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
                 estadoPlanCapacitacionSeleccionada);
         
         if(UtilList.isEmpty(listPlanCapacitacion)) {
+            listPlanCapacitacion = new ArrayList<>();
             JsfUtil.addErrorMessage(ConstanteMensaje.ERR_RESULTADO_VACIO);
-            return;
         }
         ControladorAbstracto.updateComponent("frmListadoPlanCapacitacion:dtPlanesCapacitacion"); 
     }

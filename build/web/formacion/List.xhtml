@@ -41,18 +41,22 @@
                     <p:fieldset legend="#{bundle.ListFormacionBuscarFielSet}">
                         <p:panelGrid columns="6" layout="grid">
                             <p:column>
-                            <p:outputLabel for="nombre"
-                                           value="Nombre y apellido:" styleClass="lblGeneral" />
+                            <p:outputLabel id="lblNombre" for="nombre"
+                                           value="Nombre:" styleClass="lblGeneral" />
+                            <p:tooltip id="toolLblNombre" for="lblNombre" value="Por favor, Ud. debe ingresar nombre de la formación" position="top"/>
                             </p:column>
                             
                             <p:column>
-                            <p:inputText id="nombre" value="#{formacionController.nombre}" styleClass="txtGeneral" />
+                            <p:inputText id="nombre" 
+                                         placeholder="Ejemplo: Java"
+                                         value="#{formacionController.nombre}" styleClass="txtGeneral" />
                             </p:column>
 
                             <p:column>
-                            <p:outputLabel value="#{bundle.ListFormacionTitle_idTipoFormacion}:" 
+                            <p:outputLabel id="lblTipo" value="#{bundle.ListFormacionTitle_idTipoFormacion}:" 
                                            for="somTipoFormacion"
                                            styleClass="lblGeneral" />
+                            <p:tooltip id="toollblTipo" for="lblTipo" value="Por favor, Ud. debe seleccionar el tipo de formación" position="top"/>
                             </p:column>
 
                             <p:column>
@@ -79,6 +83,7 @@
                         <p:dataTable id="datalist" 
                                      reflow="true"
                                      widgetVar="wgvDtFormacion"
+                                     scrollable="true" scrollHeight="250"
                                      value="#{formacionController.items}" var="item"
                                      selectionMode="single" selection="#{formacionController.selected}"
                                      paginator="true"
